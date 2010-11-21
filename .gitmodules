@@ -1,0 +1,3 @@
+[submodule "libpd"]
+	path = libpd
+	url = git@gitorious.org:pdlib/libpd.git
