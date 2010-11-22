@@ -1,18 +1,22 @@
 
-This is a simple sample Universal iPad/iPhone app using PdLib to load and run a PD patch file.
+This is a simple sample Universal iPad/iPhone app using Libpd to load and run a PD patch file.
 
-The PdLib source and documentation is available at
-http://gitorious.org/pdlib
+The Libpd source and documentation is available at
+http://gitorious.org/Pdlib
 
-The project is currently setup to use iOS 4.1 as its "Base SDK" and iOS 3.0 as its "iOS Deployment Target". 
+The iOS sample project is currently set up to use the latest iOS SDK. 
+But this feature only works automatically with iOS SDK 4.2 and later. 
+The project settings use “Latest SDK” as the “Base SDK” and iOS 3.0 as its “iOS Deployment Target”. 
 That means the app will run on any device with iOS 3.0 or later. 
-(These can be changed in project file's and Targets->PdTest01 GetInfo panels.)
+(These can be changed in the project’s GetInfo panels.)
 
-PdLib is currently directly compiled into the app project. (See the pdlib folder)
+If you are having problems with XCode recognizing the project’s base SDK, 
+you can manually select the SDK in the project’s and build target’s GetInfo panels.
+Libpd is currently directly compiled into the app project. (See the libpd folder)
 
-It may make more sense to compile pdlib as a static library. Then link that into the app project.
+It may make more sense to compile Libpd as a static library. Then link that into the app project.
 
-One thing that is very important to get pdlib to compile is setting the correct compiler DEFINES. 
+One thing that is very important to get Libpd to compile is setting the correct compiler DEFINES. 
 These can be done in the project build "Other C Flags" setting. 
    -DPD
    -DUSA_API_DUMMY
@@ -20,7 +24,7 @@ These can be done in the project build "Other C Flags" setting.
    -DHAVE_UNISTD_H
 ALternatively you could just add #define's to the project precompiled header file. e.g. PdTest01_Prefix.pch
 
-The PdAudio and PdBase classes provide the Objective C glue to pdlib. 
+The PdAudio and PdBase classes provide the Objective C glue to Libpd. 
 
 PdAudio initializes the iOS Audio Session.
 
@@ -28,8 +32,8 @@ A PdAudio object needs to created by your app.
 e.g.
    	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:64 andNumberOfInputChannels:2 andNumberOfOutputChannels:2];
 
-PdBase provides an interface to PdLib through + class methods. 
-These methods are analogous the PdLib Java API http://gitorious.org/pdlib/pages/Libpd
+PdBase provides an interface to Libpd through + class methods. 
+These methods are analogous the Libpd Java API http://gitorious.org/Pdlib/pages/Libpd
 
 PdBase shouldn't be explicitly instantiated as an object. 
 Just make sure you add the class to your app project by adding the source files.
@@ -41,7 +45,7 @@ e.g.
 You then you also need to play [pdAudio play];
 
 Tested systems:
-- iPad (iOS 4.2b3)
+- iPad (iOS 4.2.1gm)
 - iPhone 3GS (iOS 4.0)
 - iPod touch 2nd gen (iOS 4.1) - not working
 - iPod touch 1st gen (iOS 3.0) - audio problems
