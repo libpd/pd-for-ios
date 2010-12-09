@@ -6,7 +6,7 @@ http://gitorious.org/Pdlib
 
 The iOS sample project is currently set up to use the latest iOS SDK. 
 But this feature only works automatically with iOS SDK 4.2 and later. 
-The project settings use “Latest SDK” as the “Base SDK” and iOS 3.0 as its “iOS Deployment Target”. 
+The project settings use “Latest iOS” as the “Base SDK” and iOS 3.0 as its “iOS Deployment Target”. 
 That means the app will run on any device with iOS 3.0 or later. 
 (These can be changed in the project’s GetInfo panels.)
 
@@ -45,15 +45,23 @@ e.g.
 You then you also need to play [pdAudio play];
 
 Tested systems:
-- iPad (iOS 4.2.1gm)
+- iPad (iOS 4.2.1)
 - iPhone 3GS (iOS 4.0)
 - iPod touch 2nd gen (iOS 4.1) - not working
 - iPod touch 1st gen (iOS 3.0) - audio problems
 - iPhone EDGE (iOS 3.0) - audio problmes.
 
 Known problems:
-- Audio playback problems with iOS SDK Simulator, iPod touch 1st gen, iPhone EDGE.
+- Audio playback problems with iOS SDK Simulator
+
+- Audio playback problems with iPod touch 1st gen, iPhone EDGE, iPhone 3G.
 - No audio playback on iPod touch 2nd gen.
+
+Note: this sample app uses the CoreAudio PlayAndRecord Audio Session type.
+Currently Libpd doesn't work properly with older iDevices with armv6 CPUs when using
+the PlayAndRecord Audio Session type. The PdTest02 app demonstrates an output-only 
+application of Libpd that works on most older iDevices. i.e. PdTest02 does not use 
+the microphone input.
 
 --------------- License ------------
 

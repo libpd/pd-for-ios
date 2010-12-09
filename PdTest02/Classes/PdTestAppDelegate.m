@@ -65,8 +65,15 @@ extern void lrshift_tilde_setup(void);
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
 	// create and init PdAudio object
-	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:64 andNumberOfInputChannels:2 andNumberOfOutputChannels:2];
+	// note: we are using the AmbientSound Audio Session Category
+	// this allows this app to work properly on most older iDevices
+	// but note that recoding audio input is not possible with AmbientSound Audio Sessions
+	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:64 andNumberOfInputChannels:0 andNumberOfOutputChannels:2 
+		andAudioSessionCategory:kAudioSessionCategory_AmbientSound];
 	
+	// set AppDelegate as PdRecieverDelegate to recieve messages from Libpd
+	[PdBase setDelegate:self];
+		
 	// initialize extern lrshift~ - note this extern must be statically linked with the app; 
 	// externs can not be loaded dynamically on iOS
 	lrshift_tilde_setup();  
@@ -90,6 +97,12 @@ extern void lrshift_tilde_setup(void);
 	self.playing = YES;
 }
 
+// receivePrint delegate method to receive "print" messages from Libpd
+- (void)receivePrint:(NSString *)message
+{
+	// for simplicity we are just sending print messages to the debugging console
+	NSLog(message);
+}
 
 - (BOOL)isPlaying
 {

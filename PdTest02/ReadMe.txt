@@ -1,6 +1,9 @@
 
 PdTest02 demonstrates the use of Libpd in a Universal iPad/iPhone app.
 
+------------------------------------------------------
+Version 1.0:
+
 PdTest02 demonstrates
 - Loading the Pd patch "LoopWithExtern.pd",
   note LoopWithExtern.pd loads a sample file "Banjo_B3.wav",
@@ -33,7 +36,7 @@ These can be done in the project build "Other C Flags" setting.
    -DUSA_API_DUMMY
    -DHAVE_LIBDL
    -DHAVE_UNISTD_H
-ALternatively you could just add #define's to the project precompiled header file. e.g. PdTest01_Prefix.pch
+Alternatively you could just add #define's to the project precompiled header file. e.g. PdTest01_Prefix.pch
 
 The PdAudio and PdBase classes provide the Objective C glue to Libpd. 
 
@@ -41,7 +44,9 @@ PdAudio initializes the iOS Audio Session.
 
 A PdAudio object needs to created by your app. 
 e.g.
-   	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:64 andNumberOfInputChannels:2 andNumberOfOutputChannels:2];
+	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:64 
+		andNumberOfInputChannels:0 andNumberOfOutputChannels:2 
+		andAudioSessionCategory:kAudioSessionCategory_AmbientSound];
 
 PdBase provides an interface to Libpd through + class methods. 
 These methods are analogous the Libpd Java API http://gitorious.org/Pdlib/pages/Libpd
@@ -55,16 +60,35 @@ e.g.
 
 You then you also need to play [pdAudio play];
 
-Tested systems:
-- iPad (iOS 4.2.1gm)
-- iPhone 3GS (iOS 4.0)
-- iPod touch 2nd gen (iOS 4.1) - not working
-- iPod touch 1st gen (iOS 3.0) - audio problems
-- iPhone EDGE (iOS 3.0) - audio problmes.
+-----------------------------------------------
+Version 1.1:
+	
+Uses new PdAudio init method specifying AmbientAudio Audio Session Category to support older iDevices.
+(Note the use of AmbientAudio will prevent Libpd from recording or using the microphone input, 
+but this sample does not use audio input nor the microphone.)
 
+Currently Libpd exhibits problems when using the RecordAndPlay Audio Session type on older 
+iDevices running armv6 processors.
+	
+PdTestAppDelegate supports PdReceiverDelegate protocol defined in PdBase.h. 
+This allows the AppDelegate to receive messages from Libpd as demonstrated by the -receivePrint method.
+
+Compiles with new Libpd s_libpdmidi.c interface. 
+Note: there is not yet support for these MIDI hooks through a delegate protocol as there is for the 
+other hooks through PdReceiverDelegate.
+
+-----------------------------------------------
+Tested systems:
+- iPad (iOS 4.2.1)
+- iPhone 3GS (iOS 4.0)
+- iPod touch 2nd gen (iOS 4.1)
+- iPod touch 1st gen (iOS 3.0)
+- iPhone EDGE (iOS 3.0)
+
+-----------------------------------------------
 Known problems:
-- Audio playback problems with iOS SDK Simulator, iPod touch 1st gen, iPhone EDGE.
-- No audio playback on iPod touch 2nd gen.
+- Audio playback problems with iOS SDK Simulator
+- There are reports of audio playback problems with the iPhone 3G running iOS 4.x
 
 --------------- License ------------
 

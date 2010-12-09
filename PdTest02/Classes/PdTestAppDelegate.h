@@ -42,7 +42,8 @@
 
 @class PdTestViewController;
 
-@interface PdTestAppDelegate : NSObject <UIApplicationDelegate> {
+// note AppDelegate supports PdReceiverDelegate protocol
+@interface PdTestAppDelegate : NSObject <UIApplicationDelegate,PdReceiverDelegate > {
     UIWindow *window;
     PdTestViewController *viewController;
 	PdAudio *pdAudio;
