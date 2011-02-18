@@ -587,7 +587,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_CFLAGS = (
 					"-DPD",
-					"-DUSA_API_DUMMY",
+					"-DUSEAPI_DUMMY",
 					"-DHAVE_LIBDL",
 					"-DHAVE_UNISTD_H",
 				);
@@ -608,7 +608,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_CFLAGS = (
 					"-DPD",
-					"-DUSA_API_DUMMY",
+					"-DUSEAPI_DUMMY",
 					"-DHAVE_LIBDL",
 					"-DHAVE_UNISTD_H",
 				);

@@ -19,7 +19,7 @@ It may make more sense to compile Libpd as a static library. Then link that into
 One thing that is very important to get Libpd to compile is setting the correct compiler DEFINES. 
 These can be done in the project build "Other C Flags" setting. 
    -DPD
-   -DUSA_API_DUMMY
+   -DUSEAPI_DUMMY
    -DHAVE_LIBDL
    -DHAVE_UNISTD_H
 ALternatively you could just add #define's to the project precompiled header file. e.g. PdTest01_Prefix.pch
