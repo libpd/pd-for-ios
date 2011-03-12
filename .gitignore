@@ -1,0 +1,16 @@
+#### `.gitignore`
+# Xcode noise
+build/*
+PdTest01/build/*
+PdTest02/build/*
+PolyPatch/build/*
+*.mode1v3
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.mode1v3
+*.mode2v3
+
+# osx noise
+.DS_Store
+profile
