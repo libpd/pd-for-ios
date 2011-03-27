@@ -40,14 +40,19 @@
 #import "PolyPatchAppDelegate.h"
 #import "PolyPatchViewController.h"
 
+@interface PolyPatchAppDelegate ()
+
+@property (nonatomic, retain) UIWindow *window;
+@property (nonatomic, retain) PolyPatchViewController *viewController;
+@property (nonatomic, retain) PdAudio *pdAudio;
+
+@end
 
 @implementation PolyPatchAppDelegate
 
-@synthesize window;
-@synthesize viewController;
-
-NSString *patchFileTypeExtension = @"pd";  
-
+@synthesize window = window_;
+@synthesize viewController = viewController_;
+@synthesize pdAudio = pdAudio_;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -60,14 +65,14 @@ NSString *patchFileTypeExtension = @"pd";
     int ticksPerBuffer = 64;
 #endif
 	
-	pdAudio = [[PdAudio alloc] initWithSampleRate:44100 andTicksPerBuffer:ticksPerBuffer andNumberOfInputChannels:2 andNumberOfOutputChannels:2];
+	self.pdAudio = [[PdAudio alloc] initWithSampleRate:44100 andTicksPerBuffer:ticksPerBuffer andNumberOfInputChannels:2 andNumberOfOutputChannels:2];
 	
 	[PdBase setDelegate:self];
 	[PdBase computeAudio:YES];
-	[pdAudio play];	
+	[self.pdAudio play];	
 
-    [window addSubview:viewController.view];
-    [window makeKeyAndVisible];
+    [self.window addSubview:self.viewController.view];
+    [self.window makeKeyAndVisible];
 
 	return YES;
 }
@@ -81,8 +86,9 @@ NSString *patchFileTypeExtension = @"pd";
 #pragma mark Memory management
 
 - (void)dealloc {
-    [viewController release];
-    [window release];
+	self.viewController = nil;
+	self.window = nil;
+	self.pdAudio = nil;
     [super dealloc];
 }
 
