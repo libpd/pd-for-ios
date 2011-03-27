@@ -28,14 +28,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 0E0EE92E12EC26C6004BA33D /* libpd.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D /* libpd.a */;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = libpd;
 		};
 		0ED51321132BBCAF00970D18 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0E0EE92E12EC26C6004BA33D /* libpd.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D /* libpd */;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = libpd;
 		};
 /* End PBXContainerItemProxy section */
@@ -300,13 +300,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = ../libpd/objc;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				OTHER_CFLAGS = (
-					"-DR_DEBUG",
-					"-DPD",
-					"-DUSA_API_DUMMY",
-					"-DHAVE_LIBDL",
-					"-DHAVE_UNISTD_H",
-				);
+				OTHER_CFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -323,12 +317,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = ../libpd/objc;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				OTHER_CFLAGS = (
-					"-DPD",
-					"-DUSA_API_DUMMY",
-					"-DHAVE_LIBDL",
-					"-DHAVE_UNISTD_H",
-				);
+				OTHER_CFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
