@@ -1,0 +1,14 @@
+#N canvas 768 324 450 300 10;
+#X obj 91 73 mtof;
+#X obj 91 42 r pitch;
+#X obj 229 52 table wavetable 259;
+#X obj 91 102 tabosc4~ wavetable;
+#X obj 91 132 dac~;
+#X obj 38 180 loadbang;
+#X msg 38 205 \; wavetable cosinesum 256 0.2 -0.2 0.2 -0.2 0.2 -0.2
+0.2;
+#X connect 0 0 3 0;
+#X connect 1 0 0 0;
+#X connect 3 0 4 0;
+#X connect 3 0 4 1;
+#X connect 5 0 6 0;
