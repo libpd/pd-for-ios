@@ -67,7 +67,7 @@
 	
 	self.pdAudio = [[PdAudio alloc] initWithSampleRate:44100 andTicksPerBuffer:ticksPerBuffer andNumberOfInputChannels:2 andNumberOfOutputChannels:2];
 	
-	[PdBase setDelegate:self];
+//	[PdBase setDelegate:self];
 	[PdBase computeAudio:YES];
 	[self.pdAudio play];	
 

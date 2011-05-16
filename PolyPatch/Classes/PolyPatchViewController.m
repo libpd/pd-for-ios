@@ -45,7 +45,8 @@
 #import <QuartzCore/QuartzCore.h>
 
 //NSString *const kTestPatchName = @"test.pd"; // each patch will just print out the $0 arg every second
-NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
+//NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
+NSString *const kTestPatchName = @"synctest.pd"; // Patch from Brett Park that was crashing libpd because of sync issues
 
 @interface PolyPatchViewController ()
 
@@ -54,6 +55,7 @@ NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
 @property (nonatomic, retain) UITableView *tableView;
 
 - (void) openButtonPressed:(id)button;
+- (void) testOpeningMany;
 
 @end
 
@@ -106,6 +108,8 @@ NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
 	self.tableView.dataSource = self;
 	self.tableView.delegate = self;
 	[self.view addSubview:self.tableView];
+
+	[self testOpeningMany];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -179,6 +183,31 @@ NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
 		RLog(@"error: couldn't open patch");
 	}
 	
+}
+
+#pragma mark -
+#pragma mark Testing
+
+// opening many patches on the fly
+- (void)testOpeningMany {
+	
+	self.patches = [NSMutableArray array];
+
+	NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+	int numPatches = 20;
+	
+	for (int i = 0; i < numPatches; i++) {
+		PdFile *patch = [PdFile openFileNamed:kTestPatchName path:bundlePath];
+		if (patch) {
+			RLog(@"opened patch with $0 = %d, iteration %d", [patch dollarZero], i);
+			
+			[self.patches addObject:patch];
+		} else {
+			RLog(@"error: couldn't open patch, iteration %d", i);
+		}
+	}
+	RLog(@"reloading table");
+	[self.tableView reloadData];
 }
 
 @end

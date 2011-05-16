@@ -10,6 +10,7 @@
 		0E8C8EBB131221E0000B9D7A /* PatchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8C8EBA131221E0000B9D7A /* PatchTableViewCell.m */; };
 		0E8C8F191312306E000B9D7A /* test2.pd in Resources */ = {isa = PBXBuildFile; fileRef = 0E8C8F181312306E000B9D7A /* test2.pd */; };
 		0ED51349132BBE6500970D18 /* libpd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED512FD132BB71700970D18 /* libpd.a */; };
+		11C6079F137D0A6C006D7F8B /* synctest.pd in Resources */ = {isa = PBXBuildFile; fileRef = 11C6079E137D0A6C006D7F8B /* synctest.pd */; };
 		1D3623260D0F684500981E51 /* PolyPatchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* PolyPatchAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
@@ -45,6 +46,7 @@
 		0E8C8EB9131221E0000B9D7A /* PatchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatchTableViewCell.h; sourceTree = "<group>"; };
 		0E8C8EBA131221E0000B9D7A /* PatchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatchTableViewCell.m; sourceTree = "<group>"; };
 		0E8C8F181312306E000B9D7A /* test2.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test2.pd; path = Resources/test2.pd; sourceTree = "<group>"; };
+		11C6079E137D0A6C006D7F8B /* synctest.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = synctest.pd; path = Resources/synctest.pd; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* PolyPatchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolyPatchAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* PolyPatchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolyPatchAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* PolyPatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolyPatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,6 +136,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				11C6079E137D0A6C006D7F8B /* synctest.pd */,
 				0E8C8F181312306E000B9D7A /* test2.pd */,
 				DC609325125BBEED00F8509D /* test.pd */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
@@ -223,6 +226,7 @@
 				DC609326125BBEED00F8509D /* test.pd in Resources */,
 				DC35155112676B75004825FB /* ReadMe.txt in Resources */,
 				0E8C8F191312306E000B9D7A /* test2.pd in Resources */,
+				11C6079F137D0A6C006D7F8B /* synctest.pd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +260,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -265,6 +270,7 @@
 				INFOPLIST_FILE = "PolyPatch-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = PolyPatch;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -298,6 +304,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_CFLAGS = "";
 				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -315,6 +322,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_CFLAGS = "";
 				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
