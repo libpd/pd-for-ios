@@ -1,9 +1,6 @@
 #### `.gitignore`
 # Xcode noise
-build/*
-PdTest01/build/*
-PdTest02/build/*
-PolyPatch/build/*
+*/build/*
 *.mode1v3
 *.pbxuser
 *.perspective
