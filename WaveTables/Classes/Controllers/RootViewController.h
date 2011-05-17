@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @class PdFile;
+@class WaveTableView;
 
 @interface RootViewController : UIViewController {
     PdFile *patch_;
+    WaveTableView *waveTableView_;
+    CGFloat maxWidth_;
 }
 
 @end

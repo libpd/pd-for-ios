@@ -5,10 +5,15 @@
 #X obj 91 102 tabosc4~ wavetable;
 #X obj 91 132 dac~;
 #X obj 38 180 loadbang;
-#X msg 38 205 \; wavetable cosinesum 256 0.2 -0.2 0.2 -0.2 0.2 -0.2
+#X obj 19 34 loadbang;
+#X msg 38 240 \; wavetable cosinesum 256 0.2 -0.2 0.2 -0.2 0.2 -0.2
 0.2;
+#X msg 38 205 \; wavetable sinesum 256 1;
+#X msg 19 55 54;
 #X connect 0 0 3 0;
 #X connect 1 0 0 0;
 #X connect 3 0 4 0;
 #X connect 3 0 4 1;
-#X connect 5 0 6 0;
+#X connect 5 0 8 0;
+#X connect 6 0 9 0;
+#X connect 9 0 0 0;
