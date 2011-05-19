@@ -28,7 +28,6 @@ static NSString *const kWaveTableName = @"wavetable";
 
 @synthesize patch = patch_;
 @synthesize waveTableView = waveTableView_;
-@synthesize maxWidth = maxWidth_;
 
 #pragma mark -
 #pragma mark Init / Dealloc
