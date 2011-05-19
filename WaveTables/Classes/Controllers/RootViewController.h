@@ -14,7 +14,6 @@
 @interface RootViewController : UIViewController {
     PdFile *patch_;
     WaveTableView *waveTableView_;
-    CGFloat maxWidth_;
 }
 
 @end
