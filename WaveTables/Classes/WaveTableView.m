@@ -73,12 +73,12 @@
     if (self.wavetable) {
         CGContextSetStrokeColorWithColor(context, [self.arrayColor CGColor]);
         
-        CGFloat scaleX = bounds.size.width / self.wavetable.size; // the wavetable spans the entire view
+        CGFloat scaleX = bounds.size.width / self.wavetable.length; // the wavetable spans the entire view
         CGFloat scaleY = bounds.size.height * 0.5; // values in the array are normalized to 1.0
         
         // TODO: only draw in updated rect
         CGContextMoveToPoint(context, 0.0, [self.wavetable floatAtIndex:0] * scaleY);
-        for (int i = 0; i < self.wavetable.size; i++) {
+        for (int i = 0; i < self.wavetable.length; i++) {
             CGFloat y = (1 - [self.wavetable floatAtIndex:i]) * scaleY;
             CGContextAddLineToPoint(context, i * scaleX, y);
 //            DLog(@"drawing point at: %f, %f", i * scaleX, y);
@@ -118,7 +118,7 @@
 #pragma mark Private
 
 - (void)updateArrayWithPoint:(CGPoint)point {
-    int index = (int) (point.x * (float)self.wavetable.size / self.bounds.size.width);
+    int index = (int) (point.x * (float)self.wavetable.length / self.bounds.size.width);
     if(self.lastX != index) {
         float value = (point.y * -2.0 / self.bounds.size.height) + 1.0;
         int numPoints = abs(self.lastX - index);
