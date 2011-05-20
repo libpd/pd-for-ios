@@ -41,7 +41,6 @@
 #import "PdAudio.h"
 
 @class PolyPatchViewController;
-@class PdAudio;
 
 @interface PolyPatchAppDelegate : NSObject <UIApplicationDelegate, PdReceiverDelegate> {
     UIWindow *window_;
