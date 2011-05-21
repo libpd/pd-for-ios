@@ -15,8 +15,7 @@
     UIColor *borderColor_;
     UIColor *arrayColor_;
     
-    int lastX_;
-    float lastY_;
+	CGPoint lastPoint_;
     BOOL dragging_;
 }
 

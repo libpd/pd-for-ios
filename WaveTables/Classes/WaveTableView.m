@@ -15,8 +15,7 @@
 @property (nonatomic, retain) PdArray *wavetable;
 @property (nonatomic, retain) UIColor *borderColor;
 @property (nonatomic, retain) UIColor *arrayColor;
-@property (nonatomic, assign) int lastX; // the last [x,y] set written to the PdArray *wavetable (used for interpolation)
-@property (nonatomic, assign) float lastY; // the last [x,y] set written to the PdArray *wavetable (used for interpolation)
+@property (nonatomic, assign) CGPoint lastPoint; // the last [x,y] set written to the PdArray *wavetable (used for interpolation)
 @property (nonatomic, assign) BOOL dragging; // indicates whether the user is currently dragging a finder across the device
 
 - (void)updateArrayWithPoint:(CGPoint)point;
@@ -28,8 +27,7 @@
 @synthesize wavetable = wavetable_;
 @synthesize borderColor = borderColor_;
 @synthesize arrayColor = arrayColor_;
-@synthesize lastX = lastX_;
-@synthesize lastY = lastY_;
+@synthesize lastPoint = lastPoint_;
 @synthesize dragging = dragging_;
 
 #pragma mark -
@@ -47,7 +45,7 @@
         
         self.wavetable = pdArray;
         
-        self.lastX = -1; // set so any new point will not be the same as the last
+		self.lastPoint = CGPointMake(-1.0, 0.0); // set so any new point will not be the same as the last
     }
     return self;
 }
@@ -118,36 +116,40 @@
 #pragma mark Private
 
 - (void)updateArrayWithPoint:(CGPoint)point {
-    int index = (int) (point.x * (float)self.wavetable.length / self.bounds.size.width);
-    if(self.lastX != index) {
-        float value = (point.y * -2.0 / self.bounds.size.height) + 1.0;
-        int numPoints = abs(self.lastX - index);
-        if (self.dragging && numPoints > 1) {
-            //draw a line from lastPoint.x to point.x and feed it to self.wavetable
-            float incr = (self.lastY - value) / (float)(self.lastX - index);
-            int currentIndex = self.lastX;
-            if (index > self.lastX) { // going forward
-                for (int i = 0; i < numPoints; i++) {
-                    currentIndex++;
-                    self.lastY += incr;
-                    [self.wavetable setFloat:self.lastY atIndex:currentIndex];
-                }
-            } else {
-                for (int i = 0; i < numPoints; i++) {
-                    currentIndex--;
-                    self.lastY -= incr;
-                    [self.wavetable setFloat:self.lastY atIndex:currentIndex];
-                }
-            }
-        } else {
-            // no need to interpolate so just draw one point and store the last calculated value
-            [self.wavetable setFloat:value atIndex:index];
-            self.lastY = value;
-        }
-        
-        [self setNeedsDisplay];
-    }
-    self.lastX = index; // store the last index so that we can smoothly begin no matter where the next touched point is
+	CGFloat	pointSizeInView = (float)self.wavetable.length / self.bounds.size.width;
+    int index = (int)(point.x * pointSizeInView);
+	int lastIndex = (int)(self.lastPoint.x * pointSizeInView);
+
+	float mag = (point.y * -2.0 / self.bounds.size.height) + 1.0;
+	int numPoints = abs(lastIndex - index);
+	if (self.dragging && numPoints > 1) {
+		
+		//draw a line from lastPoint.x to point.x and feed it to self.wavetable
+		float incr = (self.lastPoint.y - mag) / (float)(lastIndex - index);
+		int currentIndex = lastIndex;
+		float currentMag = self.lastPoint.y;
+		if (index > lastIndex) { // going forward
+			for (int i = 0; i < numPoints; i++) {
+				currentIndex++;
+				currentMag += incr;
+				[self.wavetable setFloat:currentMag atIndex:currentIndex];
+			}
+		} else {
+			for (int i = 0; i < numPoints; i++) {
+				currentIndex--;
+				currentMag -= incr;
+				[self.wavetable setFloat:currentMag atIndex:currentIndex];
+			}
+		}
+	} else {
+		// no need to interpolate so just draw one point and store the last calculated value
+		[self.wavetable setFloat:mag atIndex:index];
+	}
+	
+	[self setNeedsDisplay];
+	// store the last point so that we can smoothly begin no matter where the next touched point is
+	// instead of storing the y location of the point, store the already calculated mag
+    self.lastPoint = CGPointMake(point.x, mag); 
 }
 
 @end
