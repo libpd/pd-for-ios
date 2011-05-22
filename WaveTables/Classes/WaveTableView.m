@@ -69,20 +69,20 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
 //    DLog(@"bounds: %@, rect: %@", NSStringFromCGRect(bounds), NSStringFromCGRect(rect));
     
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(context, 2.0);
+    CGContextSetLineWidth(context, 1.0);
 	
     // draw the wavetable region that was specified as invalid
     if (self.wavetable) {
         CGContextSetStrokeColorWithColor(context, [self.arrayColor CGColor]);
         
-        CGFloat scaleX = bounds.size.width / self.wavetable.length; // the wavetable spans the entire view
+        CGFloat scaleX = bounds.size.width / (self.wavetable.length - 1); // the wavetable spans the entire view, 0 to last index
         
-		int startX = (int)floor(rect.origin.x / scaleX);
-		int endX = (int)ceil((rect.origin.x + rect.size.width) / scaleX);
-		CGFloat y = convertMagToY([self.wavetable floatAtIndex:startX], bounds.size.height);
+		int startIndex = (int)floor(rect.origin.x / scaleX);
+		int endIndex = (int)ceil((rect.origin.x + rect.size.width) / scaleX);
+		CGFloat y = convertMagToY([self.wavetable floatAtIndex:startIndex], bounds.size.height);
 		
-        CGContextMoveToPoint(context, startX * scaleX, y);
-        for (int i = startX + 1; i <= endX; i++) {
+        CGContextMoveToPoint(context, startIndex * scaleX, y);
+        for (int i = startIndex + 1; i <= endIndex; i++) {
 			y = convertMagToY([self.wavetable floatAtIndex:i], bounds.size.height);
             CGContextAddLineToPoint(context, i * scaleX, y);
         }
@@ -122,9 +122,9 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
 
 - (void)updateArrayWithPoint:(CGPoint)point {
 	CGSize viewSize = self.bounds.size;
-	CGFloat	pointSizeInView = (float)self.wavetable.length / viewSize.width;
-    int index = (int)(point.x * pointSizeInView);
-	int lastIndex = (int)(self.lastPoint.x * pointSizeInView);
+	CGFloat	pointSizeInView = (float)(self.wavetable.length - 1)/ viewSize.width;
+    int index = (int)round(point.x * pointSizeInView);
+	int lastIndex = (int)round(self.lastPoint.x * pointSizeInView);
 
 	float mag = (point.y * -2.0 / viewSize.height) + 1.0;
 	int numPoints = abs(lastIndex - index);
@@ -153,13 +153,10 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
 		// no need to interpolate so just draw one point and store the last calculated value
 		[self.wavetable setFloat:mag atIndex:index];
 		
-		// invalidate a rect that incompasses this index and one index on each side
-		CGFloat sampleSizeInView = ceil(1.0 / pointSizeInView);
-		CGFloat redrawX = (point.x < sampleSizeInView ? 0.0 : point.x - sampleSizeInView);
-		CGFloat redrawWidth = sampleSizeInView * 3.0;
-		
-
-		[self setNeedsDisplayInRect:CGRectMake(redrawX, 0.0, redrawWidth, viewSize.height)];
+		// invalidate a rect that incompasses this index and 2 on either side (to keep a connected line)
+		CGFloat redrawPadding = ceil(1.0 / pointSizeInView) * 2.0;
+		CGFloat redrawX = (point.x < redrawPadding ? 0.0 : point.x - redrawPadding);
+		[self setNeedsDisplayInRect:CGRectMake(redrawX, 0.0, redrawPadding * 2.0, viewSize.height)];
 
 	}
 	
