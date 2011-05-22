@@ -15,10 +15,10 @@
 @property (nonatomic, retain) PdArray *wavetable;
 @property (nonatomic, retain) UIColor *borderColor;
 @property (nonatomic, retain) UIColor *arrayColor;
-@property (nonatomic, assign) CGPoint lastPoint; // the last [x,y] set written to the PdArray *wavetable (used for interpolation)
+@property (nonatomic, assign) CGPoint lastPoint; // the last [x,y] set written to the PdArray *wavetable (used for interpolation) note: x is in magnitude (-1:1) while y is in pixels
 @property (nonatomic, assign) BOOL dragging; // indicates whether the user is currently dragging a finder across the device
 
-- (void)updateArrayWithPoint:(CGPoint)point;
+- (void)updateTableWithPoint:(CGPoint)point;
 
 @end
 
@@ -97,7 +97,7 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
     self.dragging = NO;
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self];
-    [self updateArrayWithPoint:point];
+    [self updateTableWithPoint:point];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -105,7 +105,7 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self];
     if([self hitTest:point withEvent:event] == self) {
-        [self updateArrayWithPoint:point];
+        [self updateTableWithPoint:point];
     }
 }
 
@@ -120,7 +120,13 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
 #pragma mark -
 #pragma mark Private
 
-- (void)updateArrayWithPoint:(CGPoint)point {
+/* This is where all the calculations are done as for what elements of the
+ * PdArray should be changed as well as what rect should be invalidated
+ * to redraw the new points (we don't want to redraw the unchanged sections).
+ * If the new point has skipped a few indeces and we are in the middle of a
+ * touchesMoved, it will draw a line from the last point recorded to the new one.
+ */
+- (void)updateTableWithPoint:(CGPoint)point {
 	CGSize viewSize = self.bounds.size;
 	CGFloat	pointSizeInView = (float)(self.wavetable.length - 1)/ viewSize.width;
 	float mag = (point.y * -2.0 / viewSize.height) + 1.0;
