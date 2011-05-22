@@ -123,11 +123,16 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
 - (void)updateArrayWithPoint:(CGPoint)point {
 	CGSize viewSize = self.bounds.size;
 	CGFloat	pointSizeInView = (float)(self.wavetable.length - 1)/ viewSize.width;
+	float mag = (point.y * -2.0 / viewSize.height) + 1.0;
+
+	// to redraw the minimal ammount and still keep a connected line with the
+	// updated and old points, invalidate a rect that incompasses this index and 2 on either side
+	CGFloat redrawPadding = ceil(1.0 / pointSizeInView) * 2.0;
+	
     int index = (int)round(point.x * pointSizeInView);
 	int lastIndex = (int)round(self.lastPoint.x * pointSizeInView);
-
-	float mag = (point.y * -2.0 / viewSize.height) + 1.0;
 	int numPoints = abs(lastIndex - index);
+
 	if (self.dragging && numPoints > 1) {
 		
 		//draw a line from lastPoint.x to point.x and feed it to self.wavetable
@@ -153,8 +158,6 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
 		// no need to interpolate so just draw one point and store the last calculated value
 		[self.wavetable setFloat:mag atIndex:index];
 		
-		// invalidate a rect that incompasses this index and 2 on either side (to keep a connected line)
-		CGFloat redrawPadding = ceil(1.0 / pointSizeInView) * 2.0;
 		CGFloat redrawX = (point.x < redrawPadding ? 0.0 : point.x - redrawPadding);
 		[self setNeedsDisplayInRect:CGRectMake(redrawX, 0.0, redrawPadding * 2.0, viewSize.height)];
 
