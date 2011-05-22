@@ -132,33 +132,40 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
     int index = (int)round(point.x * pointSizeInView);
 	int lastIndex = (int)round(self.lastPoint.x * pointSizeInView);
 	int numPoints = abs(lastIndex - index);
+	CGFloat redrawX;
 
 	if (self.dragging && numPoints > 1) {
-		
 		//draw a line from lastPoint.x to point.x and feed it to self.wavetable
+
 		float incr = (self.lastPoint.y - mag) / (float)(lastIndex - index);
 		int currentIndex = lastIndex;
 		float currentMag = self.lastPoint.y;
+
 		if (index > lastIndex) { // going forward
 			for (int i = 0; i < numPoints; i++) {
 				currentIndex++;
 				currentMag += incr;
 				[self.wavetable setFloat:currentMag atIndex:currentIndex];
 			}
+			redrawX = (self.lastPoint.x < redrawPadding ? 0.0 : self.lastPoint.x - redrawPadding);
 		} else {
 			for (int i = 0; i < numPoints; i++) {
 				currentIndex--;
 				currentMag -= incr;
 				[self.wavetable setFloat:currentMag atIndex:currentIndex];
 			}
+			redrawX = (point.x < redrawPadding ? 0.0 : point.x - redrawPadding);
 		}
-		// TODO: only invalidate the section across the points modified
-		[self setNeedsDisplay];
+
+		// redraw the section across all points modified plus padding on either side
+		[self setNeedsDisplayInRect:CGRectMake(redrawX, 0.0, redrawPadding * (numPoints + 1), viewSize.height)];
+		
 	} else {
 		// no need to interpolate so just draw one point and store the last calculated value
 		[self.wavetable setFloat:mag atIndex:index];
 		
-		CGFloat redrawX = (point.x < redrawPadding ? 0.0 : point.x - redrawPadding);
+		// redraw around this point plus padding on either side
+		redrawX = (point.x < redrawPadding ? 0.0 : point.x - redrawPadding);
 		[self setNeedsDisplayInRect:CGRectMake(redrawX, 0.0, redrawPadding * 2.0, viewSize.height)];
 
 	}
