@@ -90,9 +90,7 @@ extern void lrshift_tilde_setup(void);
 - (void) openAndRunTestPatch
 {
 	// open patch located in app bundle
-	NSString *patchFilePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"LoopWithExtern.pd"];
-	
-	[PdBase openPatch: patchFilePath];
+	void *x = [PdBase openFile:@"LoopWithExtern.pd" path:[[NSBundle mainBundle] bundlePath]];
 	[PdBase computeAudio:YES];
 	self.playing = YES;
 }

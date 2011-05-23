@@ -77,9 +77,7 @@ NSString *patchFileTypeExtension = @"pd";
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsDirectory = [paths objectAtIndex:0];
 	
-	NSString *documentsPatchFilePath = [documentsDirectory stringByAppendingPathComponent:@"test.pd"];
-	
-	[PdBase openPatch: documentsPatchFilePath];
+	[PdBase openFile:@"test.pd" path:documentsDirectory];
 	[PdBase computeAudio:YES];
 	[pdAudio play];	
 }
