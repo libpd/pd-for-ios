@@ -19,6 +19,8 @@
     BOOL dragging_;
 }
 
+@property (nonatomic, retain, readonly) PdArray *wavetable;
+
 - (id)initWithWavetable:(PdArray *)pdArray;
 
 @end
