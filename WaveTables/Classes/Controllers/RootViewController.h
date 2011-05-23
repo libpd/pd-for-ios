@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PdBase.h"
 
 @class PdFile;
 @class WaveTableView;
 
-@interface RootViewController : UIViewController {
+@interface RootViewController : UIViewController <PdReceiverDelegate> {
     PdFile *patch_;
     WaveTableView *waveTableView_;
+	UIToolbar *toolBar_;
 }
 
 @end

@@ -8,7 +8,6 @@
 
 #import "RootViewController.h"
 #import "WaveTableView.h"
-#import "PdBase.h"
 #import "PdFile.h"
 #import "PdArray.h"
 
@@ -19,22 +18,28 @@ static NSString *const kWaveTableName = @"wavetable";
 
 @property (nonatomic, retain) PdFile *patch;
 @property (nonatomic, retain) WaveTableView *waveTableView;
+@property (nonatomic, retain) UIToolbar *toolBar;
 
+- (void)setupWavetable;
+- (void)setupToolbar;
 - (void)layoutWavetable;
 
+- (void)printButtonTapped:(id)sender;
 @end
 
 @implementation RootViewController
 
 @synthesize patch = patch_;
 @synthesize waveTableView = waveTableView_;
+@synthesize toolBar = toolBar_;
 
 #pragma mark -
 #pragma mark Init / Dealloc
 
 - (void)dealloc {
-    self.waveTableView = nil;
     self.patch = nil;
+    self.waveTableView = nil;
+	self.toolBar = nil;
     [super dealloc];
 }
 
@@ -42,23 +47,18 @@ static NSString *const kWaveTableName = @"wavetable";
 - (void) loadView {
     [super loadView];
     self.view.backgroundColor = [UIColor whiteColor];
+	
+	[PdBase setDelegate:self];
     
     self.patch = [PdFile openFileNamed:kPatchName path:[[NSBundle mainBundle] bundlePath]];
-    
-    // testing array methods:
-    int arraySize = [PdBase arraySizeForArrayNamed:kWaveTableName];
-    NSLog(@"--- array name: %@, size: %d ---", kWaveTableName, arraySize);
-    
-    PdArray *wavetable = [[[PdArray alloc] init] autorelease];
-    [wavetable readArrayNamed:kWaveTableName];
-    
-    self.waveTableView = [[[WaveTableView alloc] initWithWavetable:wavetable] autorelease];
-    self.waveTableView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
-    [self.view addSubview:self.waveTableView];
+	
+	[self setupWavetable];
+	[self setupToolbar];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [self layoutWavetable];
+	[PdBase computeAudio:NO]; // TODO: remove me
 }
 
 #pragma mark -
@@ -73,7 +73,45 @@ static NSString *const kWaveTableName = @"wavetable";
 }
 
 #pragma mark -
-#pragma mark Private
+#pragma mark PdReceiverDelegate
+
+- (void)receivePrint:(NSString *)message {
+	//printf("[pd console] %s \n", [message cStringUsingEncoding:NSASCIIStringEncoding]);
+	NSLog(@"[pd console] %@", message);
+}
+
+#pragma mark -
+#pragma mark Private (User Interface)
+
+- (void)setupWavetable {
+	// testing array methods:
+    int arraySize = [PdBase arraySizeForArrayNamed:kWaveTableName];
+    NSLog(@"--- array name: %@, size: %d ---", kWaveTableName, arraySize);
+    
+    PdArray *wavetable = [[[PdArray alloc] init] autorelease];
+    [wavetable readArrayNamed:kWaveTableName];
+    
+    self.waveTableView = [[[WaveTableView alloc] initWithWavetable:wavetable] autorelease];
+    self.waveTableView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
+	
+	[self.view addSubview:self.waveTableView];
+}
+
+- (void)setupToolbar {
+	self.toolBar = [[[UIToolbar alloc] init] autorelease];
+	self.toolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	self.toolBar.barStyle = UIBarStyleBlack;
+	
+	UIBarButtonItem *printButton = [[[UIBarButtonItem alloc] initWithTitle:@"Print"
+																	 style:UIBarButtonItemStyleBordered
+																	target:self
+																	action:@selector(printButtonTapped:)] autorelease];
+	
+	[self.toolBar setItems:[NSArray arrayWithObjects:printButton, nil]];
+	
+	[self.toolBar sizeToFit];
+	[self.view addSubview:self.toolBar];
+}
 
 - (void)layoutWavetable {
     // this ratio a nice number that allows the wavetable to be of maximum size on an ipad in landscape 
@@ -86,11 +124,12 @@ static NSString *const kWaveTableName = @"wavetable";
     
     CGFloat height, width, padding;
     if (viewSize.width > viewSize.height) {
-        // padding will be around the top and bottom
-        height = viewSize.height - 2.0 * kPadding;
+        // padding will be around the top and bottom, also need to make room for the toolbar
+		CGFloat toolBarHeight = self.toolBar.frame.size.height;
+        height = viewSize.height - toolBarHeight - 2.0 * kPadding;
         width = round(height * kRatioWidthToHeight);
         padding = round((viewSize.width - width) / 2.0);
-        self.waveTableView.frame = CGRectMake(padding, kPadding, width, height);
+        self.waveTableView.frame = CGRectMake(padding, toolBarHeight + kPadding, width, height);
         
     } else {
         // padding will be around left and right
@@ -102,5 +141,19 @@ static NSString *const kWaveTableName = @"wavetable";
     [self.waveTableView setNeedsDisplay];
 }
 
+#pragma mark -
+#pragma mark Private (Action Handlers)
+
+- (void)printButtonTapped:(id)sender {
+	// this will print out the array contents from within the pd patch:
+	[PdBase sendBangToReceiver:[NSString stringWithFormat:@"%d-print-table", self.patch.dollarZero]];
+	
+	// print the contents of our PdArray:
+	DLog(@"wavetable elements:");
+	for (int i = 0; i < self.waveTableView.wavetable.length; i++) {
+		DLog(@"[%d, %f]", i, [self.waveTableView.wavetable floatAtIndex:i]);
+	}
+	
+}
 
 @end
