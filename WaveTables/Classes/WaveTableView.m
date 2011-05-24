@@ -75,7 +75,7 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
     if (self.wavetable) {
         CGContextSetStrokeColorWithColor(context, [self.arrayColor CGColor]);
         
-        CGFloat scaleX = bounds.size.width / (self.wavetable.length - 1); // the wavetable spans the entire view, 0 to last index
+        CGFloat scaleX = bounds.size.width / (self.wavetable.size - 1); // the wavetable spans the entire view, 0 to last index
         
 		int startIndex = (int)floor(rect.origin.x / scaleX);
 		int endIndex = (int)ceil((rect.origin.x + rect.size.width) / scaleX);
@@ -128,7 +128,7 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
  */
 - (void)updateTableWithPoint:(CGPoint)point {
 	CGSize viewSize = self.bounds.size;
-	CGFloat	pointSizeInView = (float)(self.wavetable.length - 1)/ viewSize.width;
+	CGFloat	pointSizeInView = (float)(self.wavetable.size - 1)/ viewSize.width;
 	float mag = (point.y * -2.0 / viewSize.height) + 1.0;
 
 	// to redraw the minimal ammount and still keep a connected line with the

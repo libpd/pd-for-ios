@@ -12,6 +12,7 @@
 #import "PdArray.h"
 
 static NSString *const kPatchName = @"wavetable.pd";
+//static NSString *const kPatchName = @"test-arrays.pd";
 static NSString *const kWaveTableName = @"wavetable";
 
 @interface RootViewController ()
@@ -155,7 +156,7 @@ static NSString *const kWaveTableName = @"wavetable";
 	
 	// print the contents of our PdArray:
 	DLog(@"wavetable elements:");
-	for (int i = 0; i < self.waveTableView.wavetable.length; i++) {
+	for (int i = 0; i < self.waveTableView.wavetable.size; i++) {
 		DLog(@"[%d, %f]", i, [self.waveTableView.wavetable floatAtIndex:i]);
 	}
 	
@@ -166,7 +167,7 @@ static NSString *const kWaveTableName = @"wavetable";
     PdArray *array = self.waveTableView.wavetable;
 
 	DLog(@"(before) wavetable elements:");
-	for (int i = 0; i < array.length; i++) {
+	for (int i = 0; i < array.size; i++) {
 		DLog(@"[%d, %f]", i, [array floatAtIndex:i]);
 	}
 	[PdBase sendBangToReceiver:[NSString stringWithFormat:@"%d-print-table", self.patch.dollarZero]];
@@ -174,7 +175,7 @@ static NSString *const kWaveTableName = @"wavetable";
     [array setFloat:2.0 atIndex:3];
 
     DLog(@"\n\n(after) wavetable elements:");
-	for (int i = 0; i < self.waveTableView.wavetable.length; i++) {
+	for (int i = 0; i < self.waveTableView.wavetable.size; i++) {
 		DLog(@"[%d, %f]", i, [self.waveTableView.wavetable floatAtIndex:i]);
 	}
 	[PdBase sendBangToReceiver:[NSString stringWithFormat:@"%d-print-table", self.patch.dollarZero]];
