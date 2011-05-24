@@ -11,9 +11,8 @@
 #import "PdFile.h"
 #import "PdArray.h"
 
-static NSString *const kPatchName = @"wavetable.pd";
-//static NSString *const kPatchName = @"test-arrays.pd";
-static NSString *const kWaveTableName = @"wavetable";
+static NSString *const kWavetablePatchName = @"wavetable.pd";
+static NSString *const kResynthesisPatchName = @"resynthesis.pd";
 
 @interface RootViewController ()
 
@@ -24,9 +23,11 @@ static NSString *const kWaveTableName = @"wavetable";
 - (void)setupWavetable;
 - (void)setupToolbar;
 - (void)layoutWavetable;
+- (void)openPatch:(NSString *)name;
 
-- (void)printButtonTapped:(id)sender;
-
+- (void)printButtonTapped:(UIBarButtonItem *)sender;
+- (void)blargButtonTapped:(UIBarButtonItem *)sender;
+- (void)patchSelectorChanged:(UISegmentedControl *)sender;
 @end
 
 @implementation RootViewController
@@ -52,9 +53,8 @@ static NSString *const kWaveTableName = @"wavetable";
 	
 	[PdBase setDelegate:self];
     
-    self.patch = [PdFile openFileNamed:kPatchName path:[[NSBundle mainBundle] bundlePath]];
-	
-	[self setupWavetable];
+    [self openPatch:kWavetablePatchName];
+    
 	[self setupToolbar];
 }
 
@@ -85,12 +85,20 @@ static NSString *const kWaveTableName = @"wavetable";
 #pragma mark Private (User Interface)
 
 - (void)setupWavetable {
-	// testing array methods:
-    int arraySize = [PdBase arraySizeForArrayNamed:kWaveTableName];
-    NSLog(@"--- array name: %@, size: %d ---", kWaveTableName, arraySize);
+    if (!self.patch) {
+        DLog(@"Error, no patch loaded.");
+        return;
+    }
+    NSString *arrayName = [NSString stringWithFormat:@"%d-array", self.patch.dollarZero];
+    int arraySize = [PdBase arraySizeForArrayNamed:arrayName];
+    DLog(@"--- array name: %@, size: %d ---", arrayName, arraySize);
     
     PdArray *wavetable = [[[PdArray alloc] init] autorelease];
-    [wavetable readArrayNamed:kWaveTableName];
+    [wavetable readArrayNamed:arrayName];
+    
+    if (self.waveTableView) {
+        [self.waveTableView removeFromSuperview];
+    }
     
     self.waveTableView = [[[WaveTableView alloc] initWithWavetable:wavetable] autorelease];
     self.waveTableView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
@@ -113,7 +121,23 @@ static NSString *const kWaveTableName = @"wavetable";
 																	target:self
 																	action:@selector(blargButtonTapped:)] autorelease];
 
-	[self.toolBar setItems:[NSArray arrayWithObjects:printButton, blargButton, nil]];
+    // patch selector: segmented control with two options
+    UISegmentedControl *patchControl = [[[UISegmentedControl alloc] initWithItems:
+                                          [NSArray arrayWithObjects:@"Wavetable", @"Resynthesis", nil]]
+                                         autorelease];
+    
+    patchControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
+    patchControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    patchControl.tintColor = [UIColor darkGrayColor];
+    [patchControl addTarget:self action:@selector(patchSelectorChanged:) forControlEvents:UIControlEventValueChanged];
+    patchControl.selectedSegmentIndex = 0;
+
+    UIBarButtonItem *patchControlButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:patchControl] autorelease];
+    
+	[self.toolBar setItems:[NSArray arrayWithObjects:printButton,
+                            blargButton,
+                            patchControlButtonItem,
+                            nil]];
 	
 	[self.toolBar sizeToFit];
 	[self.view addSubview:self.toolBar];
@@ -148,9 +172,21 @@ static NSString *const kWaveTableName = @"wavetable";
 }
 
 #pragma mark -
+#pragma mark Private (Utilities)
+
+- (void)openPatch:(NSString *)name {
+    // note: if our patch is already set and we assign a new value here, the old
+    // PdFile will be deallocated, which causes the patch to be closed.
+    self.patch = [PdFile openFileNamed:name path:[[NSBundle mainBundle] bundlePath]];
+    
+    [self setupWavetable];
+    [self layoutWavetable];
+}
+
+#pragma mark -
 #pragma mark Private (Action Handlers)
 
-- (void)printButtonTapped:(id)sender {
+- (void)printButtonTapped:(UIBarButtonItem *)sender {
 	// this will print out the array contents from within the pd patch:
 	[PdBase sendBangToReceiver:[NSString stringWithFormat:@"%d-print-table", self.patch.dollarZero]];
 	
@@ -162,7 +198,7 @@ static NSString *const kWaveTableName = @"wavetable";
 	
 }
 
-- (void)blargButtonTapped:(id)sender {
+- (void)blargButtonTapped:(UIBarButtonItem *)sender {
     // DEBUG: write 1 element with value 2.
     PdArray *array = self.waveTableView.wavetable;
 
@@ -179,6 +215,26 @@ static NSString *const kWaveTableName = @"wavetable";
 		DLog(@"[%d, %f]", i, [self.waveTableView.wavetable floatAtIndex:i]);
 	}
 	[PdBase sendBangToReceiver:[NSString stringWithFormat:@"%d-print-table", self.patch.dollarZero]];
+}
+
+- (void)patchSelectorChanged:(UISegmentedControl *)sender {
+    NSString *patchName;
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            patchName = kWavetablePatchName;
+            break;
+        case 1:
+            patchName = kResynthesisPatchName;
+            break;
+        default:
+            return;
+    }
+    if ([self.patch.baseName isEqualToString:patchName]) {
+        DLog(@"%@ already open, returning.", patchName);
+        return;
+    }
+    DLog(@"selected %@", patchName);
+    [self openPatch:patchName];
 }
 
 @end

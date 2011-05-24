@@ -15,6 +15,7 @@
 		11C91B2012C1AEE00022693B /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C91B1E12C1AEE00022693B /* RootViewController.m */; };
 		11C91B2612C1AF010022693B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C91B2212C1AF010022693B /* main.m */; };
 		11C9C55B138936DC003FD21A /* for.pd in Resources */ = {isa = PBXBuildFile; fileRef = 11C9C55A138936DC003FD21A /* for.pd */; };
+		11D47E50138BE56500D2FEEE /* resynthesis.pd in Resources */ = {isa = PBXBuildFile; fileRef = 11D47E4F138BE56500D2FEEE /* resynthesis.pd */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -52,6 +53,7 @@
 		11C91B2512C1AF010022693B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11C91B2C12C1AF9F0022693B /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		11C9C55A138936DC003FD21A /* for.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = for.pd; sourceTree = "<group>"; };
+		11D47E4F138BE56500D2FEEE /* resynthesis.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = resynthesis.pd; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* WaveTables.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaveTables.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -124,6 +126,7 @@
 		11C91B2412C1AF010022693B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				11D47E4F138BE56500D2FEEE /* resynthesis.pd */,
 				11C9C55A138936DC003FD21A /* for.pd */,
 				113A4575138149DB004C88F9 /* wavetable.pd */,
 				11C91B2512C1AF010022693B /* Info.plist */,
@@ -231,6 +234,7 @@
 			files = (
 				113A4576138149DB004C88F9 /* wavetable.pd in Resources */,
 				11C9C55B138936DC003FD21A /* for.pd in Resources */,
+				11D47E50138BE56500D2FEEE /* resynthesis.pd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +304,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../libpd/objc/**";
 				OTHER_CFLAGS = "-DDEBUG";
@@ -315,6 +320,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
