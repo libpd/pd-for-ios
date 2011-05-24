@@ -25,6 +25,7 @@ static NSString *const kWaveTableName = @"wavetable";
 - (void)layoutWavetable;
 
 - (void)printButtonTapped:(id)sender;
+
 @end
 
 @implementation RootViewController
@@ -58,7 +59,6 @@ static NSString *const kWaveTableName = @"wavetable";
 
 - (void) viewWillAppear:(BOOL)animated {
     [self layoutWavetable];
-	[PdBase computeAudio:NO]; // TODO: remove me
 }
 
 #pragma mark -
@@ -106,8 +106,13 @@ static NSString *const kWaveTableName = @"wavetable";
 																	 style:UIBarButtonItemStyleBordered
 																	target:self
 																	action:@selector(printButtonTapped:)] autorelease];
-	
-	[self.toolBar setItems:[NSArray arrayWithObjects:printButton, nil]];
+
+    UIBarButtonItem *blargButton = [[[UIBarButtonItem alloc] initWithTitle:@"Blarg"
+																	 style:UIBarButtonItemStyleBordered
+																	target:self
+																	action:@selector(blargButtonTapped:)] autorelease];
+
+	[self.toolBar setItems:[NSArray arrayWithObjects:printButton, blargButton, nil]];
 	
 	[self.toolBar sizeToFit];
 	[self.view addSubview:self.toolBar];
@@ -154,6 +159,25 @@ static NSString *const kWaveTableName = @"wavetable";
 		DLog(@"[%d, %f]", i, [self.waveTableView.wavetable floatAtIndex:i]);
 	}
 	
+}
+
+- (void)blargButtonTapped:(id)sender {
+    // DEBUG: write 1 element with value 2.
+    PdArray *array = self.waveTableView.wavetable;
+
+	DLog(@"(before) wavetable elements:");
+	for (int i = 0; i < array.length; i++) {
+		DLog(@"[%d, %f]", i, [array floatAtIndex:i]);
+	}
+	[PdBase sendBangToReceiver:[NSString stringWithFormat:@"%d-print-table", self.patch.dollarZero]];
+
+    [array setFloat:2.0 atIndex:3];
+
+    DLog(@"\n\n(after) wavetable elements:");
+	for (int i = 0; i < self.waveTableView.wavetable.length; i++) {
+		DLog(@"[%d, %f]", i, [self.waveTableView.wavetable floatAtIndex:i]);
+	}
+	[PdBase sendBangToReceiver:[NSString stringWithFormat:@"%d-print-table", self.patch.dollarZero]];
 }
 
 @end
