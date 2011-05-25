@@ -40,11 +40,9 @@
         self.borderColor = [UIColor darkGrayColor];
         self.layer.borderColor = self.borderColor.CGColor;
         self.layer.borderWidth = 1.0;
-        
         self.arrayColor = [UIColor blackColor];
         
         self.wavetable = pdArray;
-        
 		self.lastPoint = CGPointMake(-1.0, 0.0); // set so any new point will not be the same as the last
     }
     return self;
@@ -65,18 +63,15 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
 }
 
 - (void)drawRect:(CGRect)rect {
-    CGRect bounds = self.bounds;
-//    DLog(@"bounds: %@, rect: %@", NSStringFromCGRect(bounds), NSStringFromCGRect(rect));
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(context, 1.0);
-	
-    // draw the wavetable region that was specified as invalid
     if (self.wavetable) {
+        CGRect bounds = self.bounds;
+        
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSetLineWidth(context, 1.0);
+	
         CGContextSetStrokeColorWithColor(context, [self.arrayColor CGColor]);
         
         CGFloat scaleX = bounds.size.width / (self.wavetable.size - 1); // the wavetable spans the entire view, 0 to last index
-        
 		int startIndex = (int)floor(rect.origin.x / scaleX);
 		int endIndex = (int)ceil((rect.origin.x + rect.size.width) / scaleX);
 		CGFloat y = convertMagToY([self.wavetable floatAtIndex:startIndex], bounds.size.height);
@@ -131,10 +126,7 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
 	CGFloat	pointSizeInView = (float)(self.wavetable.size - 1)/ viewSize.width;
 	float mag = (point.y * -2.0 / viewSize.height) + 1.0;
 
-	// to redraw the minimal ammount and still keep a connected line with the
-	// updated and old points, invalidate a rect that incompasses this index and 2 on either side
-	CGFloat redrawPadding = ceil(1.0 / pointSizeInView) * 2.0;
-	
+	CGFloat redrawPadding = ceil(1.0 / pointSizeInView) * 2.0; // minimal amount to invalidate a rect that still keeps a continious line
     int index = (int)round(point.x * pointSizeInView);
 	int lastIndex = (int)round(self.lastPoint.x * pointSizeInView);
 	int numPoints = abs(lastIndex - index);
@@ -163,21 +155,16 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
 			redrawX = (point.x < redrawPadding ? 0.0 : point.x - redrawPadding);
 		}
 
-		// redraw the section across all points modified plus padding on either side
 		[self setNeedsDisplayInRect:CGRectMake(redrawX, 0.0, redrawPadding * (numPoints + 1), viewSize.height)];
 		
 	} else {
 		// no need to interpolate so just draw one point and store the last calculated value
 		[self.wavetable setFloat:mag atIndex:index];
 		
-		// redraw around this point plus padding on either side
 		redrawX = (point.x < redrawPadding ? 0.0 : point.x - redrawPadding);
 		[self setNeedsDisplayInRect:CGRectMake(redrawX, 0.0, redrawPadding * 2.0, viewSize.height)];
-
 	}
 	
-	// store the last point so that we can smoothly begin no matter where the next touched point is
-	// instead of storing the y location of the point, store the already calculated mag
     self.lastPoint = CGPointMake(point.x, mag); 
 }
 
