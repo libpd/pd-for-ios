@@ -24,6 +24,7 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
 - (void)setupToolbar;
 - (void)layoutWavetable;
 - (void)openPatch:(NSString *)name;
+- (void)setVolume:(CGFloat)volume; // in db normalized to 100 = 1 rms
 
 - (void)printButtonTapped:(UIBarButtonItem *)sender;
 - (void)blargButtonTapped:(UIBarButtonItem *)sender;
@@ -60,6 +61,11 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
 
 - (void) viewWillAppear:(BOOL)animated {
     [self layoutWavetable];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    //[self setVolume:70];
+    [self setVolume:70];
 }
 
 #pragma mark -
@@ -181,6 +187,15 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
     
     [self setupWavetable];
     [self layoutWavetable];
+}
+
+- (void)setVolume:(CGFloat)volume {
+    if (volume < 0.0) {
+        volume = 0.0;
+    } else if (volume > 100.0) {
+        volume = 100.0;
+    }
+    [PdBase sendFloat:volume toReceiver:[NSString stringWithFormat:@"%d-volume", self.patch.dollarZero]];
 }
 
 #pragma mark -
