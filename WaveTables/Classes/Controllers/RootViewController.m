@@ -83,8 +83,7 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
 #pragma mark PdReceiverDelegate
 
 - (void)receivePrint:(NSString *)message {
-	//printf("[pd console] %s \n", [message cStringUsingEncoding:NSASCIIStringEncoding]);
-	NSLog(@"[pd console] %@", message);
+	DLog(@"%@", message);
 }
 
 #pragma mark -
