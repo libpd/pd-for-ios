@@ -133,6 +133,8 @@ static inline CGFloat convertYToMag(CGFloat y, CGFloat minY, CGFloat maxY, CGFlo
  * to redraw the new points (we don't want to redraw the unchanged sections).
  * If the new point has skipped a few indeces and we are in the middle of a
  * touchesMoved, it will draw a line from the last point recorded to the new one.
+ * When a series of floats are written (in the interpolation), the write to pd
+ * is prolonged until after the for loop and only the local array is updated.
  */
 - (void)updateTableWithPoint:(CGPoint)point {
 	CGSize viewSize = self.bounds.size;
@@ -156,18 +158,18 @@ static inline CGFloat convertYToMag(CGFloat y, CGFloat minY, CGFloat maxY, CGFlo
 			for (int i = 0; i < numPoints; i++) {
 				currentIndex++;
 				currentMag += incr;
-				[self.wavetable setFloat:currentMag atIndex:currentIndex];
+                [self.wavetable setLocalFloat:currentMag atIndex:currentIndex];
 			}
 			redrawX = (self.lastPoint.x < redrawPadding ? 0.0 : self.lastPoint.x - redrawPadding);
 		} else {
 			for (int i = 0; i < numPoints; i++) {
 				currentIndex--;
 				currentMag -= incr;
-				[self.wavetable setFloat:currentMag atIndex:currentIndex];
+                [self.wavetable setLocalFloat:currentMag atIndex:currentIndex];
 			}
 			redrawX = (point.x < redrawPadding ? 0.0 : point.x - redrawPadding);
 		}
-
+        [self.wavetable write];
 		[self setNeedsDisplayInRect:CGRectMake(redrawX, 0.0, redrawPadding * (numPoints + 1), viewSize.height)];
 		
 	} else {
