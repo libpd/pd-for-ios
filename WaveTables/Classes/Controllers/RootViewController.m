@@ -94,8 +94,7 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
     int arraySize = [PdBase arraySizeForArrayNamed:arrayName];
     DLog(@"--- array name: %@, size: %d ---", arrayName, arraySize);
     
-    PdArray *wavetable = [[[PdArray alloc] init] autorelease];
-    [wavetable readArrayNamed:arrayName];
+    PdArray *wavetable = [PdArray arrayNamed:arrayName];
     
     if (self.waveTableView) {
         [self.waveTableView removeFromSuperview];
