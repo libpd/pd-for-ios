@@ -17,9 +17,14 @@
     
 	CGPoint lastPoint_;
     BOOL dragging_;
+    
+    CGFloat minY_;
+    CGFloat maxY_;
 }
 
 @property (nonatomic, retain, readonly) PdArray *wavetable;
+@property (nonatomic, assign) CGFloat minY; // minimum magnitude to draw in the wavetable (default: -1.0)
+@property (nonatomic, assign) CGFloat maxY; // minimum magnitude to draw in the wavetable (default: 1.0)
 
 - (id)initWithWavetable:(PdArray *)pdArray;
 

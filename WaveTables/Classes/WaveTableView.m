@@ -29,6 +29,8 @@
 @synthesize arrayColor = arrayColor_;
 @synthesize lastPoint = lastPoint_;
 @synthesize dragging = dragging_;
+@synthesize minY = minY_;
+@synthesize maxY = maxY_;
 
 #pragma mark -
 #pragma mark Init / Dealloc
@@ -44,6 +46,8 @@
         
         self.wavetable = pdArray;
 		self.lastPoint = CGPointMake(-1.0, 0.0); // set so any new point will not be the same as the last
+        self.minY = -1.0;
+        self.maxY = 1.0;
     }
     return self;
 }
@@ -56,29 +60,38 @@
 }
 
 #pragma mark -
-#pragma mark Drawing
+#pragma mark Inline Conversion functions
 
-static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
-	return (1.0 - mag) * maxHeight * 0.5;
+static inline CGFloat convertMagToY(CGFloat mag, CGFloat minY, CGFloat maxY, CGFloat viewHeight) {
+	return (maxY - mag) * viewHeight / (maxY - minY);
 }
+
+static inline CGFloat convertYToMag(CGFloat y, CGFloat minY, CGFloat maxY, CGFloat viewHeight) {
+    return  maxY - y * (maxY - minY) / viewHeight;
+}
+
+#pragma mark -
+#pragma mark Drawing
 
 - (void)drawRect:(CGRect)rect {
     if (self.wavetable) {
         CGRect bounds = self.bounds;
         
         CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSetLineWidth(context, 1.0);
+        CGContextSetLineWidth(context, 2.0);
 	
         CGContextSetStrokeColorWithColor(context, [self.arrayColor CGColor]);
         
         CGFloat scaleX = bounds.size.width / (self.wavetable.size - 1); // the wavetable spans the entire view, 0 to last index
 		int startIndex = (int)floor(rect.origin.x / scaleX);
 		int endIndex = (int)ceil((rect.origin.x + rect.size.width) / scaleX);
-		CGFloat y = convertMagToY([self.wavetable floatAtIndex:startIndex], bounds.size.height);
+        CGFloat minY = self.minY;
+        CGFloat maxY = self.maxY;
+		CGFloat y = convertMagToY([self.wavetable floatAtIndex:startIndex], minY, maxY, bounds.size.height);
 		
         CGContextMoveToPoint(context, startIndex * scaleX, y);
         for (int i = startIndex + 1; i <= endIndex; i++) {
-			y = convertMagToY([self.wavetable floatAtIndex:i], bounds.size.height);
+			y = convertMagToY([self.wavetable floatAtIndex:i], minY, maxY, bounds.size.height);
             CGContextAddLineToPoint(context, i * scaleX, y);
         }
         CGContextStrokePath(context);
@@ -123,12 +136,12 @@ static inline CGFloat convertMagToY(CGFloat mag, CGFloat maxHeight) {
  */
 - (void)updateTableWithPoint:(CGPoint)point {
 	CGSize viewSize = self.bounds.size;
-	CGFloat	pointSizeInView = (float)(self.wavetable.size - 1)/ viewSize.width;
-	float mag = (point.y * -2.0 / viewSize.height) + 1.0;
-
-	CGFloat redrawPadding = ceil(1.0 / pointSizeInView) * 2.0; // minimal amount to invalidate a rect that still keeps a continious line
-    int index = (int)round(point.x * pointSizeInView);
-	int lastIndex = (int)round(self.lastPoint.x * pointSizeInView);
+	CGFloat	waveTableToViewXRatio = (float)(self.wavetable.size - 1)/ viewSize.width;
+	//float mag = (point.y * -2.0 / viewSize.height) + 1.0; // TODO: generalize to take a minY and maxY.  will need to update the name too
+    CGFloat mag = convertYToMag(point.y, self.minY, self.maxY, viewSize.height);
+	CGFloat redrawPadding = ceil(1.0 / waveTableToViewXRatio) * 2.0; // minimal amount to invalidate a rect that still keeps a continious line
+    int index = (int)round(point.x * waveTableToViewXRatio);
+	int lastIndex = (int)round(self.lastPoint.x * waveTableToViewXRatio);
 	int numPoints = abs(lastIndex - index);
 	CGFloat redrawX;
 
