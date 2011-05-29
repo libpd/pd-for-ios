@@ -8,8 +8,10 @@
  */
 
 // debug macros from: http://www.cimgf.com/2010/05/02/my-current-prefix-pch-file/
+// I modified DLog to use printf instead of NSLog
+
 #ifdef DEBUG
-#define DLog(...) NSLog(@"%s %@", __PRETTY_FUNCTION__, [NSString stringWithFormat:__VA_ARGS__])
+#define DLog(nslog_string, ...)	printf("%s\t", __PRETTY_FUNCTION__); printf("%s", [[NSString stringWithFormat:nslog_string, ##__VA_ARGS__] UTF8String]); printf("\n");
 #define ALog(...) [[NSAssertionHandler currentHandler] handleFailureInFunction:[NSString stringWithCString:__PRETTY_FUNCTION__ encoding:NSUTF8StringEncoding] file:[NSString stringWithCString:__FILE__ encoding:NSUTF8StringEncoding] lineNumber:__LINE__ description:__VA_ARGS__]
 #else
 #define DLog(...) do { } while (0)
