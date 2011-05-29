@@ -228,12 +228,17 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
 
 - (void)patchSelectorChanged:(UISegmentedControl *)sender {
     NSString *patchName;
+    CGFloat minY, maxY;
     switch (sender.selectedSegmentIndex) {
         case 0:
             patchName = kWavetablePatchName;
+            minY = -1.0;
+            maxY = 2.0;
             break;
         case 1:
             patchName = kResynthesisPatchName;
+            minY = 0.0;
+            maxY = 1.0;
             break;
         default:
             return;
@@ -242,8 +247,10 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
         DLog(@"%@ already open, returning.", patchName);
         return;
     }
-    DLog(@"selected %@", patchName);
+    DLog(@"selected  minY = %2.1f, maxY = %2.1f", patchName, minY, maxY);
     [self openPatch:patchName];
+    self.waveTableView.minY = minY;
+    self.waveTableView.maxY = maxY;
 }
 
 @end
