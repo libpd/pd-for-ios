@@ -27,7 +27,7 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
 - (void)setVolume:(CGFloat)volume; // in db normalized to 100 = 1 rms
 
 - (void)printButtonTapped:(UIBarButtonItem *)sender;
-- (void)blargButtonTapped:(UIBarButtonItem *)sender;
+- (void)blargButtonTapped:(UIBarButtonItem *)sender:(UIBarButtonItem *)sender;
 - (void)patchSelectorChanged:(UISegmentedControl *)sender;
 @end
 
@@ -51,20 +51,16 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
 - (void) loadView {
     [super loadView];
     self.view.backgroundColor = [UIColor whiteColor];
-	
+
 	[PdBase setDelegate:self];
-    
-    [self openPatch:kWavetablePatchName];
-    
-	[self setupToolbar];
+	[self setupToolbar]; // this will also select a patch from the patchSelector, thereby opening the patch
 }
 
-- (void) viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [self layoutWavetable];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    //[self setVolume:70];
     [self setVolume:70];
 }
 
