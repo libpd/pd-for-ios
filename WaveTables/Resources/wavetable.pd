@@ -37,7 +37,6 @@
 #X connect 5 0 6 0;
 #X connect 6 0 3 0;
 #X restore 31 107 pd output~;
-#X obj 269 22 table \$0-array 10;
 #N canvas 110 439 450 300 init 0;
 #X obj 85 207 s \$0-table-size;
 #X obj 85 182 + 3;
@@ -60,13 +59,17 @@
 #X connect 5 0 4 0;
 #X connect 6 0 10 0;
 #X connect 7 0 6 0;
-#X connect 7 0 3 0;
 #X connect 7 0 12 0;
+#X connect 7 0 3 0;
 #X connect 8 0 7 0;
 #X connect 9 0 7 0;
 #X connect 12 0 11 0;
 #X restore 313 87 pd init;
 #X obj 31 22 r \$0-pitch;
+#X text 96 178 - reakinator@gmail.com;
+#X text 28 165 This patch if is apart of the libpd/pd-for-ios example
+WaveTables;
+#X obj 269 22 table \$0-array 259;
 #X connect 0 0 2 0;
 #X connect 2 0 3 0;
-#X connect 6 0 0 0;
+#X connect 5 0 0 0;
