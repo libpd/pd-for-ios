@@ -76,10 +76,9 @@ static inline CGFloat convertYToMag(CGFloat y, CGFloat minY, CGFloat maxY, CGFlo
 - (void)drawRect:(CGRect)rect {
     if (self.wavetable) {
         CGRect bounds = self.bounds;
-        
         CGContextRef context = UIGraphicsGetCurrentContext();
+
         CGContextSetLineWidth(context, 2.0);
-	
         CGContextSetStrokeColorWithColor(context, [self.arrayColor CGColor]);
         
         CGFloat scaleX = bounds.size.width / (self.wavetable.size - 1); // the wavetable spans the entire view, 0 to last index
