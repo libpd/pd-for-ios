@@ -220,7 +220,7 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
         case 0:
             patchName = kWavetablePatchName;
             minY = -1.0;
-            maxY = 2.0;
+            maxY = 1.0;
             break;
         case 1:
             patchName = kResynthesisPatchName;
