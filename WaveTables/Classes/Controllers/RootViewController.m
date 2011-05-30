@@ -149,11 +149,9 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
     // in portriate, it will just try to fit in the screen with the same ratio, but alot smaller
     static const CGFloat kRatioWidthToHeight = 1.375; 
     static const CGFloat kPadding = 10;
-
     CGSize viewSize = self.view.bounds.size;
-   // CGFloat viewRatio = viewSize.width / viewSize.height;
-    
     CGFloat height, width, padding;
+
     if (viewSize.width > viewSize.height) {
         // padding will be around the top and bottom, also need to make room for the toolbar
 		CGFloat toolBarHeight = self.toolBar.frame.size.height;
@@ -175,9 +173,9 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
 #pragma mark -
 #pragma mark Private (Utilities)
 
+// note: if our patch is already set and we assign a new value here, the old
+// PdFile will be deallocated, which causes the patch to be closed.
 - (void)openPatch:(NSString *)name {
-    // note: if our patch is already set and we assign a new value here, the old
-    // PdFile will be deallocated, which causes the patch to be closed.
     self.patch = [PdFile openFileNamed:name path:[[NSBundle mainBundle] bundlePath]];
     
     [self setupWavetable];
@@ -196,11 +194,11 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
 #pragma mark -
 #pragma mark Private (Action Handlers)
 
+// this will print out the array contents from within the pd patch,
+// and also print the contents of our PdArray
 - (void)printButtonTapped:(UIBarButtonItem *)sender {
-	// this will print out the array contents from within the pd patch:
 	[PdBase sendBangToReceiver:[NSString stringWithFormat:@"%d-print-table", self.patch.dollarZero]];
 	
-	// print the contents of our PdArray:
 	DLog(@"wavetable elements:");
 	for (int i = 0; i < self.waveTableView.wavetable.size; i++) {
 		DLog(@"[%d, %f]", i, [self.waveTableView.wavetable floatAtIndex:i]);
