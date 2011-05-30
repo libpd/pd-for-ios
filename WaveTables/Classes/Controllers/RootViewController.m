@@ -122,12 +122,16 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
 																	target:self
 																	action:@selector(resetButtonTapped:)]
                                     autorelease];
+    
+    UIBarButtonItem *spaceButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                                  target:nil
+                                                                                  action:nil]
+                                    autorelease];
 
     UISegmentedControl *patchControl = [[[UISegmentedControl alloc] initWithItems:
                                           [NSArray arrayWithObjects:@"Wavetable", @"Resynthesis", nil]]
                                          autorelease];
     
-    patchControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
     patchControl.segmentedControlStyle = UISegmentedControlStyleBar;
     patchControl.tintColor = [UIColor darkGrayColor];
     [patchControl addTarget:self action:@selector(patchSelectorChanged:) forControlEvents:UIControlEventValueChanged];
@@ -137,6 +141,7 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
     
 	[self.toolBar setItems:[NSArray arrayWithObjects:printButton,
                             resetButton,
+                            spaceButton,
                             patchControlButtonItem,
                             nil]];
 	
