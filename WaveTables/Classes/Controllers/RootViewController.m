@@ -27,7 +27,7 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
 - (void)setVolume:(CGFloat)volume; // in db normalized to 100 = 1 rms
 
 - (void)printButtonTapped:(UIBarButtonItem *)sender;
-- (void)blargButtonTapped:(UIBarButtonItem *)sender:(UIBarButtonItem *)sender;
+- (void)resetButtonTapped:(UIBarButtonItem *)sender;
 - (void)patchSelectorChanged:(UISegmentedControl *)sender;
 @end
 
@@ -114,14 +114,15 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
 	UIBarButtonItem *printButton = [[[UIBarButtonItem alloc] initWithTitle:@"Print"
 																	 style:UIBarButtonItemStyleBordered
 																	target:self
-																	action:@selector(printButtonTapped:)] autorelease];
+																	action:@selector(printButtonTapped:)]
+                                    autorelease];
 
-    UIBarButtonItem *blargButton = [[[UIBarButtonItem alloc] initWithTitle:@"Blarg"
+    UIBarButtonItem *resetButton = [[[UIBarButtonItem alloc] initWithTitle:@"Reset"
 																	 style:UIBarButtonItemStyleBordered
 																	target:self
-																	action:@selector(blargButtonTapped:)] autorelease];
+																	action:@selector(resetButtonTapped:)]
+                                    autorelease];
 
-    // patch selector: segmented control with two options
     UISegmentedControl *patchControl = [[[UISegmentedControl alloc] initWithItems:
                                           [NSArray arrayWithObjects:@"Wavetable", @"Resynthesis", nil]]
                                          autorelease];
@@ -135,7 +136,7 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
     UIBarButtonItem *patchControlButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:patchControl] autorelease];
     
 	[self.toolBar setItems:[NSArray arrayWithObjects:printButton,
-                            blargButton,
+                            resetButton,
                             patchControlButtonItem,
                             nil]];
 	
@@ -204,26 +205,14 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
 	for (int i = 0; i < self.waveTableView.wavetable.size; i++) {
 		DLog(@"[%d, %f]", i, [self.waveTableView.wavetable floatAtIndex:i]);
 	}
-	
 }
 
-- (void)blargButtonTapped:(UIBarButtonItem *)sender {
-    // DEBUG: write 1 element with value 2.
-    PdArray *array = self.waveTableView.wavetable;
+- (void)resetButtonTapped:(UIBarButtonItem *)sender {
+    DLog(@"sending reset message to the patch");
+    [PdBase sendBangToReceiver:@"reset"];
 
-	DLog(@"(before) wavetable elements:");
-	for (int i = 0; i < array.size; i++) {
-		DLog(@"[%d, %f]", i, [array floatAtIndex:i]);
-	}
-	[PdBase sendBangToReceiver:[NSString stringWithFormat:@"%d-print-table", self.patch.dollarZero]];
-
-    [array setFloat:2.0 atIndex:3];
-
-    DLog(@"\n\n(after) wavetable elements:");
-	for (int i = 0; i < self.waveTableView.wavetable.size; i++) {
-		DLog(@"[%d, %f]", i, [self.waveTableView.wavetable floatAtIndex:i]);
-	}
-	[PdBase sendBangToReceiver:[NSString stringWithFormat:@"%d-print-table", self.patch.dollarZero]];
+    [self.waveTableView.wavetable read]; // updates the local array
+    [self.waveTableView setNeedsDisplay];
 }
 
 - (void)patchSelectorChanged:(UISegmentedControl *)sender {
