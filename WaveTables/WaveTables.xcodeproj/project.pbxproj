@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		111620FF13B0D5E7000971DC /* PdArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 111620FE13B0D5E7000971DC /* PdArray.m */; };
 		113A44C5138142F9004C88F9 /* libpd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 113A44C4138142ED004C88F9 /* libpd.a */; };
 		113A450E13814889004C88F9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 113A450D13814889004C88F9 /* AudioToolbox.framework */; };
 		113A4576138149DB004C88F9 /* wavetable.pd in Resources */ = {isa = PBXBuildFile; fileRef = 113A4575138149DB004C88F9 /* wavetable.pd */; };
@@ -39,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		111620FD13B0D5E7000971DC /* PdArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PdArray.h; sourceTree = "<group>"; };
+		111620FE13B0D5E7000971DC /* PdArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PdArray.m; sourceTree = "<group>"; };
 		113A44BF138142ED004C88F9 /* libpd.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libpd.xcodeproj; path = ../libpd/libpd.xcodeproj; sourceTree = SOURCE_ROOT; };
 		113A450D13814889004C88F9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		113A4575138149DB004C88F9 /* wavetable.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wavetable.pd; sourceTree = "<group>"; };
@@ -76,6 +79,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		111620FC13B0D5C4000971DC /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				111620FD13B0D5E7000971DC /* PdArray.h */,
+				111620FE13B0D5E7000971DC /* PdArray.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		113A44C0138142ED004C88F9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +108,7 @@
 		11C91B1912C1AEE00022693B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				111620FC13B0D5C4000971DC /* Helpers */,
 				113A45D013815251004C88F9 /* Views */,
 				11C91B1C12C1AEE00022693B /* Controllers */,
 				11C91B1A12C1AEE00022693B /* WaveTablesAppDelegate.h */,
@@ -249,6 +262,7 @@
 				11C91B2012C1AEE00022693B /* RootViewController.m in Sources */,
 				11C91B2612C1AF010022693B /* main.m in Sources */,
 				113A45D61381528E004C88F9 /* WaveTableView.m in Sources */,
+				111620FF13B0D5E7000971DC /* PdArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
