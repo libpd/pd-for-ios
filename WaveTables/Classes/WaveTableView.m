@@ -86,11 +86,11 @@ static inline CGFloat convertYToMag(CGFloat y, CGFloat minY, CGFloat maxY, CGFlo
 		int endIndex = (int)ceil((rect.origin.x + rect.size.width) / scaleX);
         CGFloat minY = self.minY;
         CGFloat maxY = self.maxY;
-		CGFloat y = convertMagToY([self.wavetable floatAtIndex:startIndex], minY, maxY, bounds.size.height);
+		CGFloat y = convertMagToY([self.wavetable localFloatAtIndex:startIndex], minY, maxY, bounds.size.height);
 		
         CGContextMoveToPoint(context, startIndex * scaleX, y);
         for (int i = startIndex + 1; i <= endIndex; i++) {
-			y = convertMagToY([self.wavetable floatAtIndex:i], minY, maxY, bounds.size.height);
+			y = convertMagToY([self.wavetable localFloatAtIndex:i], minY, maxY, bounds.size.height);
             CGContextAddLineToPoint(context, i * scaleX, y);
         }
         CGContextStrokePath(context);
