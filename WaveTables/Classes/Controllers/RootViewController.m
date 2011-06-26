@@ -13,7 +13,7 @@
 
 static NSString *const kWavetablePatchName = @"wavetable.pd";
 static NSString *const kResynthesisPatchName = @"resynthesis.pd";
-
+static NSString *const kPdArrayName = @"%d-array"; // decimal parameter is the $0 arg
 @interface RootViewController ()
 
 @property (nonatomic, retain) PdFile *patch;
@@ -90,7 +90,7 @@ static NSString *const kResynthesisPatchName = @"resynthesis.pd";
         DLog(@"Error, no patch loaded.");
         return;
     }
-    NSString *arrayName = [NSString stringWithFormat:@"%d-array", self.patch.dollarZero];
+    NSString *arrayName = [NSString stringWithFormat:kPdArrayName, self.patch.dollarZero];
     int arraySize = [PdBase arraySizeForArrayNamed:arrayName];
     DLog(@"--- array name: %@, size: %d ---", arrayName, arraySize);
     
