@@ -55,7 +55,7 @@
 
 - (void)read {
   if (self.array) {
-		[PdBase copyArrayNamed:self.name withOffset:0 count:self.size toArray:self.array];
+		[PdBase copyArrayNamed:self.name withOffset:0 toArray:self.array count:self.size];
   }
 }
 
