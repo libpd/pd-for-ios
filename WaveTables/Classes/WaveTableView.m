@@ -138,7 +138,6 @@ static inline CGFloat convertYToMag(CGFloat y, CGFloat minY, CGFloat maxY, CGFlo
 - (void)updateTableWithPoint:(CGPoint)point {
 	CGSize viewSize = self.bounds.size;
 	CGFloat	waveTableToViewXRatio = (float)(self.wavetable.size - 1)/ viewSize.width;
-	//float mag = (point.y * -2.0 / viewSize.height) + 1.0; // TODO: generalize to take a minY and maxY.  will need to update the name too
     CGFloat mag = convertYToMag(point.y, self.minY, self.maxY, viewSize.height);
 	CGFloat redrawPadding = ceil(1.0 / waveTableToViewXRatio) * 2.0; // minimal amount to invalidate a rect that still keeps a continious line
     int index = (int)round(point.x * waveTableToViewXRatio);
@@ -148,7 +147,6 @@ static inline CGFloat convertYToMag(CGFloat y, CGFloat minY, CGFloat maxY, CGFlo
 
 	if (self.dragging && numPoints > 1) {
 		//draw a line from lastPoint.x to point.x and feed it to self.wavetable
-
 		float incr = (self.lastPoint.y - mag) / (float)(lastIndex - index);
 		int currentIndex = lastIndex;
 		float currentMag = self.lastPoint.y;

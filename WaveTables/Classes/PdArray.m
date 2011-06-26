@@ -66,7 +66,7 @@
 }
 
 - (float)floatAtIndex:(int)index {
-  [self read]; // TODO: only grab the specific float and put it in the local array
+  [self read]; // TODO: only grab the specific float and put it in the local array. but, nothing uses this yet..
   return [self localFloatAtIndex:index];
 }
 
