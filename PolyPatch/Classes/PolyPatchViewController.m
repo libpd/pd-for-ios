@@ -68,12 +68,6 @@ NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
 #pragma mark -
 #pragma mark Init / Dealloc
 
-- (id)init {
-	if (self = [super init]) {
-	}
-	return self;
-}
-
 - (void)dealloc {
 	self.openButton = nil;
 	self.tableView = nil;
