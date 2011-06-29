@@ -71,6 +71,7 @@
 	[PdBase computeAudio:YES];
 	[self.pdAudio play];	
 
+	self.viewController = [[[PolyPatchViewController alloc] init] autorelease];
     [self.window addSubview:self.viewController.view];
     [self.window makeKeyAndVisible];
 
