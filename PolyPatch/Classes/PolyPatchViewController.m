@@ -45,8 +45,8 @@
 #import <QuartzCore/QuartzCore.h>
 
 //NSString *const kTestPatchName = @"test.pd"; // each patch will just print out the $0 arg every second
-//NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
-NSString *const kTestPatchName = @"synctest.pd"; // Patch from Brett Park that was crashing libpd because of sync issues
+NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
+//NSString *const kTestPatchName = @"synctest.pd"; // Patch from Brett Park that was crashing libpd because of sync issues
 
 @interface PolyPatchViewController ()
 
@@ -109,7 +109,7 @@ NSString *const kTestPatchName = @"synctest.pd"; // Patch from Brett Park that w
 	self.tableView.delegate = self;
 	[self.view addSubview:self.tableView];
 
-	[self testOpeningMany];
+	//[self testOpeningMany]; 	// uncomment to test syncing issues with synctest.pd
 }
 
 - (void) viewWillAppear:(BOOL)animated {
