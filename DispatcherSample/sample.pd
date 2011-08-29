@@ -1,0 +1,19 @@
+#N canvas 655 297 450 300 10;
+#X obj 72 32 loadbang;
+#X obj 72 57 metro 500;
+#X obj 72 85 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 72 107 route 0 1;
+#X obj 52 150 bng 15 250 50 0 foo empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 93 151 bng 15 250 50 0 bar empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 235 55 osc~ 220;
+#X obj 233 93 dac~;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 3 1 5 0;
+#X connect 6 0 7 0;
+#X connect 6 0 7 1;
