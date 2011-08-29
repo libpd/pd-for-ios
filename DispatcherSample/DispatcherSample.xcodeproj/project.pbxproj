@@ -427,6 +427,7 @@
 				HEADER_SEARCH_PATHS = "";
 				"HEADER_SEARCH_PATHS[arch=*]" = "../libpd/**";
 				INFOPLIST_FILE = "DispatcherSample/DispatcherSample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -446,6 +447,7 @@
 				HEADER_SEARCH_PATHS = "";
 				"HEADER_SEARCH_PATHS[arch=*]" = "../libpd/**";
 				INFOPLIST_FILE = "DispatcherSample/DispatcherSample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -519,6 +521,7 @@
 				58ABCE73140ACCEF003C36F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		58ABCE74140ACCEF003C36F3 /* Build configuration list for PBXNativeTarget "DispatcherSampleTests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +530,7 @@
 				58ABCE76140ACCEF003C36F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

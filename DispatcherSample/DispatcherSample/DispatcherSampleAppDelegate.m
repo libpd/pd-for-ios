@@ -2,8 +2,10 @@
 //  DispatcherSampleAppDelegate.m
 //  DispatcherSample
 //
-//  Created by Peter Brinkmann on 8/28/11.
-//  Copyright 2011. All rights reserved.
+//  Copyright (c) 2011 Peter Brinkmann (peter.brinkmann@gmail.com)
+//
+//  For information on usage and redistribution, and for a DISCLAIMER OF ALL
+//  WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 //
 
 #import "DispatcherSampleAppDelegate.h"
@@ -18,8 +20,8 @@
 @synthesize viewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window.rootViewController = self.viewController;
-    [self.window makeKeyAndVisible];
+    window.rootViewController = self.viewController;
+    [window makeKeyAndVisible];
     
 	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:32
                          andNumberOfInputChannels:1 andNumberOfOutputChannels:2];
@@ -53,14 +55,14 @@
     [pdAudio pause];
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {\
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    [pdAudio play];
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    [pdAudio play];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
