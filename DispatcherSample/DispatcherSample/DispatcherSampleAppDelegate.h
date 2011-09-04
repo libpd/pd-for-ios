@@ -10,18 +10,22 @@
 
 #import <UIKit/UIKit.h>
 #import "PdAudio.h"
+#import "PdDispatcher.h"
 
 @class DispatcherSampleViewController;
 
 @interface DispatcherSampleAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
     DispatcherSampleViewController *viewController;
+    
 	PdAudio *pdAudio;
-    void *patch;
+    PdDispatcher *pdDispatcher;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet DispatcherSampleViewController *viewController;
+@property (nonatomic, readonly) PdAudio *pdAudio;
+@property (nonatomic, readonly) PdDispatcher *pdDispatcher;
 
 @end
 

@@ -12,8 +12,8 @@
 #import "PdDispatcher.h"
 
 @interface SampleListener : NSObject<PdListener> {
-    NSString *label;
+    UILabel *label;
 }
 
-- (id)initWithLabel:(NSString *)label;
+- (id)initWithLabel:(UILabel *)label;
 @end

@@ -9,10 +9,19 @@
 //
 
 #import "DispatcherSampleViewController.h"
+#import "DispatcherSampleAppDelegate.h"
+#import "SampleListener.h"
 
 @implementation DispatcherSampleViewController
 
+@synthesize fooLabel;
+@synthesize barLabel;
+
+#define APP_DELEGATE ((DispatcherSampleAppDelegate *)[UIApplication sharedApplication].delegate)
+
 - (void)dealloc {
+    [fooLabel release];
+    [barLabel release];
     [super dealloc];
 }
 
@@ -25,13 +34,12 @@
 
 #pragma mark - View lifecycle
 
-/*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
+    fooLabel.text = @"foooooooooo";
+    barLabel.text = @"baaaaaaaaar";
     [super viewDidLoad];
 }
-*/
 
 - (void)viewDidUnload {
     [super viewDidUnload];

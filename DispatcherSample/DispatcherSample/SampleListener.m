@@ -13,7 +13,7 @@
 
 @implementation SampleListener
 
-- (id)initWithLabel:(NSString *)s {
+- (id)initWithLabel:(UILabel *)s {
     self = [super init];
     if (self) {
         label = s;
@@ -33,6 +33,8 @@
 
 - (void)receiveFloat:(float)val {
     NSLog(@"Listener %@: float %f\n", label, val);
+    NSString *s = [NSString stringWithFormat:@"%f", val];
+    [label performSelectorOnMainThread:@selector(setText:) withObject:s waitUntilDone:NO];
 }
 
 - (void)receiveSymbol:(NSString *)s {

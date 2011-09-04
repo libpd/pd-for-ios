@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		581A4B7714114A4E00C6AC68 /* sample.pd in Resources */ = {isa = PBXBuildFile; fileRef = 581A4B7514114A4E00C6AC68 /* sample.pd */; };
 		58ABCE3F140ACCEE003C36F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58ABCE3E140ACCEE003C36F3 /* UIKit.framework */; };
 		58ABCE41140ACCEE003C36F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58ABCE40140ACCEE003C36F3 /* Foundation.framework */; };
 		58ABCE43140ACCEE003C36F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58ABCE42140ACCEE003C36F3 /* CoreGraphics.framework */; };
@@ -22,10 +23,9 @@
 		58ABCE69140ACCEF003C36F3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58ABCE67140ACCEF003C36F3 /* InfoPlist.strings */; };
 		58ABCE6C140ACCEF003C36F3 /* DispatcherSampleTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 58ABCE6B140ACCEF003C36F3 /* DispatcherSampleTests.h */; };
 		58ABCE6E140ACCEF003C36F3 /* DispatcherSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 58ABCE6D140ACCEF003C36F3 /* DispatcherSampleTests.m */; };
-		58ABCE83140ACDD7003C36F3 /* libpd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58ABCE82140ACDD7003C36F3 /* libpd.a */; };
 		58ABCE8E140AD038003C36F3 /* SampleListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 58ABCE8D140AD038003C36F3 /* SampleListener.m */; };
 		58ABCE90140ADE73003C36F3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58ABCE8F140ADE73003C36F3 /* AudioToolbox.framework */; };
-		58ABCE92140AE243003C36F3 /* sample.pd in Resources */ = {isa = PBXBuildFile; fileRef = 58ABCE91140AE243003C36F3 /* sample.pd */; };
+		58E8FD39141003E600DDE612 /* libpd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58E8FD38141003E600DDE612 /* libpd.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +43,7 @@
 			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = libpd;
 		};
-		58ABCE80140ACDCF003C36F3 /* PBXContainerItemProxy */ = {
+		58E8FD36141003C900DDE612 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 58ABCE77140ACD8F003C36F3 /* libpd.xcodeproj */;
 			proxyType = 1;
@@ -53,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		581A4B7514114A4E00C6AC68 /* sample.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample.pd; sourceTree = "<group>"; };
 		58ABCE3A140ACCEE003C36F3 /* DispatcherSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DispatcherSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58ABCE3E140ACCEE003C36F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		58ABCE40140ACCEE003C36F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -78,7 +79,7 @@
 		58ABCE8C140AD038003C36F3 /* SampleListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleListener.h; sourceTree = "<group>"; };
 		58ABCE8D140AD038003C36F3 /* SampleListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleListener.m; sourceTree = "<group>"; };
 		58ABCE8F140ADE73003C36F3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		58ABCE91140AE243003C36F3 /* sample.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample.pd; sourceTree = "<group>"; };
+		58E8FD38141003E600DDE612 /* libpd.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libpd.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,8 +87,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58E8FD39141003E600DDE612 /* libpd.a in Frameworks */,
 				58ABCE90140ADE73003C36F3 /* AudioToolbox.framework in Frameworks */,
-				58ABCE83140ACDD7003C36F3 /* libpd.a in Frameworks */,
 				58ABCE3F140ACCEE003C36F3 /* UIKit.framework in Frameworks */,
 				58ABCE41140ACCEE003C36F3 /* Foundation.framework in Frameworks */,
 				58ABCE43140ACCEE003C36F3 /* CoreGraphics.framework in Frameworks */,
@@ -107,10 +108,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		581A4B7314114A4E00C6AC68 /* patch */ = {
+			isa = PBXGroup;
+			children = (
+				581A4B7514114A4E00C6AC68 /* sample.pd */,
+			);
+			path = patch;
+			sourceTree = "<group>";
+		};
 		58ABCE2F140ACCEE003C36F3 = {
 			isa = PBXGroup;
 			children = (
-				58ABCE91140AE243003C36F3 /* sample.pd */,
+				581A4B7314114A4E00C6AC68 /* patch */,
+				58E8FD38141003E600DDE612 /* libpd.a */,
 				58ABCE8F140ADE73003C36F3 /* AudioToolbox.framework */,
 				58ABCE82140ACDD7003C36F3 /* libpd.a */,
 				58ABCE77140ACD8F003C36F3 /* libpd.xcodeproj */,
@@ -209,7 +219,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				58ABCE81140ACDCF003C36F3 /* PBXTargetDependency */,
+				58E8FD37141003C900DDE612 /* PBXTargetDependency */,
 			);
 			name = DispatcherSample;
 			productName = DispatcherSample;
@@ -282,7 +292,7 @@
 				58ABCE49140ACCEE003C36F3 /* InfoPlist.strings in Resources */,
 				58ABCE52140ACCEF003C36F3 /* MainWindow.xib in Resources */,
 				58ABCE58140ACCEF003C36F3 /* DispatcherSampleViewController.xib in Resources */,
-				58ABCE92140AE243003C36F3 /* sample.pd in Resources */,
+				581A4B7714114A4E00C6AC68 /* sample.pd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,10 +351,10 @@
 			target = 58ABCE39140ACCEE003C36F3 /* DispatcherSample */;
 			targetProxy = 58ABCE62140ACCEF003C36F3 /* PBXContainerItemProxy */;
 		};
-		58ABCE81140ACDCF003C36F3 /* PBXTargetDependency */ = {
+		58E8FD37141003C900DDE612 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = libpd;
-			targetProxy = 58ABCE80140ACDCF003C36F3 /* PBXContainerItemProxy */;
+			targetProxy = 58E8FD36141003C900DDE612 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

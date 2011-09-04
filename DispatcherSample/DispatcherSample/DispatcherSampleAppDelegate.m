@@ -18,6 +18,8 @@
 
 @synthesize window;
 @synthesize viewController;
+@synthesize pdAudio;
+@synthesize pdDispatcher;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     window.rootViewController = self.viewController;
@@ -25,18 +27,17 @@
     
 	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:32
                          andNumberOfInputChannels:1 andNumberOfOutputChannels:2];
-    
     PdDispatcher *dispatcher = [[PdDispatcher alloc] init];
-    SampleListener *listener = [[SampleListener alloc] initWithLabel:@"foo"];
+    [PdBase setDelegate:dispatcher];
+    
+    SampleListener *listener = [[SampleListener alloc] initWithLabel:self.viewController.fooLabel];
     [dispatcher addListener:listener forSource:@"foo"];
     [listener release];
-    listener = [[SampleListener alloc] initWithLabel:@"bar"];
+    listener = [[SampleListener alloc] initWithLabel:self.viewController.barLabel];
     [dispatcher addListener:listener forSource:@"bar"];
     [listener release];
-    [PdBase setDelegate:dispatcher];
-    [dispatcher release];
     
-	patch = [PdBase openFile:@"sample.pd" path:[[NSBundle mainBundle] bundlePath]];
+	[PdBase openFile:@"sample.pd" path:[[NSBundle mainBundle] bundlePath]];
     [PdBase computeAudio:YES];
     
     return YES;
@@ -44,15 +45,14 @@
 
 - (void)dealloc {
     [pdAudio release];
-    [PdBase closeFile:patch];
     [PdBase setDelegate:nil];
+    [pdDispatcher release];
     [window release];
     [viewController release];
     [super dealloc];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    [pdAudio pause];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -60,6 +60,7 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    [pdAudio pause];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

@@ -11,7 +11,11 @@
 #import <UIKit/UIKit.h>
 
 @interface DispatcherSampleViewController : UIViewController {
-    
+    UILabel *fooLabel;
+    UILabel *barLabel;
 }
+
+@property(nonatomic, retain) IBOutlet UILabel *fooLabel;
+@property(nonatomic, retain) IBOutlet UILabel *barLabel;
 
 @end
