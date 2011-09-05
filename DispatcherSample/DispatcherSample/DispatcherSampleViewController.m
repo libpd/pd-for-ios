@@ -36,8 +36,6 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-    fooLabel.text = @"foooooooooo";
-    barLabel.text = @"baaaaaaaaar";
     [super viewDidLoad];
 }
 
