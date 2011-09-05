@@ -9,7 +9,6 @@
 //
 
 #import "DispatcherSampleViewController.h"
-#import "DispatcherSampleAppDelegate.h"
 #import "SampleListener.h"
 
 @implementation DispatcherSampleViewController
@@ -17,10 +16,7 @@
 @synthesize fooLabel;
 @synthesize barLabel;
 
-#define APP_DELEGATE ((DispatcherSampleAppDelegate *)[UIApplication sharedApplication].delegate)
-
--(void)pdSetup {
-    PdDispatcher *dispatcher = APP_DELEGATE.pdDispatcher;
+-(void)pdSetup:(PdDispatcher *)dispatcher {
     SampleListener *listener = [[SampleListener alloc] initWithLabel:fooLabel];
     [dispatcher addListener:listener forSource:@"foo"];
     [listener release];

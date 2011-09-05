@@ -24,8 +24,6 @@
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet DispatcherSampleViewController *viewController;
-@property (nonatomic, readonly) PdAudio *pdAudio;
-@property (nonatomic, readonly) PdDispatcher *pdDispatcher;
 
 @end
 

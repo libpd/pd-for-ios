@@ -9,12 +9,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PdDispatcher.h"
 
 @interface DispatcherSampleViewController : UIViewController {
     UILabel *fooLabel;
     UILabel *barLabel;
 }
 
--(void)pdSetup;
+@property(nonatomic, retain) IBOutlet UILabel *fooLabel;
+@property(nonatomic, retain) IBOutlet UILabel *barLabel;
+
+-(void)pdSetup:(PdDispatcher *)dispatcher;
 
 @end
