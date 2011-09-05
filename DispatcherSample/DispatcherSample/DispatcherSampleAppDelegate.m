@@ -28,16 +28,10 @@
     pdDispatcher = [[PdDispatcher alloc] init];
     [PdBase setDelegate:pdDispatcher];
     
-    SampleListener *listener = [[SampleListener alloc] initWithLabel:self.viewController.fooLabel];
-    [pdDispatcher addListener:listener forSource:@"foo"];
-    [listener release];
-    listener = [[SampleListener alloc] initWithLabel:self.viewController.barLabel];
-    [pdDispatcher addListener:listener forSource:@"bar"];
-    [listener release];
-
 	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:32
                          andNumberOfInputChannels:1 andNumberOfOutputChannels:2];
-	[PdBase openFile:@"sample.pd" path:[[NSBundle mainBundle] resourcePath]];
+    
+    [viewController pdSetup];
     
     return YES;
 }

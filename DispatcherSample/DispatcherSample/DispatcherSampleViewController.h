@@ -15,7 +15,6 @@
     UILabel *barLabel;
 }
 
-@property(nonatomic, retain) IBOutlet UILabel *fooLabel;
-@property(nonatomic, retain) IBOutlet UILabel *barLabel;
+-(void)pdSetup;
 
 @end
