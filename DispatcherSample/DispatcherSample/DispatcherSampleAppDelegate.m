@@ -11,7 +11,6 @@
 #import "DispatcherSampleAppDelegate.h"
 #import "DispatcherSampleViewController.h"
 #import "PdBase.h"
-#import "SampleListener.h"
 #import "PdDispatcher.h"
 
 @implementation DispatcherSampleAppDelegate
@@ -51,10 +50,10 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
+    [pdAudio pause];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [pdAudio pause];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
