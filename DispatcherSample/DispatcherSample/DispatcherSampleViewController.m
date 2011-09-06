@@ -8,15 +8,19 @@
 //  WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 //
 
+#import "DispatcherSampleAppDelegate.h"
 #import "DispatcherSampleViewController.h"
 #import "SampleListener.h"
+
+#define APP_DELEGATE ((DispatcherSampleAppDelegate *)[UIApplication sharedApplication].delegate)
 
 @implementation DispatcherSampleViewController
 
 @synthesize fooLabel;
 @synthesize barLabel;
 
--(void)pdSetup:(PdDispatcher *)dispatcher {
+-(void)pdSetup {
+    PdDispatcher *dispatcher = APP_DELEGATE.pdDispatcher;
     SampleListener *listener = [[SampleListener alloc] initWithLabel:fooLabel];
     [dispatcher addListener:listener forSource:@"foo"];
     [listener release];

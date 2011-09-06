@@ -17,6 +17,7 @@
 
 @synthesize window;
 @synthesize viewController;
+@synthesize pdDispatcher;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     window.rootViewController = self.viewController;
@@ -28,7 +29,7 @@
 	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:32
                          andNumberOfInputChannels:1 andNumberOfOutputChannels:2];
     
-    [viewController pdSetup:pdDispatcher];
+    [viewController pdSetup];
     
     return YES;
 }

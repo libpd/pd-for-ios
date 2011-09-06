@@ -19,6 +19,6 @@
 @property(nonatomic, retain) IBOutlet UILabel *fooLabel;
 @property(nonatomic, retain) IBOutlet UILabel *barLabel;
 
--(void)pdSetup:(PdDispatcher *)dispatcher;
+-(void)pdSetup;
 
 @end
