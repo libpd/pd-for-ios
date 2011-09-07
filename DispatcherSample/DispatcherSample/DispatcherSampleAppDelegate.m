@@ -27,7 +27,7 @@
     [PdBase setDelegate:pdDispatcher];
     
 #if TARGET_IPHONE_SIMULATOR	
-	int ticksPerBuffer = 8;
+	int ticksPerBuffer = 8;  // No other value seems to work with the simulator.
 #else
     int ticksPerBuffer = 32;
 #endif

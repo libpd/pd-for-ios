@@ -61,7 +61,15 @@ NSString *patchFileTypeExtension = @"pd";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
-	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:64 andNumberOfInputChannels:2 andNumberOfOutputChannels:2];
+    
+#if TARGET_IPHONE_SIMULATOR	
+	int ticksPerBuffer = 8;  // No other value seems to work with the simulator.
+#else
+    int ticksPerBuffer = 32;
+#endif
+    
+	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:ticksPerBuffer
+                         andNumberOfInputChannels:2 andNumberOfOutputChannels:2];
 	
 	[self copyDemoPatchesToUserDomain];  // move the bundled patches to the documents dir
 	[self openAndRunTestPatch]; 

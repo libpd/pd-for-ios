@@ -64,12 +64,20 @@ extern void lrshift_tilde_setup(void);
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
+    
+#if TARGET_IPHONE_SIMULATOR	
+	int ticksPerBuffer = 8;  // No other value seems to work with the simulator.
+#else
+    int ticksPerBuffer = 32;
+#endif
+    
 	// create and init PdAudio object
 	// note: we are using the AmbientSound Audio Session Category
 	// this allows this app to work properly on most older iDevices
 	// but note that recoding audio input is not possible with AmbientSound Audio Sessions
-	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:64 andNumberOfInputChannels:0 andNumberOfOutputChannels:2 
-		andAudioSessionCategory:kAudioSessionCategory_AmbientSound];
+	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:ticksPerBuffer
+                         andNumberOfInputChannels:0 andNumberOfOutputChannels:2 
+                         andAudioSessionCategory:kAudioSessionCategory_AmbientSound];
 	
 	// set AppDelegate as PdRecieverDelegate to recieve messages from Libpd
 	[PdBase setDelegate:self];
