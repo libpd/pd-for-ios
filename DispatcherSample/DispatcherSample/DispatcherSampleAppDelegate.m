@@ -26,11 +26,18 @@
     pdDispatcher = [[PdDispatcher alloc] init];
     [PdBase setDelegate:pdDispatcher];
     
-	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:32
-                         andNumberOfInputChannels:1 andNumberOfOutputChannels:2];
+#if TARGET_IPHONE_SIMULATOR	
+	int ticksPerBuffer = 8;
+#else
+    int ticksPerBuffer = 32;
+#endif
+    
+	pdAudio = [[PdAudio alloc] initWithSampleRate:44100 andTicksPerBuffer:ticksPerBuffer
+                         andNumberOfInputChannels:2 andNumberOfOutputChannels:2];
     
     [viewController pdSetup];
     
+    [pdAudio play];
     return YES;
 }
 
@@ -47,11 +54,9 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    [pdAudio play];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    [pdAudio pause];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
