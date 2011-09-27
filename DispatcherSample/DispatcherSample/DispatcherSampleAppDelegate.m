@@ -17,14 +17,14 @@
 
 @synthesize window;
 @synthesize viewController;
-@synthesize pdDispatcher;
+@synthesize dispatcher;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     window.rootViewController = self.viewController;
     [window makeKeyAndVisible];
     
-    pdDispatcher = [[PdDispatcher alloc] init];
-    [PdBase setDelegate:pdDispatcher];
+    dispatcher = [[PdUiDispatcher alloc] init];
+    [PdBase setDelegate:dispatcher];
     
 #if TARGET_IPHONE_SIMULATOR	
 	int ticksPerBuffer = 8;  // No other value seems to work with the simulator.
@@ -44,7 +44,7 @@
 - (void)dealloc {
     [pdAudio release];
     [PdBase setDelegate:nil];
-    [pdDispatcher release];
+    [dispatcher release];
     [window release];
     [viewController release];
     [super dealloc];

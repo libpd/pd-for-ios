@@ -19,12 +19,12 @@
     DispatcherSampleViewController *viewController;
     
 	PdAudio *pdAudio;
-    PdDispatcher *pdDispatcher;
+    PdDispatcher *dispatcher;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet DispatcherSampleViewController *viewController;
-@property (nonatomic, readonly) PdDispatcher *pdDispatcher;
+@property (nonatomic, readonly) PdDispatcher *dispatcher;
 
 @end
 

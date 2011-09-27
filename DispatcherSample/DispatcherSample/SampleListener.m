@@ -34,7 +34,7 @@
 - (void)receiveFloat:(float)val {
     NSLog(@"Listener %@: float %f\n", label, val);
     NSString *s = [NSString stringWithFormat:@"%f", val];
-    [[InvokeOnMainThread withTarget:label] setText:s];
+    [label setText:s];
 }
 
 - (void)receiveSymbol:(NSString *)s {
