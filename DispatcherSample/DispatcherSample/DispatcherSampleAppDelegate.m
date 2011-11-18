@@ -23,7 +23,7 @@
     window.rootViewController = self.viewController;
     [window makeKeyAndVisible];
     
-    dispatcher = [[PdUiDispatcher alloc] init];
+    dispatcher = [[PdDispatcher alloc] init];
     [PdBase setDelegate:dispatcher];
     
 #if TARGET_IPHONE_SIMULATOR	
