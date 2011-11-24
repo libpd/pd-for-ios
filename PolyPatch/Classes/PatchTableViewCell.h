@@ -38,11 +38,7 @@
 
 #import <UIKit/UIKit.h>
 
-
-@interface PatchTableViewCell : UITableViewCell {
-	int dollarZero_;
-	UISlider *pitchSlider_;
-}
+@interface PatchTableViewCell : UITableViewCell
 
 @property (nonatomic, assign) int dollarZero;
 

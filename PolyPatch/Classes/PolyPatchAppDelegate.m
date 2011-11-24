@@ -39,58 +39,57 @@
 
 #import "PolyPatchAppDelegate.h"
 #import "PolyPatchViewController.h"
+#import "PdAudioController.h"
 
 @interface PolyPatchAppDelegate ()
+@property (nonatomic, retain) PdAudioController *audioController;
 
-@property (nonatomic, retain) UIWindow *window;
-@property (nonatomic, retain) PolyPatchViewController *viewController;
-@property (nonatomic, retain) PdAudio *pdAudio;
-
+- (void)initAudio;
 @end
 
 @implementation PolyPatchAppDelegate
 
 @synthesize window = window_;
-@synthesize viewController = viewController_;
-@synthesize pdAudio = pdAudio_;
+@synthesize audioController = audioController_;
 
 #pragma mark -
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+	[PdBase setDelegate:self];
 
-#if TARGET_IPHONE_SIMULATOR	
-	int ticksPerBuffer = 512 / [PdBase getBlockSize]; // apparently the only way to get clean audio output with the simulator
-#else
-    int ticksPerBuffer = 64;
-#endif
-	
-	self.pdAudio = [[PdAudio alloc] initWithSampleRate:44100 andTicksPerBuffer:ticksPerBuffer andNumberOfInputChannels:2 andNumberOfOutputChannels:2];
-	
-//	[PdBase setDelegate:self];
-	[PdBase computeAudio:YES];
-	[self.pdAudio play];	
-
-	self.viewController = [[[PolyPatchViewController alloc] init] autorelease];
-    [self.window addSubview:self.viewController.view];
+	self.window = [[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
+	self.window.rootViewController = [[[PolyPatchViewController alloc] init] autorelease];
     [self.window makeKeyAndVisible];
-
+	
+	[self initAudio];
 	return YES;
 }
 
 - (void)receivePrint:(NSString *)message {
-	// NSLog seems to bog down the audio loop, so we use printf instead, a more direct approach for debug output
-	printf("%s %s \n", __PRETTY_FUNCTION__, [message cStringUsingEncoding:NSASCIIStringEncoding]);
+	NSLog(@"%s %@", __PRETTY_FUNCTION__, message);
 }
 
 #pragma mark -
 #pragma mark Memory management
 
 - (void)dealloc {
-	self.viewController = nil;
+	self.audioController = nil;
 	self.window = nil;
-	self.pdAudio = nil;
     [super dealloc];
+}
+
+#pragma mark - Private
+
+- (void)initAudio {
+	self.audioController = [[[PdAudioController alloc] init] autorelease];
+	PdAudioStatus status = [self.audioController configureWithSampleRate:44100 numberInputChannels:2 numberOutputChannels:2];
+	if (status == PdAudioError) {
+		NSLog(@"Error in PdAudioController!");
+	} else if (status == PdAudioPropertyChanged) {
+		NSLog(@"Audio properties changed.");
+	}
+	[self.audioController setActive:YES];
 }
 
 

@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		0E8C8EBB131221E0000B9D7A /* PatchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8C8EBA131221E0000B9D7A /* PatchTableViewCell.m */; };
 		0E8C8F191312306E000B9D7A /* test2.pd in Resources */ = {isa = PBXBuildFile; fileRef = 0E8C8F181312306E000B9D7A /* test2.pd */; };
-		0ED51349132BBE6500970D18 /* libpd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED512FD132BB71700970D18 /* libpd.a */; };
+		0ED51349132BBE6500970D18 /* libpd-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED512FD132BB71700970D18 /* libpd-ios.a */; };
+		1152A396147D362B00DCD675 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1152A395147D362B00DCD675 /* AVFoundation.framework */; };
 		11C6079F137D0A6C006D7F8B /* synctest.pd in Resources */ = {isa = PBXBuildFile; fileRef = 11C6079E137D0A6C006D7F8B /* synctest.pd */; };
 		1D3623260D0F684500981E51 /* PolyPatchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* PolyPatchAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -45,6 +46,7 @@
 		0E8C8EB9131221E0000B9D7A /* PatchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatchTableViewCell.h; sourceTree = "<group>"; };
 		0E8C8EBA131221E0000B9D7A /* PatchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatchTableViewCell.m; sourceTree = "<group>"; };
 		0E8C8F181312306E000B9D7A /* test2.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test2.pd; path = Resources/test2.pd; sourceTree = "<group>"; };
+		1152A395147D362B00DCD675 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		11C6079E137D0A6C006D7F8B /* synctest.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = synctest.pd; path = Resources/synctest.pd; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* PolyPatchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolyPatchAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* PolyPatchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolyPatchAppDelegate.m; sourceTree = "<group>"; };
@@ -67,11 +69,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1152A396147D362B00DCD675 /* AVFoundation.framework in Frameworks */,
 				DCCC7CDF125C3E0F002CF6AC /* AudioToolbox.framework in Frameworks */,
 				DC0C300E125D15FC008B6389 /* Foundation.framework in Frameworks */,
 				DC0C3012125D160B008B6389 /* UIKit.framework in Frameworks */,
 				DC0C3016125D1614008B6389 /* CoreGraphics.framework in Frameworks */,
-				0ED51349132BBE6500970D18 /* libpd.a in Frameworks */,
+				0ED51349132BBE6500970D18 /* libpd-ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,7 +97,7 @@
 		0ED512F9132BB71700970D18 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0ED512FD132BB71700970D18 /* libpd.a */,
+				0ED512FD132BB71700970D18 /* libpd-ios.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -145,6 +148,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1152A395147D362B00DCD675 /* AVFoundation.framework */,
 				DCCC7CDE125C3E0F002CF6AC /* AudioToolbox.framework */,
 				DC0C300D125D15FC008B6389 /* Foundation.framework */,
 				DC0C3011125D160B008B6389 /* UIKit.framework */,
@@ -205,10 +209,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		0ED512FD132BB71700970D18 /* libpd.a */ = {
+		0ED512FD132BB71700970D18 /* libpd-ios.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libpd.a;
+			path = "libpd-ios.a";
 			remoteRef = 0ED512FC132BB71700970D18 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -298,7 +302,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = ../libpd/objc;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				OTHER_CFLAGS = "";
+				OTHER_CFLAGS = "-DR_DEBUG";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;

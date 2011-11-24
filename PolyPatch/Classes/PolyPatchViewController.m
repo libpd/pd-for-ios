@@ -54,8 +54,8 @@ NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
 @property (nonatomic, retain) UIButton *openButton;
 @property (nonatomic, retain) UITableView *tableView;
 
-- (void) openButtonPressed:(id)button;
-- (void) testOpeningMany;
+- (void)openButtonPressed:(id)button;
+- (void)testOpeningMany;
 
 @end
 
@@ -91,7 +91,7 @@ NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
 	openButton.layer.cornerRadius = 5.0;
 	openButton.layer.borderColor = [[UIColor purpleColor] CGColor];
 	openButton.layer.borderWidth = 1.0;
-	[openButton setTitle:@"Open" forState:UIControlStateNormal];
+	[openButton setTitle:@"Open New" forState:UIControlStateNormal];
 	[openButton addTarget:self action:@selector(openButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:openButton];
 	self.openButton = openButton;
@@ -106,7 +106,7 @@ NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
 	//[self testOpeningMany]; 	// uncomment to test syncing issues with synctest.pd
 }
 
-- (void) viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 
 	self.openButton.frame = CGRectMake(00.0, 10.0, self.view.bounds.size.width - 0.0, 40.0);
@@ -176,7 +176,6 @@ NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
 	} else {
 		RLog(@"error: couldn't open patch");
 	}
-	
 }
 
 #pragma mark -
@@ -184,7 +183,6 @@ NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
 
 // opening many patches on the fly
 - (void)testOpeningMany {
-	
 	self.patches = [NSMutableArray array];
 
 	NSString *bundlePath = [[NSBundle mainBundle] bundlePath];

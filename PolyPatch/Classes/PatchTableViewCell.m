@@ -72,12 +72,10 @@
 
 - (void) layoutSubviews {
 	[super layoutSubviews];
-
-	self.pitchSlider.frame = CGRectMake(self.bounds.size.width * 0.6,
+	self.pitchSlider.frame = CGRectMake(self.bounds.size.width  * 0.6,
 										self.bounds.size.height * 0.3,
-										self.bounds.size.width * 0.3,
+										self.bounds.size.width  * 0.3,
 										self.bounds.size.height * 0.5);
-
 }
 
 - (void)dealloc {
@@ -85,10 +83,9 @@
     [super dealloc];
 }
 
+// Here we send the pitch value to only the patch specified by the $0 arg associated with this table cell
 - (void)pitchSliderValueChanged:(UISlider *)sender {
-	// Here we send the pitch value only the patch spefied by the $0 arg associated with this table cell
 	[PdBase sendFloat:sender.value toReceiver:[NSString stringWithFormat:@"%d-pitch", self.dollarZero]];
 }
-
 
 @end

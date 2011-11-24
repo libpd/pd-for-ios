@@ -39,11 +39,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PolyPatchViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
-	NSMutableArray *patches_;
-	UIButton *openButton_;
-	UITableView *tableView_;
-}
-
+@interface PolyPatchViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @end
 

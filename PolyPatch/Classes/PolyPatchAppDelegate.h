@@ -38,15 +38,13 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "PdAudio.h"
+#import "PdBase.h"
 
 @class PolyPatchViewController;
 
-@interface PolyPatchAppDelegate : NSObject <UIApplicationDelegate, PdReceiverDelegate> {
-    UIWindow *window_;
-    PolyPatchViewController *viewController_;
-	PdAudio *pdAudio_;
-}
+@interface PolyPatchAppDelegate : NSObject <UIApplicationDelegate, PdReceiverDelegate>
+
+@property (nonatomic, retain) UIWindow *window;
 
 @end
 
