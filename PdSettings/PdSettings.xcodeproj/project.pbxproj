@@ -153,7 +153,7 @@
 		11A8BDDE1425F4920006B996 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				11A8BDE51425F4930006B996 /* libpd.a */,
+				11A8BDE51425F4930006B996 /* libpd-ios.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,7 +221,7 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		11A8BDE51425F4930006B996 /* libpd.a */ = {
+		11A8BDE51425F4930006B996 /* libpd-ios.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libpd-ios.a";
@@ -308,7 +308,7 @@
 					"-ObjC",
 				);
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = "../libpd/**";
+				USER_HEADER_SEARCH_PATHS = ../libpd/objc;
 			};
 			name = Debug;
 		};
@@ -335,7 +335,7 @@
 					"-ObjC",
 				);
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = "../libpd/**";
+				USER_HEADER_SEARCH_PATHS = ../libpd/objc;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
