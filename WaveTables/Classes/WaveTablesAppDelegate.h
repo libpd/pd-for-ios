@@ -41,14 +41,14 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "PdAudio.h"
 
 @class RootViewController;
+@class PdAudioController;
 
 @interface WaveTablesAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window_;
     RootViewController *viewController_;
-    PdAudio *pdAudio_;
+    PdAudioController *audioController_;
 }
 
 @property (nonatomic, retain) UIWindow *window;

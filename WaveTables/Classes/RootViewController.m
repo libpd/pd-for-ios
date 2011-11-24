@@ -94,10 +94,6 @@ static NSString *const kPdArrayName = @"%d-array"; // decimal parameter is the $
     [self layoutWavetable];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [self setVolume:70];
-}
-
 #pragma mark -
 #pragma mark Rotation
 
@@ -168,9 +164,10 @@ static NSString *const kPdArrayName = @"%d-array"; // decimal parameter is the $
     
     patchControl.segmentedControlStyle = UISegmentedControlStyleBar;
     patchControl.tintColor = [UIColor darkGrayColor];
+	patchControl.selectedSegmentIndex = 0;
     [patchControl addTarget:self action:@selector(patchSelectorChanged:) forControlEvents:UIControlEventValueChanged];
-    patchControl.selectedSegmentIndex = 0;
-
+	[self patchSelectorChanged:patchControl];
+	
     UIBarButtonItem *patchControlButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:patchControl] autorelease];
     
 	[self.toolBar setItems:[NSArray arrayWithObjects:printButton,
@@ -183,9 +180,10 @@ static NSString *const kPdArrayName = @"%d-array"; // decimal parameter is the $
 	[self.view addSubview:self.toolBar];
 }
 
+// this ratio is a nice number that allows the wavetable to be of maximum size on an ipad in
+// landscape and portrait.
+// It will just try to fit in the screen with the same ratio, but alot smaller
 - (void)layoutWavetable {
-    // this ratio a nice number that allows the wavetable to be of maximum size on an ipad in landscape 
-    // in portriate, it will just try to fit in the screen with the same ratio, but alot smaller
     static const CGFloat kRatioWidthToHeight = 1.375; 
     static const CGFloat kPadding = 10;
     CGSize viewSize = self.view.bounds.size;
@@ -219,6 +217,7 @@ static NSString *const kPdArrayName = @"%d-array"; // decimal parameter is the $
     
     [self setupWavetable];
     [self layoutWavetable];
+	[self setVolume:90];
 }
 
 - (void)setVolume:(CGFloat)volume {
@@ -269,11 +268,12 @@ static NSString *const kPdArrayName = @"%d-array"; // decimal parameter is the $
         default:
             return;
     }
+	DLog(@"selected patch named: %@", patchName);
     if ([self.patch.baseName isEqualToString:patchName]) {
         DLog(@"%@ already open, returning.", patchName);
         return;
     }
-    DLog(@"selected  minY = %2.1f, maxY = %2.1f", patchName, minY, maxY);
+	DLog(@"minY = %2.1f, maxY = %2.1f", patchName, minY, maxY);
     [self openPatch:patchName];
     self.waveTableView.minY = minY;
     self.waveTableView.maxY = maxY;
