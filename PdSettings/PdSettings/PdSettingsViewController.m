@@ -48,9 +48,9 @@ typedef enum {
 - (UIButton *)addButtonWithText:(NSString *)text selector:(SEL)selector;
 - (void)fillSettingsArray;
 - (void)indicateSettingsChanged;
-- (void)selectInitialPickerSettings;
+- (void)updatePickerSettings;
 - (int)pickerValueForComponent:(SettingsPickerComponent)component;
-- (void)setPickerValue:(int)value component:(SettingsPickerComponent)component;
+- (void)setPickerValue:(int)value component:(SettingsPickerComponent)component animated:(BOOL)animated;
 
 @end
 
@@ -74,6 +74,7 @@ typedef enum {
 		[PdBase setDelegate:self];
 		[PdBase subscribe:@"test-value"];
 		self.audioController = [[[PdAudioController alloc] init] autorelease];
+		[self.audioController configureWithSampleRate:44100 numberInputChannels:2 numberOutputChannels:2]; // well known settings
 		[self fillSettingsArray];
 	}
 	return self;
@@ -118,8 +119,7 @@ typedef enum {
 
 	[self.view addSubview:self.settingsPicker];
 	[self.view addSubview:self.patchSelector];
-	
-	[self selectInitialPickerSettings];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -130,6 +130,7 @@ typedef enum {
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
+	[self updatePickerSettings];
 	[self.audioController print];
 }
 
@@ -195,7 +196,7 @@ typedef enum {
 		PdAudioStatus status = [self.audioController configureTicksPerBuffer:ticks];
 		if (status == PdAudioPropertyChanged) {
 			RLog(@"Could not configure ticksPerBuffer = %d, instead got %d", ticks, self.audioController.ticksPerBuffer);
-			[self setPickerValue:self.audioController.ticksPerBuffer component:SettingsPickerComponentNumberTicks];
+			[self setPickerValue:self.audioController.ticksPerBuffer component:SettingsPickerComponentNumberTicks animated:YES];
 		}
 	} else {
 		[self indicateSettingsChanged];
@@ -358,10 +359,7 @@ typedef enum {
 	} else if (status == PdAudioPropertyChanged) {
 		RLog(@"Could not configure with provided properties (samplerate: %d, numInputs: %d, numOutputs: %d)", sampleRate, numInputs, numOutputs);
 		RLog(@"Instead got samplerate: %d, numInputs: %d, numOutputs: %d", self.audioController.sampleRate, self.audioController.numberInputChannels, self.audioController.numberOutputChannels);
-		
-		[self setPickerValue:self.audioController.sampleRate component:SettingsPickerComponentSampleRate];
-		[self setPickerValue:self.audioController.numberInputChannels component:SettingsPickerComponentNumberInputChannels];
-		[self setPickerValue:self.audioController.numberOutputChannels component:SettingsPickerComponentNumberOutputChannels];
+		[self updatePickerSettings];
 	}
 }
 
@@ -401,14 +399,12 @@ typedef enum {
 						  nil];
 }
 
-- (void)selectInitialPickerSettings {
-	[self setPickerValue:44100 component:SettingsPickerComponentSampleRate];
-	[self setPickerValue:2 component:SettingsPickerComponentNumberInputChannels];
-	[self setPickerValue:2 component:SettingsPickerComponentNumberOutputChannels];
-	[self setPickerValue:8 component:SettingsPickerComponentNumberTicks];
-	[self configureAudio];
+- (void)updatePickerSettings {
+	[self setPickerValue:self.audioController.sampleRate component:SettingsPickerComponentSampleRate animated:YES];
+	[self setPickerValue:self.audioController.numberInputChannels component:SettingsPickerComponentNumberInputChannels animated:YES];
+	[self setPickerValue:self.audioController.numberOutputChannels component:SettingsPickerComponentNumberOutputChannels animated:YES];
+	[self setPickerValue:self.audioController.ticksPerBuffer component:SettingsPickerComponentNumberTicks animated:YES];
 }
-
 
 - (int)pickerValueForComponent:(SettingsPickerComponent)component {
 	int row = [self.settingsPicker selectedRowInComponent:component];
@@ -416,13 +412,13 @@ typedef enum {
 	return [value intValue];
 }
 
-- (void)setPickerValue:(int)value component:(SettingsPickerComponent)component {
+- (void)setPickerValue:(int)value component:(SettingsPickerComponent)component animated:(BOOL)animated {
 	NSString *valueString = [NSString stringWithFormat:@"%d", value];
 	NSArray *componentArray = [self.settingsArray objectAtIndex:component];
 	int row = 0;
 	for (NSString *pickerValue in componentArray) {
 		if ([valueString isEqualToString:pickerValue]) {
-			[self.settingsPicker selectRow:row inComponent:component animated:YES];
+			[self.settingsPicker selectRow:row inComponent:component animated:animated];
 			return;
 		}
 		row++;
