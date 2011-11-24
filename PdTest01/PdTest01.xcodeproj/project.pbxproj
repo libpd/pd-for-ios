@@ -3,20 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1152A3FC147E9BD000DCD675 /* AudioHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1152A3F3147E9BD000DCD675 /* AudioHelpers.m */; };
+		1152A3FD147E9BD000DCD675 /* PdAudioController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1152A3F5147E9BD000DCD675 /* PdAudioController.m */; };
+		1152A3FE147E9BD000DCD675 /* PdAudioUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1152A3F7147E9BD000DCD675 /* PdAudioUnit.m */; };
+		1152A400147E9BD000DCD675 /* ringbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 1152A3FA147E9BD000DCD675 /* ringbuffer.c */; };
+		1152A402147E9D6C00DCD675 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1152A401147E9D6C00DCD675 /* AVFoundation.framework */; };
 		1D3623260D0F684500981E51 /* PdTest01AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* PdTest01AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
-		2899E5220DE3E06400AC0155 /* PdTest01ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* PdTest01ViewController.xib */; };
-		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* PdTest01ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* PdTest01ViewController.m */; };
 		DC02069512B0420A00A7541F /* s_libpdmidi.c in Sources */ = {isa = PBXBuildFile; fileRef = DC02069412B0420A00A7541F /* s_libpdmidi.c */; };
 		DC0C300E125D15FC008B6389 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0C300D125D15FC008B6389 /* Foundation.framework */; };
 		DC0C3012125D160B008B6389 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0C3011125D160B008B6389 /* UIKit.framework */; };
 		DC0C3016125D1614008B6389 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0C3015125D1614008B6389 /* CoreGraphics.framework */; };
-		DC2EC93B1259158600C9FF37 /* PdAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2EC9381259158600C9FF37 /* PdAudio.m */; };
 		DC2EC93C1259158600C9FF37 /* PdBase.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2EC93A1259158600C9FF37 /* PdBase.m */; };
 		DC2EC9A8125915D600C9FF37 /* d_arithmetic.c in Sources */ = {isa = PBXBuildFile; fileRef = DC2EC93E125915D600C9FF37 /* d_arithmetic.c */; };
 		DC2EC9A9125915D600C9FF37 /* d_array.c in Sources */ = {isa = PBXBuildFile; fileRef = DC2EC93F125915D600C9FF37 /* d_array.c */; };
@@ -94,11 +96,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1152A3F2147E9BD000DCD675 /* AudioHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioHelpers.h; path = ../libpd/objc/AudioHelpers.h; sourceTree = "<group>"; };
+		1152A3F3147E9BD000DCD675 /* AudioHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioHelpers.m; path = ../libpd/objc/AudioHelpers.m; sourceTree = "<group>"; };
+		1152A3F4147E9BD000DCD675 /* PdAudioController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PdAudioController.h; path = ../libpd/objc/PdAudioController.h; sourceTree = "<group>"; };
+		1152A3F5147E9BD000DCD675 /* PdAudioController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PdAudioController.m; path = ../libpd/objc/PdAudioController.m; sourceTree = "<group>"; };
+		1152A3F6147E9BD000DCD675 /* PdAudioUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PdAudioUnit.h; path = ../libpd/objc/PdAudioUnit.h; sourceTree = "<group>"; };
+		1152A3F7147E9BD000DCD675 /* PdAudioUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PdAudioUnit.m; path = ../libpd/objc/PdAudioUnit.m; sourceTree = "<group>"; };
+		1152A3FA147E9BD000DCD675 /* ringbuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ringbuffer.c; path = ../libpd/objc/ringbuffer.c; sourceTree = "<group>"; };
+		1152A3FB147E9BD000DCD675 /* ringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ringbuffer.h; path = ../libpd/objc/ringbuffer.h; sourceTree = "<group>"; };
+		1152A401147E9D6C00DCD675 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* PdTest01AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PdTest01AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* PdTest01AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PdTest01AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* PdTest01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PdTest01.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2899E5210DE3E06400AC0155 /* PdTest01ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PdTest01ViewController.xib; sourceTree = "<group>"; };
-		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		28D7ACF60DDB3853001CB0EB /* PdTest01ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PdTest01ViewController.h; sourceTree = "<group>"; };
 		28D7ACF70DDB3853001CB0EB /* PdTest01ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PdTest01ViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -108,8 +117,6 @@
 		DC0C300D125D15FC008B6389 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DC0C3011125D160B008B6389 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DC0C3015125D1614008B6389 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		DC2EC9371259158600C9FF37 /* PdAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PdAudio.h; path = ../libpd/objc/PdAudio.h; sourceTree = "<group>"; };
-		DC2EC9381259158600C9FF37 /* PdAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PdAudio.m; path = ../libpd/objc/PdAudio.m; sourceTree = "<group>"; };
 		DC2EC9391259158600C9FF37 /* PdBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PdBase.h; path = ../libpd/objc/PdBase.h; sourceTree = "<group>"; };
 		DC2EC93A1259158600C9FF37 /* PdBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PdBase.m; path = ../libpd/objc/PdBase.m; sourceTree = "<group>"; };
 		DC2EC93E125915D600C9FF37 /* d_arithmetic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d_arithmetic.c; path = "../libpd/pure-data/src/d_arithmetic.c"; sourceTree = "<group>"; };
@@ -201,6 +208,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1152A402147E9D6C00DCD675 /* AVFoundation.framework in Frameworks */,
 				DCCC7CDF125C3E0F002CF6AC /* AudioToolbox.framework in Frameworks */,
 				DC0C300E125D15FC008B6389 /* Foundation.framework in Frameworks */,
 				DC0C3012125D160B008B6389 /* UIKit.framework in Frameworks */,
@@ -221,6 +229,19 @@
 				28D7ACF70DDB3853001CB0EB /* PdTest01ViewController.m */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		1152A3F0147E9B4E00DCD675 /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				1152A3F2147E9BD000DCD675 /* AudioHelpers.h */,
+				1152A3F3147E9BD000DCD675 /* AudioHelpers.m */,
+				1152A3F4147E9BD000DCD675 /* PdAudioController.h */,
+				1152A3F5147E9BD000DCD675 /* PdAudioController.m */,
+				1152A3F6147E9BD000DCD675 /* PdAudioUnit.h */,
+				1152A3F7147E9BD000DCD675 /* PdAudioUnit.m */,
+			);
+			name = audio;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -260,8 +281,6 @@
 			isa = PBXGroup;
 			children = (
 				DC609325125BBEED00F8509D /* test.pd */,
-				2899E5210DE3E06400AC0155 /* PdTest01ViewController.xib */,
-				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* PdTest01-Info.plist */,
 			);
 			name = Resources;
@@ -275,6 +294,7 @@
 				DC0C3011125D160B008B6389 /* UIKit.framework */,
 				DC0C3015125D1614008B6389 /* CoreGraphics.framework */,
 				DCD724CE125D1A1E000A4BDE /* Foundation.framework */,
+				1152A401147E9D6C00DCD675 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -363,8 +383,9 @@
 		DC2ECA05125915E100C9FF37 /* libpd glue */ = {
 			isa = PBXGroup;
 			children = (
-				DC2EC9371259158600C9FF37 /* PdAudio.h */,
-				DC2EC9381259158600C9FF37 /* PdAudio.m */,
+				1152A3FA147E9BD000DCD675 /* ringbuffer.c */,
+				1152A3FB147E9BD000DCD675 /* ringbuffer.h */,
+				1152A3F0147E9B4E00DCD675 /* audio */,
 				DC2EC9391259158600C9FF37 /* PdBase.h */,
 				DC2EC93A1259158600C9FF37 /* PdBase.m */,
 			);
@@ -408,8 +429,11 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "PdTest01" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -432,8 +456,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
-				2899E5220DE3E06400AC0155 /* PdTest01ViewController.xib in Resources */,
 				DC609326125BBEED00F8509D /* test.pd in Resources */,
 				DC35155112676B75004825FB /* ReadMe.txt in Resources */,
 			);
@@ -449,7 +471,6 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* PdTest01AppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* PdTest01ViewController.m in Sources */,
-				DC2EC93B1259158600C9FF37 /* PdAudio.m in Sources */,
 				DC2EC93C1259158600C9FF37 /* PdBase.m in Sources */,
 				DC2EC9A8125915D600C9FF37 /* d_arithmetic.c in Sources */,
 				DC2EC9A9125915D600C9FF37 /* d_array.c in Sources */,
@@ -521,6 +542,10 @@
 				DC3889C41299F3690024386A /* x_libpdreceive.c in Sources */,
 				DC3889C51299F3690024386A /* z_libpd.c in Sources */,
 				DC02069512B0420A00A7541F /* s_libpdmidi.c in Sources */,
+				1152A3FC147E9BD000DCD675 /* AudioHelpers.m in Sources */,
+				1152A3FD147E9BD000DCD675 /* PdAudioController.m in Sources */,
+				1152A3FE147E9BD000DCD675 /* PdAudioUnit.m in Sources */,
+				1152A400147E9BD000DCD675 /* ringbuffer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,14 +556,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv7,
+					armv6,
+				);
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PdTest01_Prefix.pch;
 				INFOPLIST_FILE = "PdTest01-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = PdTest01;
 				SDKROOT = iphoneos;
 			};
@@ -548,12 +577,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv7,
+					armv6,
+				);
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PdTest01_Prefix.pch;
 				INFOPLIST_FILE = "PdTest01-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = PdTest01;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -567,15 +600,16 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
 					"-DPD",
 					"-DUSEAPI_DUMMY",
 					"-DHAVE_LIBDL",
 					"-DHAVE_UNISTD_H",
 				);
-				PREBINDING = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -588,15 +622,16 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
 					"-DPD",
 					"-DUSEAPI_DUMMY",
 					"-DHAVE_LIBDL",
 					"-DHAVE_UNISTD_H",
 				);
-				PREBINDING = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

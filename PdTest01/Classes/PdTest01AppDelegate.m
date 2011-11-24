@@ -39,126 +39,34 @@
 
 #import "PdTest01AppDelegate.h"
 #import "PdTest01ViewController.h"
+#import "PdAudioController.h"
+#import "PdBase.h"
+
 @interface PdTest01AppDelegate()
-
-- (void) openAndRunTestPatch;
-- (void) copyDemoPatchesToUserDomain;
-
-
+@property (nonatomic, retain) PdAudioController *audioController;
 @end
-
 
 @implementation PdTest01AppDelegate
 
 @synthesize window;
-@synthesize viewController;
-
-NSString *patchFileTypeExtension = @"pd";  
-
-
-#pragma mark -
-#pragma mark Application lifecycle
+@synthesize audioController = audioController_;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    
-    
-#if TARGET_IPHONE_SIMULATOR	
-	int ticksPerBuffer = 8;  // No other value seems to work with the simulator.
-#else
-    int ticksPerBuffer = 32;
-#endif
-    
-	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:ticksPerBuffer
-                         andNumberOfInputChannels:2 andNumberOfOutputChannels:2];
+	self.audioController = [[[PdAudioController alloc] init] autorelease];
+	[self.audioController configureWithSampleRate:44100 numberInputChannels:2 numberOutputChannels:2];
+	[PdBase openFile:@"test.pd" path:[[NSBundle mainBundle] resourcePath]];
+	[self.audioController setActive:YES];
 	
-	[self copyDemoPatchesToUserDomain];  // move the bundled patches to the documents dir
-	[self openAndRunTestPatch]; 
-	
-    [window addSubview:viewController.view];
-    [window makeKeyAndVisible];
-
+	self.window = [[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
+	self.window.rootViewController = [[[PdTest01ViewController alloc] init] autorelease];
+    [self.window makeKeyAndVisible];
 	return YES;
 }
 
-- (void) openAndRunTestPatch
-{
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsDirectory = [paths objectAtIndex:0];
-	
-	[PdBase openFile:@"test.pd" path:documentsDirectory];
-	[PdBase computeAudio:YES];
-	[pdAudio play];	
-}
-
-- (void) copyDemoPatchesToUserDomain
-{
-	NSFileManager *fm = [NSFileManager defaultManager];
-	NSError *fileError;
-	
-	NSBundle *mainBundle = [NSBundle mainBundle];
-	NSString *bundlePath = [mainBundle bundlePath];
-	
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsDirectory = [paths objectAtIndex:0];
-	
-	NSArray *bundleFiles = [fm contentsOfDirectoryAtPath:bundlePath error:&fileError];
-	
-	for( NSString *patchFile in bundleFiles )
-	{
-		if ([[patchFile pathExtension] isEqualToString:patchFileTypeExtension ])
-		{
-			NSString *bundlePatchFilePath = [bundlePath stringByAppendingPathComponent:patchFile]; 
-			NSString *documentsPatchFilePath = [documentsDirectory stringByAppendingPathComponent:patchFile];
-			
-			if ([fm fileExistsAtPath:bundlePatchFilePath]) 
-			{
-				if( ![fm fileExistsAtPath:documentsPatchFilePath] )
-					if( ![fm copyItemAtPath:bundlePatchFilePath toPath: documentsPatchFilePath error:&fileError] )
-						NSLog(@"Error copying demo patch:%@", [fileError localizedDescription]);
-			} 
-		}
-	}
-}
-
-
-- (void)applicationWillResignActive:(UIApplication *)application {
-    /*
-     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-     */
-}
-
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    /*
-     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     */
-}
-
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    /*
-     Called when the application is about to terminate.
-     See also applicationDidEnterBackground:.
-     */
-}
-
-
-#pragma mark -
-#pragma mark Memory management
-
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    /*
-     Free up as much memory as possible by purging cached data objects that can be recreated (or reloaded from disk) later.
-     */
-}
-
-
 - (void)dealloc {
-    [viewController release];
-    [window release];
+	self.audioController = nil;
+	self.window = nil;
     [super dealloc];
 }
-
 
 @end

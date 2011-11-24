@@ -38,18 +38,8 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "PdAudio.h"
 
-@class PdTest01ViewController;
-
-@interface PdTest01AppDelegate : NSObject <UIApplicationDelegate> {
-    UIWindow *window;
-    PdTest01ViewController *viewController;
-	PdAudio *pdAudio;
-}
-
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet PdTest01ViewController *viewController;
-
+@interface PdTest01AppDelegate : NSObject <UIApplicationDelegate>
+@property (nonatomic, retain) UIWindow *window;
 @end
 
