@@ -278,7 +278,7 @@
 		58ABCE7F140ACD90003C36F3 /* libpd.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libpd.a;
+			path = "libpd-ios.a";
 			remoteRef = 58ABCE7E140ACD90003C36F3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
