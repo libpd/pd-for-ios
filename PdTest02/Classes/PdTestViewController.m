@@ -50,55 +50,33 @@
 @synthesize playToggle;
 
 
-/*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-*/
-
-- (void) viewWillAppear:(BOOL)animated
-{
+- (void) viewWillAppear:(BOOL)animated {
 	[self playStateChanged];
 }
 
-// Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }
 
-- (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
-}
-
-- (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
-}
-
-
 - (void)dealloc {
+	[outputLeftToggle release];
+	[outputRightToggle release];
+	[playToggle release];
     [super dealloc];
 }
 
-- (IBAction) outputLeftChanged
-{
+- (IBAction)outputLeftChanged {
 	[PdBase sendFloat:(outputLeftToggle.on ? 1. : 0.) toReceiver: @"left" ];
 }
 
-- (IBAction) outputRightChanged
-{
+- (IBAction)outputRightChanged {
 	[PdBase sendFloat:(outputRightToggle.on ? 1. : 0.) toReceiver: @"right" ];
 }
 
-- (IBAction) playStateChanged
-{
+- (IBAction)playStateChanged {
 	PdTestAppDelegate *appDelegate = (PdTestAppDelegate *) [[UIApplication sharedApplication] delegate];
-	appDelegate.playing = playToggle.on;
+	BOOL active = playToggle.on;
+	[appDelegate setAudioActive:active];
 }
-
 
 @end

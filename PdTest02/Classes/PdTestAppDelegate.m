@@ -39,23 +39,20 @@
 
 #import "PdTestAppDelegate.h"
 #import "PdTestViewController.h"
-
+#import "PdAudioController.h"
 
 @interface PdTestAppDelegate()
 
+@property (nonatomic, retain) PdAudioController *audioController;
 - (void) openAndRunTestPatch;
 
-
 @end
-
 
 @implementation PdTestAppDelegate
 
 @synthesize window;
 @synthesize viewController;
-@synthesize playing;
-
-
+@synthesize audioController;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -63,21 +60,10 @@
 extern void lrshift_tilde_setup(void);
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    
-    
-#if TARGET_IPHONE_SIMULATOR	
-	int ticksPerBuffer = 8;  // No other value seems to work with the simulator.
-#else
-    int ticksPerBuffer = 32;
-#endif
-    
-	// create and init PdAudio object
-	// note: we are using the AmbientSound Audio Session Category
-	// this allows this app to work properly on most older iDevices
-	// but note that recoding audio input is not possible with AmbientSound Audio Sessions
-	pdAudio = [[PdAudio alloc] initWithSampleRate:44100.0 andTicksPerBuffer:ticksPerBuffer
-                         andNumberOfInputChannels:0 andNumberOfOutputChannels:2 
-                         andAudioSessionCategory:kAudioSessionCategory_AmbientSound];
+
+	// load our audio controller
+	self.audioController = [[[PdAudioController alloc] init] autorelease];
+	[self.audioController configureWithSampleRate:44100 numberInputChannels:0 numberOutputChannels:2];
 	
 	// set AppDelegate as PdRecieverDelegate to recieve messages from Libpd
 	[PdBase setDelegate:self];
@@ -88,84 +74,32 @@ extern void lrshift_tilde_setup(void);
 	
 	[self openAndRunTestPatch]; 
 	
-    [window addSubview:viewController.view];
-    [window makeKeyAndVisible];
-	
-	
+    [self.window addSubview:viewController.view];
+    [self.window makeKeyAndVisible];
 	return YES;
 }
 
-- (void) openAndRunTestPatch
-{
+- (void)openAndRunTestPatch {
 	// open patch located in app bundle
 	void *x = [PdBase openFile:@"LoopWithExtern.pd" path:[[NSBundle mainBundle] bundlePath]];
-	[PdBase computeAudio:YES];
-	self.playing = YES;
+	[self.audioController setActive:YES];
 }
 
 // receivePrint delegate method to receive "print" messages from Libpd
-- (void)receivePrint:(NSString *)message
-{
-	// for simplicity we are just sending print messages to the debugging console
-	NSLog(message);
+// for simplicity we are just sending print messages to the debugging console
+- (void)receivePrint:(NSString *)message {
+	NSLog(@"(pd) %@", message);
 }
 
-- (BOOL)isPlaying
-{
-    return playing;
+- (void)setAudioActive:(BOOL)active {
+	[self.audioController setActive:active];
 }
-
-- (void)setPlaying:(BOOL)newState
-{
-    if( newState == playing )
-		return;
-	
-	playing = newState;
-	if( playing )
-		[pdAudio play];
-	else
-		[pdAudio pause];
-}
-
-
-- (void)applicationWillResignActive:(UIApplication *)application {
-    /*
-     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-     */
-}
-
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    /*
-     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     */
-}
-
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    /*
-     Called when the application is about to terminate.
-     See also applicationDidEnterBackground:.
-     */
-}
-
-
-#pragma mark -
-#pragma mark Memory management
-
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    /*
-     Free up as much memory as possible by purging cached data objects that can be recreated (or reloaded from disk) later.
-     */
-}
-
 
 - (void)dealloc {
     [viewController release];
-    [window release];
+    self.window = nil;
+	self.audioController = nil;
     [super dealloc];
 }
-
 
 @end
