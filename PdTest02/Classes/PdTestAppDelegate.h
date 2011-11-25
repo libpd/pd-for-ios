@@ -38,23 +38,22 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "PdAudio.h"
+#import "PdBase.h"
 
 @class PdTestViewController;
+@class PdAudioController;
 
 // note AppDelegate supports PdReceiverDelegate protocol
-@interface PdTestAppDelegate : NSObject <UIApplicationDelegate,PdReceiverDelegate > {
+@interface PdTestAppDelegate : NSObject <UIApplicationDelegate, PdReceiverDelegate > {
     UIWindow *window;
     PdTestViewController *viewController;
-	PdAudio *pdAudio;
-	BOOL playing;
+	PdAudioController *audioController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet PdTestViewController *viewController;
-@property (nonatomic, getter=isPlaying) BOOL playing;
 
-
+- (void)setAudioActive:(BOOL)active;
 
 @end
 
