@@ -200,7 +200,7 @@
 		58ABCE78140ACD8F003C36F3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				58ABCE7F140ACD90003C36F3 /* libpd.a */,
+				58ABCE7F140ACD90003C36F3 /* libpd-ios.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -275,7 +275,7 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		58ABCE7F140ACD90003C36F3 /* libpd.a */ = {
+		58ABCE7F140ACD90003C36F3 /* libpd-ios.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libpd-ios.a";
