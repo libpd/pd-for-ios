@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5811EFC21482EB29006867D5 /* libpd-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5811EFBF1482EA65006867D5 /* libpd-ios.a */; };
+		5811EFC41482EB2F006867D5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5811EFC31482EB2F006867D5 /* AudioToolbox.framework */; };
+		5811EFC61482EB33006867D5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5811EFC51482EB33006867D5 /* AVFoundation.framework */; };
 		581A4B7714114A4E00C6AC68 /* sample.pd in Resources */ = {isa = PBXBuildFile; fileRef = 581A4B7514114A4E00C6AC68 /* sample.pd */; };
 		58ABCE3F140ACCEE003C36F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58ABCE3E140ACCEE003C36F3 /* UIKit.framework */; };
 		58ABCE41140ACCEE003C36F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58ABCE40140ACCEE003C36F3 /* Foundation.framework */; };
@@ -24,11 +27,23 @@
 		58ABCE6C140ACCEF003C36F3 /* DispatcherSampleTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 58ABCE6B140ACCEF003C36F3 /* DispatcherSampleTests.h */; };
 		58ABCE6E140ACCEF003C36F3 /* DispatcherSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 58ABCE6D140ACCEF003C36F3 /* DispatcherSampleTests.m */; };
 		58ABCE8E140AD038003C36F3 /* SampleListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 58ABCE8D140AD038003C36F3 /* SampleListener.m */; };
-		58ABCE90140ADE73003C36F3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58ABCE8F140ADE73003C36F3 /* AudioToolbox.framework */; };
-		58E8FD39141003E600DDE612 /* libpd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58E8FD38141003E600DDE612 /* libpd.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5811EFBE1482EA65006867D5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5811EFB71482EA65006867D5 /* libpd.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = "libpd-ios";
+		};
+		5811EFC01482EB24006867D5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5811EFB71482EA65006867D5 /* libpd.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = "libpd-ios";
+		};
 		58ABCE62140ACCEF003C36F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 58ABCE31140ACCEE003C36F3 /* Project object */;
@@ -36,23 +51,12 @@
 			remoteGlobalIDString = 58ABCE39140ACCEE003C36F3;
 			remoteInfo = DispatcherSample;
 		};
-		58ABCE7E140ACD90003C36F3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 58ABCE77140ACD8F003C36F3 /* libpd.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D;
-			remoteInfo = libpd;
-		};
-		58E8FD36141003C900DDE612 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 58ABCE77140ACD8F003C36F3 /* libpd.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = libpd;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5811EFB71482EA65006867D5 /* libpd.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libpd.xcodeproj; path = ../libpd/libpd.xcodeproj; sourceTree = "<group>"; };
+		5811EFC31482EB2F006867D5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		5811EFC51482EB33006867D5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		581A4B7514114A4E00C6AC68 /* sample.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample.pd; sourceTree = "<group>"; };
 		58ABCE3A140ACCEE003C36F3 /* DispatcherSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DispatcherSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58ABCE3E140ACCEE003C36F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -74,12 +78,8 @@
 		58ABCE6A140ACCEF003C36F3 /* DispatcherSampleTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DispatcherSampleTests-Prefix.pch"; sourceTree = "<group>"; };
 		58ABCE6B140ACCEF003C36F3 /* DispatcherSampleTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DispatcherSampleTests.h; sourceTree = "<group>"; };
 		58ABCE6D140ACCEF003C36F3 /* DispatcherSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DispatcherSampleTests.m; sourceTree = "<group>"; };
-		58ABCE77140ACD8F003C36F3 /* libpd.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libpd.xcodeproj; path = ../libpd/libpd.xcodeproj; sourceTree = "<group>"; };
-		58ABCE82140ACDD7003C36F3 /* libpd.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libpd.a; sourceTree = SOURCE_ROOT; };
 		58ABCE8C140AD038003C36F3 /* SampleListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleListener.h; sourceTree = "<group>"; };
 		58ABCE8D140AD038003C36F3 /* SampleListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleListener.m; sourceTree = "<group>"; };
-		58ABCE8F140ADE73003C36F3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		58E8FD38141003E600DDE612 /* libpd.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libpd.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,8 +87,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58E8FD39141003E600DDE612 /* libpd.a in Frameworks */,
-				58ABCE90140ADE73003C36F3 /* AudioToolbox.framework in Frameworks */,
+				5811EFC61482EB33006867D5 /* AVFoundation.framework in Frameworks */,
+				5811EFC41482EB2F006867D5 /* AudioToolbox.framework in Frameworks */,
+				5811EFC21482EB29006867D5 /* libpd-ios.a in Frameworks */,
 				58ABCE3F140ACCEE003C36F3 /* UIKit.framework in Frameworks */,
 				58ABCE41140ACCEE003C36F3 /* Foundation.framework in Frameworks */,
 				58ABCE43140ACCEE003C36F3 /* CoreGraphics.framework in Frameworks */,
@@ -108,6 +109,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5811EFB81482EA65006867D5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5811EFBF1482EA65006867D5 /* libpd-ios.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		581A4B7314114A4E00C6AC68 /* patch */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,11 +128,10 @@
 		58ABCE2F140ACCEE003C36F3 = {
 			isa = PBXGroup;
 			children = (
+				5811EFC51482EB33006867D5 /* AVFoundation.framework */,
+				5811EFC31482EB2F006867D5 /* AudioToolbox.framework */,
+				5811EFB71482EA65006867D5 /* libpd.xcodeproj */,
 				581A4B7314114A4E00C6AC68 /* patch */,
-				58E8FD38141003E600DDE612 /* libpd.a */,
-				58ABCE8F140ADE73003C36F3 /* AudioToolbox.framework */,
-				58ABCE82140ACDD7003C36F3 /* libpd.a */,
-				58ABCE77140ACD8F003C36F3 /* libpd.xcodeproj */,
 				58ABCE44140ACCEE003C36F3 /* DispatcherSample */,
 				58ABCE64140ACCEF003C36F3 /* DispatcherSampleTests */,
 				58ABCE3D140ACCEE003C36F3 /* Frameworks */,
@@ -197,14 +205,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		58ABCE78140ACD8F003C36F3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				58ABCE7F140ACD90003C36F3 /* libpd-ios.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -219,7 +219,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				58E8FD37141003C900DDE612 /* PBXTargetDependency */,
+				5811EFC11482EB24006867D5 /* PBXTargetDependency */,
 			);
 			name = DispatcherSample;
 			productName = DispatcherSample;
@@ -262,8 +262,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 58ABCE78140ACD8F003C36F3 /* Products */;
-					ProjectRef = 58ABCE77140ACD8F003C36F3 /* libpd.xcodeproj */;
+					ProductGroup = 5811EFB81482EA65006867D5 /* Products */;
+					ProjectRef = 5811EFB71482EA65006867D5 /* libpd.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -275,11 +275,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		58ABCE7F140ACD90003C36F3 /* libpd-ios.a */ = {
+		5811EFBF1482EA65006867D5 /* libpd-ios.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libpd-ios.a";
-			remoteRef = 58ABCE7E140ACD90003C36F3 /* PBXContainerItemProxy */;
+			remoteRef = 5811EFBE1482EA65006867D5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -346,15 +346,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5811EFC11482EB24006867D5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libpd-ios";
+			targetProxy = 5811EFC01482EB24006867D5 /* PBXContainerItemProxy */;
+		};
 		58ABCE63140ACCEF003C36F3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 58ABCE39140ACCEE003C36F3 /* DispatcherSample */;
 			targetProxy = 58ABCE62140ACCEF003C36F3 /* PBXContainerItemProxy */;
-		};
-		58E8FD37141003C900DDE612 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = libpd;
-			targetProxy = 58E8FD36141003C900DDE612 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -435,7 +435,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DispatcherSample/DispatcherSample-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
-				"HEADER_SEARCH_PATHS[arch=*]" = "../libpd/**";
+				"HEADER_SEARCH_PATHS[arch=*]" = "";
 				INFOPLIST_FILE = "DispatcherSample/DispatcherSample-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
@@ -443,6 +443,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../libpd/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -455,7 +456,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DispatcherSample/DispatcherSample-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
-				"HEADER_SEARCH_PATHS[arch=*]" = "../libpd/**";
+				"HEADER_SEARCH_PATHS[arch=*]" = "";
 				INFOPLIST_FILE = "DispatcherSample/DispatcherSample-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
@@ -463,6 +464,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../libpd/**";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

@@ -9,7 +9,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PdAudio.h"
+#import "PdAudioController.h"
 #import "PdDispatcher.h"
 
 @class DispatcherSampleViewController;
@@ -18,13 +18,12 @@
     UIWindow *window;
     DispatcherSampleViewController *viewController;
     
-	PdAudio *pdAudio;
+	PdAudioController *audioController;
     PdDispatcher *dispatcher;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet DispatcherSampleViewController *viewController;
-@property (nonatomic, readonly) PdDispatcher *dispatcher;
 
 @end
 

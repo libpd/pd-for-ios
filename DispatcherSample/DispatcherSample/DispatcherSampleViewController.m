@@ -20,7 +20,7 @@
 @synthesize barLabel;
 
 -(void)pdSetup {
-    PdDispatcher *dispatcher = APP_DELEGATE.dispatcher;
+    PdDispatcher *dispatcher = (PdDispatcher *)[PdBase delegate];
     SampleListener *listener = [[SampleListener alloc] initWithLabel:fooLabel];
     [dispatcher addListener:listener forSource:@"foo"];
     [listener release];

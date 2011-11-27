@@ -17,7 +17,6 @@
 
 @synthesize window;
 @synthesize viewController;
-@synthesize dispatcher;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     window.rootViewController = self.viewController;
@@ -26,23 +25,17 @@
     dispatcher = [[PdDispatcher alloc] init];
     [PdBase setDelegate:dispatcher];
     
-#if TARGET_IPHONE_SIMULATOR	
-	int ticksPerBuffer = 8;  // No other value seems to work with the simulator.
-#else
-    int ticksPerBuffer = 32;
-#endif
-    
-	pdAudio = [[PdAudio alloc] initWithSampleRate:44100 andTicksPerBuffer:ticksPerBuffer
-                         andNumberOfInputChannels:2 andNumberOfOutputChannels:2];
+	audioController = [[PdAudioController alloc] init];
+    [audioController configureWithSampleRate:44100 numberInputChannels:0 numberOutputChannels:2];
     
     [viewController pdSetup];
     
-    [pdAudio play];
+    audioController.active = YES;
     return YES;
 }
 
 - (void)dealloc {
-    [pdAudio release];
+    [audioController release];
     [PdBase setDelegate:nil];
     [dispatcher release];
     [window release];
