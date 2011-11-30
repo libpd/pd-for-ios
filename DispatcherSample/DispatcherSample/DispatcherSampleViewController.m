@@ -27,6 +27,9 @@
     listener = [[SampleListener alloc] initWithLabel:barLabel];
     [dispatcher addListener:listener forSource:@"bar"];
     [listener release];
+    listener = [[SampleListener alloc] initWithLabel:nil];
+    [dispatcher addListener:listener forSource:@"baz"];
+    [listener release];
     
 	[PdBase openFile:@"sample.pd" path:[[NSBundle mainBundle] resourcePath]];
 }

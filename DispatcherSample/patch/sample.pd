@@ -1,4 +1,4 @@
-#N canvas 655 297 450 300 10;
+#N canvas 979 1230 450 300 10;
 #X obj 52 13 loadbang;
 #X obj 235 55 osc~ 220;
 #X obj 233 93 dac~;
@@ -15,6 +15,11 @@
 #X floatatom 141 207 16 0 0 0 - - -;
 #X obj 19 236 s bar;
 #X obj 140 235 s foo;
+#X obj 289 125 f 0;
+#X obj 326 126 + 1;
+#X msg 331 156 \$1 10 -0.123;
+#X obj 331 183 s baz;
+#X obj 243 160 print count;
 #X connect 0 0 5 0;
 #X connect 1 0 2 0;
 #X connect 1 0 2 1;
@@ -25,6 +30,7 @@
 #X connect 5 1 4 0;
 #X connect 6 0 7 0;
 #X connect 6 1 4 1;
+#X connect 6 1 15 0;
 #X connect 7 0 8 0;
 #X connect 8 0 9 0;
 #X connect 8 1 10 0;
@@ -32,3 +38,8 @@
 #X connect 10 0 12 0;
 #X connect 11 0 13 0;
 #X connect 12 0 14 0;
+#X connect 15 0 16 0;
+#X connect 15 0 17 0;
+#X connect 15 0 19 0;
+#X connect 16 0 15 1;
+#X connect 17 0 18 0;
