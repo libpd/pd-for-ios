@@ -83,7 +83,7 @@
 
 - (void)initAudio {
 	self.audioController = [[[PdAudioController alloc] init] autorelease];
-	PdAudioStatus status = [self.audioController configureWithSampleRate:44100 numberInputChannels:2 numberOutputChannels:2];
+	PdAudioStatus status = [self.audioController configureWithSampleRate:44100 numberInputChannels:2 numberOutputChannels:2 mixingEnabled:NO];
 	if (status == PdAudioError) {
 		NSLog(@"Error in PdAudioController!");
 	} else if (status == PdAudioPropertyChanged) {

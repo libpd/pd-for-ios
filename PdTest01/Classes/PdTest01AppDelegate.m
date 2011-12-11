@@ -53,7 +53,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 	self.audioController = [[[PdAudioController alloc] init] autorelease];
-	[self.audioController configureWithSampleRate:44100 numberInputChannels:2 numberOutputChannels:2];
+	[self.audioController configureWithSampleRate:44100 numberInputChannels:2 numberOutputChannels:2 mixingEnabled:NO];
 	[PdBase openFile:@"test.pd" path:[[NSBundle mainBundle] resourcePath]];
 	[self.audioController setActive:YES];
 	
