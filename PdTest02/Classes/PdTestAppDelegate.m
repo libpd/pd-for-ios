@@ -73,6 +73,7 @@ extern void lrshift_tilde_setup(void);
 	lrshift_tilde_setup();  
 	
 	[self openAndRunTestPatch]; 
+	[self.audioController print];
 	
     [self.window addSubview:viewController.view];
     [self.window makeKeyAndVisible];

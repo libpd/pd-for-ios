@@ -56,6 +56,7 @@
 	[self.audioController configureWithSampleRate:44100 numberInputChannels:2 numberOutputChannels:2];
 	[PdBase openFile:@"test.pd" path:[[NSBundle mainBundle] resourcePath]];
 	[self.audioController setActive:YES];
+	[self.audioController print];
 	
 	self.window = [[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
 	self.window.rootViewController = [[[PdTest01ViewController alloc] init] autorelease];
