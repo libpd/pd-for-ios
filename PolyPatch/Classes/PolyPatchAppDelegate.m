@@ -90,6 +90,7 @@
 		NSLog(@"Audio properties changed.");
 	}
 	[self.audioController setActive:YES];
+	[self.audioController print];
 }
 
 
