@@ -61,7 +61,7 @@
     self.viewController = [[[RootViewController alloc] init] autorelease];
 
 	self.audioController = [[[PdAudioController alloc] init] autorelease];
-	[self.audioController configureWithSampleRate:44100 numberInputChannels:0 numberOutputChannels:2 mixingEnabled:NO];
+	[self.audioController configureForAmbientAudioWithSampleRate:44100 numberOutputChannels:2 mixingEnabled:YES];
 	[self.audioController setActive:YES];
 	[self.audioController print];
 	

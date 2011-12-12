@@ -63,7 +63,7 @@ extern void lrshift_tilde_setup(void);
 
 	// load our audio controller
 	self.audioController = [[[PdAudioController alloc] init] autorelease];
-	[self.audioController configureWithSampleRate:44100 numberInputChannels:0 numberOutputChannels:2 mixingEnabled:NO];
+	[self.audioController configureForAmbientAudioWithSampleRate:44100 numberOutputChannels:2 mixingEnabled:YES];
 	
 	// set AppDelegate as PdRecieverDelegate to recieve messages from Libpd
 	[PdBase setDelegate:self];
