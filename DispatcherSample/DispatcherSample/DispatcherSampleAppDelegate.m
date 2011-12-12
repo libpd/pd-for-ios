@@ -26,7 +26,8 @@
     [PdBase setDelegate:dispatcher];
     
 	audioController = [[PdAudioController alloc] init];
-    [audioController configureForAmbientAudioWithSampleRate:44100 numberOutputChannels:2 mixingEnabled:YES];
+    [audioController configureAmbientWithSampleRate:44100 numberOutputChannels:2 mixingEnabled:YES];
+    [audioController print];
     
     [viewController pdSetup];
     

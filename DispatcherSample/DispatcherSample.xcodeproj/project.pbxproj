@@ -250,6 +250,9 @@
 /* Begin PBXProject section */
 		58ABCE31140ACCEE003C36F3 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = 58ABCE34140ACCEE003C36F3 /* Build configuration list for PBXProject "DispatcherSample" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -434,6 +437,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DispatcherSample/DispatcherSample-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = "";
 				"HEADER_SEARCH_PATHS[arch=*]" = "";
 				INFOPLIST_FILE = "DispatcherSample/DispatcherSample-Info.plist";
@@ -455,6 +459,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DispatcherSample/DispatcherSample-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = "";
 				"HEADER_SEARCH_PATHS[arch=*]" = "";
 				INFOPLIST_FILE = "DispatcherSample/DispatcherSample-Info.plist";
@@ -481,6 +486,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DispatcherSampleTests/DispatcherSampleTests-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "DispatcherSampleTests/DispatcherSampleTests-Info.plist";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -503,6 +509,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DispatcherSampleTests/DispatcherSampleTests-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "DispatcherSampleTests/DispatcherSampleTests-Info.plist";
 				OTHER_LDFLAGS = (
 					"-framework",
