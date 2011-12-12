@@ -33,7 +33,7 @@ typedef enum {
 @property (nonatomic, retain) NSArray *settingsArray;
 @property (nonatomic, retain) UIButton *activeButton;
 @property (nonatomic, retain) UIButton *reloadButton;
-@property (nonatomic, retain) UIButton *ambientAudioButton;
+@property (nonatomic, retain) UIButton *backgroundAudioButton;
 @property (nonatomic, retain) UIPickerView *settingsPicker;
 @property (nonatomic, retain) UISegmentedControl *patchSelector;
 
@@ -64,7 +64,7 @@ typedef enum {
 			reloadButton = reloadButton_,
 			settingsPicker = settingsPicker_,
 			patchSelector = patchSelector_,
-			ambientAudioButton = ambientAudioButton_;
+			backgroundAudioButton = backgroundAudioButton_;
 
 #pragma mark - Init / Dealloc
 
@@ -74,7 +74,7 @@ typedef enum {
 		[PdBase setDelegate:self];
 		[PdBase subscribe:@"test-value"];
 		self.audioController = [[[PdAudioController alloc] init] autorelease];
-		[self.audioController configureWithSampleRate:44100 numberInputChannels:2 numberOutputChannels:2 mixingEnabled:NO]; // well known settings
+		[self.audioController configureWithSampleRate:44100 numberInputChannels:2 numberOutputChannels:2]; // well known settings
 		[self fillSettingsArray];
 	}
 	return self;
@@ -85,7 +85,7 @@ typedef enum {
 	self.patch = nil;
 	self.activeButton = nil;
 	self.reloadButton = nil;
-	self.ambientAudioButton = nil;
+	self.backgroundAudioButton = nil;
 	self.patchSelector = nil;
 	self.settingsArray = nil;
 	[super dealloc];
@@ -103,7 +103,7 @@ typedef enum {
 	self.reloadButton = [self addButtonWithText:@"Reload Settings" selector:@selector(reloadButtonWasTapped:)];
 	self.reloadButton.enabled = NO;
 	
-	self.ambientAudioButton = [self addButtonWithText:@"Ambient Audio" selector:@selector(bgButtonWasTapped:)];
+	self.backgroundAudioButton = [self addButtonWithText:@"Background Audio" selector:@selector(bgButtonWasTapped:)];
 	
 	self.settingsPicker = [[[UIPickerView alloc] init] autorelease];
 	self.settingsPicker.delegate = self;
@@ -185,10 +185,9 @@ typedef enum {
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-	// if the user selects inputs > 0, make sure to disable the
-	// ambient audio button
+	// if the user selects inputs > 0, make sure to disable the background audio button
 	if (component == SettingsPickerComponentNumberInputChannels && [self pickerValueForComponent:SettingsPickerComponentNumberInputChannels] > 0) {
-		self.ambientAudioButton.selected = NO;
+		self.backgroundAudioButton.selected = NO;
 	}
 	
 	// number of ticks can be changed while the audio unit is running, without it needing to be recreated, so it has a different configure method
@@ -226,12 +225,12 @@ typedef enum {
 	CGFloat rButtonXOffset = viewSize.width - kFramePadding - kReloadButtonWidth;
 	self.reloadButton.frame = CGRectMake(rButtonXOffset, kFramePadding, kReloadButtonWidth, kButtonHeight);
 	if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
-		self.ambientAudioButton.frame = CGRectMake(self.reloadButton.frame.origin.x,
+		self.backgroundAudioButton.frame = CGRectMake(self.reloadButton.frame.origin.x,
 													  self.reloadButton.frame.origin.y + kButtonHeight + kButtonSpacer,
 													  kReloadButtonWidth,
 													  kButtonHeight);
 	} else {
-		self.ambientAudioButton.frame = CGRectMake(self.reloadButton.frame.origin.x - self.reloadButton.frame.size.width - kButtonSpacer,
+		self.backgroundAudioButton.frame = CGRectMake(self.reloadButton.frame.origin.x - self.reloadButton.frame.size.width - kButtonSpacer,
 													  self.reloadButton.frame.origin.y,
 													  kReloadButtonWidth,
 													  kButtonHeight);
@@ -346,15 +345,14 @@ typedef enum {
 	int numInputs = [self pickerValueForComponent:SettingsPickerComponentNumberInputChannels];
 	int numOutputs = [self pickerValueForComponent:SettingsPickerComponentNumberOutputChannels];
 	
-	if (self.ambientAudioButton.selected) {
-		status = [self.audioController configureForAmbientAudioWithSampleRate:sampleRate
-                                                         numberOutputChannels:numOutputs
-                                                                mixingEnabled:NO];
+	if (self.backgroundAudioButton.selected) {
+		status = [self.audioController configureForBackgroundAudioWithSampleRate:sampleRate
+															numberOutputChannels:numOutputs
+																   mixingEnabled:YES];
 	} else {
 		status = [self.audioController configureWithSampleRate:sampleRate
 										   numberInputChannels:numInputs
-										  numberOutputChannels:numOutputs
-                                                 mixingEnabled:NO];
+										  numberOutputChannels:numOutputs];
 	}
 	if (status == PdAudioError) {
 		RLog(@"Error configuring PdAudioController");
