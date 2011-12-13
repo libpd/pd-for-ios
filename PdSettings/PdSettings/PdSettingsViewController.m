@@ -34,15 +34,17 @@ typedef enum {
 @property (nonatomic, retain) UIButton *activeButton;
 @property (nonatomic, retain) UIButton *reloadButton;
 @property (nonatomic, retain) UIButton *ambientAudioButton;
+@property (nonatomic, retain) UIButton *allowMixingButton;
 @property (nonatomic, retain) UIPickerView *settingsPicker;
 @property (nonatomic, retain) UISegmentedControl *patchSelector;
 
 - (void)configureAudio; // this is where PdAudioController's configure method is called and audio properties are actually set
-- (void)layoutInteface;
+- (void)layoutInterface;
 - (void)layoutLabels;
 - (void)activeButtonWasTapped:(UIButton *)sender;
 - (void)reloadButtonWasTapped:(UIButton *)sender;
-- (void)bgButtonWasTapped:(UIButton *)sender;
+- (void)ambientButtonWasTapped:(UIButton *)sender;
+- (void)allowMixingButtonWasTapped:(UIButton *)sender;
 - (void)patchSelectorChanged:(UISegmentedControl *)sender;
 - (UILabel *)addLabelWithText:(NSString *)text;
 - (UIButton *)addButtonWithText:(NSString *)text selector:(SEL)selector;
@@ -58,13 +60,14 @@ typedef enum {
 @implementation PdSettingsViewController
 
 @synthesize audioController = audioController_,
-			patch = patch_,
-			settingsArray = settingsArray_,
-			activeButton = activeButton_,
-			reloadButton = reloadButton_,
-			settingsPicker = settingsPicker_,
-			patchSelector = patchSelector_,
-			ambientAudioButton = ambientAudioButton_;
+patch = patch_,
+settingsArray = settingsArray_,
+activeButton = activeButton_,
+reloadButton = reloadButton_,
+settingsPicker = settingsPicker_,
+patchSelector = patchSelector_,
+ambientAudioButton = ambientAudioButton_,
+allowMixingButton = allowMixingButton_;
 
 #pragma mark - Init / Dealloc
 
@@ -74,7 +77,7 @@ typedef enum {
 		[PdBase setDelegate:self];
 		[PdBase subscribe:@"test-value"];
 		self.audioController = [[[PdAudioController alloc] init] autorelease];
-		[self.audioController configureWithSampleRate:44100 numberInputChannels:2 numberOutputChannels:2 mixingEnabled:NO]; // well known settings
+		[self.audioController configurePlaybackWithSampleRate:44100 numberChannels:2 inputEnabled:YES mixingEnabled:NO]; // well known settings
 		[self fillSettingsArray];
 	}
 	return self;
@@ -86,6 +89,7 @@ typedef enum {
 	self.activeButton = nil;
 	self.reloadButton = nil;
 	self.ambientAudioButton = nil;
+    self.allowMixingButton = nil;
 	self.patchSelector = nil;
 	self.settingsArray = nil;
 	[super dealloc];
@@ -99,11 +103,12 @@ typedef enum {
 	
 	self.activeButton = [self addButtonWithText:@"Inactive" selector:@selector(activeButtonWasTapped:)];
 	[self.activeButton setTitle:@"Active" forState:UIControlStateSelected];
-
+    
 	self.reloadButton = [self addButtonWithText:@"Reload Settings" selector:@selector(reloadButtonWasTapped:)];
 	self.reloadButton.enabled = NO;
 	
-	self.ambientAudioButton = [self addButtonWithText:@"Ambient Audio" selector:@selector(bgButtonWasTapped:)];
+	self.ambientAudioButton = [self addButtonWithText:@"Ambient Audio" selector:@selector(ambientButtonWasTapped:)];
+	self.allowMixingButton = [self addButtonWithText:@"Allow Mixing" selector:@selector(allowMixingButtonWasTapped:)];
 	
 	self.settingsPicker = [[[UIPickerView alloc] init] autorelease];
 	self.settingsPicker.delegate = self;
@@ -116,15 +121,15 @@ typedef enum {
     self.patchSelector.selectedSegmentIndex = 0;
     [self.patchSelector addTarget:self action:@selector(patchSelectorChanged:) forControlEvents:UIControlEventValueChanged];
 	[self patchSelectorChanged:self.patchSelector];
-
+    
 	[self.view addSubview:self.settingsPicker];
 	[self.view addSubview:self.patchSelector];
-
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	[self layoutInteface];
+	[self layoutInterface];
 	[self layoutLabels];
 }
 
@@ -147,7 +152,7 @@ typedef enum {
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	[self layoutInteface];
+	[self layoutInterface];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -207,7 +212,7 @@ typedef enum {
 
 #pragma mark - Private (UI)
 
-- (void)layoutInteface {
+- (void)layoutInterface {
 	const CGFloat kButtonHeight = 34.0;
 	const CGFloat kPSWidth = 300.0;
 	const CGFloat kActiveButtonWidth = 70.0;
@@ -215,7 +220,7 @@ typedef enum {
 	const CGFloat kButtonSpacer = 10.0;
 	const CGFloat kPickerHeight = 162.0;
 	CGSize viewSize = self.view.bounds.size;
-
+    
 	self.settingsPicker.frame =  CGRectMake(0.0, viewSize.height - kPickerHeight, viewSize.width, kPickerHeight);
 	
 	CGFloat psXOffset = (viewSize.width - kPSWidth) * 0.5;
@@ -227,22 +232,30 @@ typedef enum {
 	self.reloadButton.frame = CGRectMake(rButtonXOffset, kFramePadding, kReloadButtonWidth, kButtonHeight);
 	if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
 		self.ambientAudioButton.frame = CGRectMake(self.reloadButton.frame.origin.x,
-													  self.reloadButton.frame.origin.y + kButtonHeight + kButtonSpacer,
-													  kReloadButtonWidth,
-													  kButtonHeight);
+                                                   self.reloadButton.frame.origin.y + kButtonHeight + kButtonSpacer,
+                                                   kReloadButtonWidth,
+                                                   kButtonHeight);
+		self.allowMixingButton.frame = CGRectMake(self.reloadButton.frame.origin.x,
+                                                  self.reloadButton.frame.origin.y + 2 * (kButtonHeight + kButtonSpacer),
+                                                  kReloadButtonWidth,
+                                                  kButtonHeight);
 	} else {
 		self.ambientAudioButton.frame = CGRectMake(self.reloadButton.frame.origin.x - self.reloadButton.frame.size.width - kButtonSpacer,
-													  self.reloadButton.frame.origin.y,
-													  kReloadButtonWidth,
-													  kButtonHeight);
+                                                   self.reloadButton.frame.origin.y,
+                                                   kReloadButtonWidth,
+                                                   kButtonHeight);
+		self.allowMixingButton.frame = CGRectMake(self.reloadButton.frame.origin.x - 2 * (self.reloadButton.frame.size.width + kButtonSpacer),
+                                                  self.reloadButton.frame.origin.y,
+                                                  kReloadButtonWidth,
+                                                  kButtonHeight);
 	}
-
+    
 }
 
 - (void)layoutLabels {
 	CGSize viewSize = self.view.bounds.size;
 	const CGFloat kPSLabelWidth = 100.0;
-
+    
 	CGFloat pickerLabelsYOffset = viewSize.height - self.settingsPicker.frame.size.height - kLabelHeight;
 	CGFloat drawingWidth = viewSize.width - kFramePadding * 2;
 	CGFloat xOffset = kFramePadding + 2;
@@ -271,7 +284,7 @@ typedef enum {
 												 pickerLabelsYOffset,
 												 drawingWidth * kPickerOtherComponentsProportion,
 												 kLabelHeight));
-
+    
 	UILabel *psLabel = [self addLabelWithText:@"patch selector"];
 	psLabel.textAlignment = UITextAlignmentCenter;
 	CGFloat psLabelYOffset = self.patchSelector.frame.origin.y - kLabelHeight - 2;
@@ -303,7 +316,7 @@ typedef enum {
 	[button setTitleColor:[UIColor colorWithRed:0.75 green:0.75 blue:0.75 alpha:1.0] forState:UIControlStateNormal];
 	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-
+    
 	UIImage *normalImage = [[UIImage imageNamed:@"button-normal.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
 	[button setBackgroundImage:normalImage forState:UIControlStateNormal];
 	UIImage *pressedImage = [[UIImage imageNamed:@"button-pressed.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
@@ -325,14 +338,22 @@ typedef enum {
 - (void)reloadButtonWasTapped:(UIButton *)sender {
 	RLog(@"reloading audio configuration");
 	[self configureAudio];
-
+    
 	[self.reloadButton.layer removeAnimationForKey:@"shadow"];
 	[self.audioController print];
 	self.reloadButton.enabled = NO;
 }
 
-// ???: should this call configureAudio?
-- (void)bgButtonWasTapped:(UIButton *)sender {
+- (void)ambientButtonWasTapped:(UIButton *)sender {
+	sender.selected = !sender.selected;
+    if (sender.selected) {
+        [self setPickerValue:0 component:SettingsPickerComponentNumberInputChannels animated:YES];
+    }
+	RLog(@"selected: %d", sender.selected);
+	[self indicateSettingsChanged];
+}
+
+- (void)allowMixingButtonWasTapped:(UIButton *)sender {
 	sender.selected = !sender.selected;
 	RLog(@"selected: %d", sender.selected);
 	[self indicateSettingsChanged];
@@ -347,22 +368,19 @@ typedef enum {
 	int numOutputs = [self pickerValueForComponent:SettingsPickerComponentNumberOutputChannels];
 	
 	if (self.ambientAudioButton.selected) {
-		status = [self.audioController configureForAmbientAudioWithSampleRate:sampleRate
-                                                         numberOutputChannels:numOutputs
-                                                                mixingEnabled:NO];
+		status = [self.audioController configureAmbientWithSampleRate:sampleRate numberChannels:numOutputs mixingEnabled:self.allowMixingButton.selected];
 	} else {
-		status = [self.audioController configureWithSampleRate:sampleRate
-										   numberInputChannels:numInputs
-										  numberOutputChannels:numOutputs
-                                                 mixingEnabled:NO];
+        int numChannels = (numInputs > numOutputs) ? numInputs : numOutputs;
+		status = [self.audioController configurePlaybackWithSampleRate:sampleRate numberChannels:numChannels
+                                                          inputEnabled:(numInputs > 0) mixingEnabled:self.allowMixingButton.selected];
 	}
 	if (status == PdAudioError) {
 		RLog(@"Error configuring PdAudioController");
 	} else if (status == PdAudioPropertyChanged) {
 		RLog(@"Could not configure with provided properties (samplerate: %d, numInputs: %d, numOutputs: %d)", sampleRate, numInputs, numOutputs);
-		RLog(@"Instead got samplerate: %d, numInputs: %d, numOutputs: %d", self.audioController.sampleRate, self.audioController.numberInputChannels, self.audioController.numberOutputChannels);
-		[self updatePickerSettings];
+		RLog(@"Instead got samplerate: %d, numChannels: %d", self.audioController.sampleRate, self.audioController.numberChannels);
 	}
+    [self updatePickerSettings];
 }
 
 - (void)patchSelectorChanged:(UISegmentedControl *)sender {
@@ -379,7 +397,7 @@ typedef enum {
 // TODO: test with bogus values
 - (void)fillSettingsArray {
 	const int kNumTickOptions = 32;
-
+    
 #if TARGET_IPHONE_SIMULATOR	// only samplerates that work in simulator are 22k and 44k
 	NSArray *sampleratesArray = [NSArray arrayWithObjects:@"22050", @"44100", nil];
 #else
@@ -403,8 +421,8 @@ typedef enum {
 
 - (void)updatePickerSettings {
 	[self setPickerValue:self.audioController.sampleRate component:SettingsPickerComponentSampleRate animated:YES];
-	[self setPickerValue:self.audioController.numberInputChannels component:SettingsPickerComponentNumberInputChannels animated:YES];
-	[self setPickerValue:self.audioController.numberOutputChannels component:SettingsPickerComponentNumberOutputChannels animated:YES];
+	[self setPickerValue:(self.audioController.inputEnabled ? self.audioController.numberChannels : 0) component:SettingsPickerComponentNumberInputChannels animated:YES];
+	[self setPickerValue:self.audioController.numberChannels component:SettingsPickerComponentNumberOutputChannels animated:YES];
 	[self setPickerValue:self.audioController.ticksPerBuffer component:SettingsPickerComponentNumberTicks animated:YES];
 }
 
@@ -432,7 +450,7 @@ typedef enum {
 - (void)indicateSettingsChanged {
 	if (!self.reloadButton.enabled) {
 		self.reloadButton.enabled = YES;
-
+        
 		self.reloadButton.layer.shadowRadius = 5.0;
 		self.reloadButton.layer.shadowColor = [UIColor cyanColor].CGColor;
 		self.reloadButton.layer.shadowOpacity = 0.0;
