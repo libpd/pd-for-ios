@@ -20,7 +20,7 @@ static const CGFloat kPickerOtherComponentsProportion = 0.22222222;
 
 typedef enum {
 	SettingsPickerComponentSampleRate,
-	SettingsPickerComponentNumberInputChannels,
+	SettingsPickerComponentInputEnabled,
 	SettingsPickerComponentNumberOutputChannels,
 	SettingsPickerComponentNumberTicks,
 	SettingsPickerNumberComponents
@@ -74,7 +74,7 @@ typedef enum {
 		[PdBase setDelegate:self];
 		[PdBase subscribe:@"test-value"];
 		self.audioController = [[[PdAudioController alloc] init] autorelease];
-		[self.audioController configureWithSampleRate:44100 numberInputChannels:2 numberOutputChannels:2]; // well known settings
+		[self.audioController configurePlaybackWithSampleRate:44100 numberOutputChannels:2 inputEnabled:NO mixingEnabled:YES];
 		[self fillSettingsArray];
 	}
 	return self;
@@ -186,7 +186,7 @@ typedef enum {
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
 	// if the user selects inputs > 0, make sure to disable the background audio button
-	if (component == SettingsPickerComponentNumberInputChannels && [self pickerValueForComponent:SettingsPickerComponentNumberInputChannels] > 0) {
+	if (component == SettingsPickerComponentInputEnabled && [self pickerValueForComponent:SettingsPickerComponentInputEnabled]) {
 		self.backgroundAudioButton.selected = NO;
 	}
 	
@@ -330,7 +330,6 @@ typedef enum {
 	self.reloadButton.enabled = NO;
 }
 
-// ???: should this call configureAudio?
 - (void)bgButtonWasTapped:(UIButton *)sender {
 	sender.selected = !sender.selected;
 	RLog(@"selected: %d", sender.selected);
@@ -342,23 +341,32 @@ typedef enum {
 - (void)configureAudio {
 	PdAudioStatus status;
 	int sampleRate = [self pickerValueForComponent:SettingsPickerComponentSampleRate];
-	int numInputs = [self pickerValueForComponent:SettingsPickerComponentNumberInputChannels];
+	int inputEnabled = [self pickerValueForComponent:SettingsPickerComponentInputEnabled];
 	int numOutputs = [self pickerValueForComponent:SettingsPickerComponentNumberOutputChannels];
 	
 	if (self.backgroundAudioButton.selected) {
-		status = [self.audioController configureForBackgroundAudioWithSampleRate:sampleRate
-															numberOutputChannels:numOutputs
-																   mixingEnabled:YES];
+		// special case for background audio: no inputs and playback configuration
+		status = [self.audioController configurePlaybackWithSampleRate:sampleRate
+												  numberOutputChannels:numOutputs
+														  inputEnabled:NO
+														 mixingEnabled:YES];
+	} else if(inputEnabled) {
+		// playback configuration, plus input enabled (gives the same number of input and output channels
+		status = [self.audioController configurePlaybackWithSampleRate:sampleRate
+												  numberOutputChannels:numOutputs
+														  inputEnabled:YES
+														 mixingEnabled:NO];
 	} else {
-		status = [self.audioController configureWithSampleRate:sampleRate
-										   numberInputChannels:numInputs
-										  numberOutputChannels:numOutputs];
+		// the (more or less) default configuration; gives you 'ambient', meaning no inputs and system sounds will silence your app. You can still get mixing, however (but not in the simulator).
+		status = [self.audioController configureAmbientWithSampleRate:sampleRate
+												 numberOutputChannels:numOutputs
+														mixingEnabled:YES];
 	}
 	if (status == PdAudioError) {
 		RLog(@"Error configuring PdAudioController");
 	} else if (status == PdAudioPropertyChanged) {
-		RLog(@"Could not configure with provided properties (samplerate: %d, numInputs: %d, numOutputs: %d)", sampleRate, numInputs, numOutputs);
-		RLog(@"Instead got samplerate: %d, numInputs: %d, numOutputs: %d", self.audioController.sampleRate, self.audioController.numberInputChannels, self.audioController.numberOutputChannels);
+		RLog(@"Could not configure with provided properties (samplerate: %d, inputEnabled: %d, numOutputs: %d)", sampleRate, inputEnabled, numOutputs);
+		RLog(@"Instead got samplerate: %d, numOutputs: %d, inputEnabled: %d", self.audioController.sampleRate, self.audioController.numberOutputChannels, self.audioController.inputEnabled);
 		[self updatePickerSettings];
 	}
 }
@@ -384,7 +392,7 @@ typedef enum {
 	NSArray *sampleratesArray = [NSArray arrayWithObjects: @"8000", @"22050", @"24000", @"32000", @"44100", @"48000", nil];
 #endif
 	
-	NSArray *inputChannelsArray = [NSArray arrayWithObjects:@"0", @"1", @"2", nil];
+	NSArray *inputChannelsArray = [NSArray arrayWithObjects:@"NO", @"YES", nil];
 	NSArray *outputChannelsArray = [NSArray arrayWithObjects:@"0", @"1", @"2", nil];
 	
 	NSMutableArray *ticksArray = [NSMutableArray arrayWithCapacity:kNumTickOptions];
@@ -401,7 +409,7 @@ typedef enum {
 
 - (void)updatePickerSettings {
 	[self setPickerValue:self.audioController.sampleRate component:SettingsPickerComponentSampleRate animated:YES];
-	[self setPickerValue:self.audioController.numberInputChannels component:SettingsPickerComponentNumberInputChannels animated:YES];
+	[self setPickerValue:self.audioController.inputEnabled component:SettingsPickerComponentInputEnabled animated:YES];
 	[self setPickerValue:self.audioController.numberOutputChannels component:SettingsPickerComponentNumberOutputChannels animated:YES];
 	[self setPickerValue:self.audioController.ticksPerBuffer component:SettingsPickerComponentNumberTicks animated:YES];
 }
@@ -409,11 +417,19 @@ typedef enum {
 - (int)pickerValueForComponent:(SettingsPickerComponent)component {
 	int row = [self.settingsPicker selectedRowInComponent:component];
 	NSString *value = [[self.settingsArray objectAtIndex:component] objectAtIndex:row];
+	if (component == SettingsPickerComponentInputEnabled) {
+		return  (int)[value boolValue];
+	}
 	return [value intValue];
 }
 
 - (void)setPickerValue:(int)value component:(SettingsPickerComponent)component animated:(BOOL)animated {
-	NSString *valueString = [NSString stringWithFormat:@"%d", value];
+	NSString *valueString;
+	if (component == SettingsPickerComponentInputEnabled) {
+		valueString = (value ? @"YES" : @"NO");
+	} else {
+		valueString = [NSString stringWithFormat:@"%d", value];
+	}
 	NSArray *componentArray = [self.settingsArray objectAtIndex:component];
 	int row = 0;
 	for (NSString *pickerValue in componentArray) {
