@@ -376,10 +376,14 @@ allowMixingButton = allowMixingButton_;
 	}
 	if (status == PdAudioError) {
 		RLog(@"Error configuring PdAudioController");
+        [self.reloadButton setTitle:@"Error!" forState:UIControlStateNormal];
 	} else if (status == PdAudioPropertyChanged) {
 		RLog(@"Could not configure with provided properties (samplerate: %d, numInputs: %d, numOutputs: %d)", sampleRate, numInputs, numOutputs);
 		RLog(@"Instead got samplerate: %d, numChannels: %d", self.audioController.sampleRate, self.audioController.numberChannels);
-	}
+        [self.reloadButton setTitle:@"Property Changed!" forState:UIControlStateNormal];
+	} else {
+        [self.reloadButton setTitle:@"Success!" forState:UIControlStateNormal];
+    }
     [self updatePickerSettings];
 }
 
@@ -450,6 +454,7 @@ allowMixingButton = allowMixingButton_;
 - (void)indicateSettingsChanged {
 	if (!self.reloadButton.enabled) {
 		self.reloadButton.enabled = YES;
+        [self.reloadButton setTitle:@"Reload Settings" forState:UIControlStateNormal];
         
 		self.reloadButton.layer.shadowRadius = 5.0;
 		self.reloadButton.layer.shadowColor = [UIColor cyanColor].CGColor;
