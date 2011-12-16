@@ -402,11 +402,7 @@ allowMixingButton = allowMixingButton_;
 - (void)fillSettingsArray {
 	const int kNumTickOptions = 32;
     
-#if TARGET_IPHONE_SIMULATOR	// only samplerates that work in simulator are 22k and 44k
-	NSArray *sampleratesArray = [NSArray arrayWithObjects:@"22050", @"44100", nil];
-#else
 	NSArray *sampleratesArray = [NSArray arrayWithObjects: @"8000", @"22050", @"24000", @"32000", @"44100", @"48000", nil];
-#endif
 	
 	NSArray *inputChannelsArray = [NSArray arrayWithObjects:@"0", @"1", @"2", nil];
 	NSArray *outputChannelsArray = [NSArray arrayWithObjects:@"0", @"1", @"2", nil];
