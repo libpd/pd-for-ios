@@ -9,6 +9,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PdBase.h"
 #import "PdDispatcher.h"
 
 @interface SampleListener : NSObject<PdListener> {

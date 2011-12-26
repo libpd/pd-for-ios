@@ -27,25 +27,25 @@
     [super dealloc];
 }
 
-- (void)receiveBang {
+- (void)receiveBangFromSource:(NSString *)source {
     NSLog(@"Listener %@: bang\n", label);
 }
 
-- (void)receiveFloat:(float)val {
+- (void)receiveFloat:(float)val fromSource:(NSString *)source {
     NSLog(@"Listener %@: float %f\n", label, val);
     NSString *s = [NSString stringWithFormat:@"%f", val];
     [label setText:s];
 }
 
-- (void)receiveSymbol:(NSString *)s {
+- (void)receiveSymbol:(NSString *)s fromSource:(NSString *)source {
     NSLog(@"Listener %@: symbol %@\n", label, s);
 }
 
-- (void)receiveList:(NSArray *)v {
+- (void)receiveList:(NSArray *)v fromSource:(NSString *)source {
     NSLog(@"Listener %@: list %@\n", label, v);
 }
 
-- (void)receiveMessage:(NSString *)message withArguments:(NSArray *)arguments {
+- (void)receiveMessage:(NSString *)message withArguments:(NSArray *)arguments fromSource:(NSString *)source {
     NSLog(@"Listener %@: message %@,  %@\n", label, message, arguments);
 }
 
