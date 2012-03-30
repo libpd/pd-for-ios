@@ -7,5 +7,5 @@ These two commands install the dependencies from libpd.  After the initial
 setup, say
   git pull
   git submodule update
-whenever you want to sync with the gitorious repositories.
+whenever you want to sync with the GitHub repositories.
 
