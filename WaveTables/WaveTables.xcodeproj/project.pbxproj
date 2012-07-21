@@ -38,6 +38,13 @@
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = libpd;
 		};
+		1176E13015BB6D910061A139 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 113A44BF138142ED004C88F9 /* libpd.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 119013AB1486450C00086F19;
+			remoteInfo = "libpd-osx";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				113A44C4138142ED004C88F9 /* libpd-ios.a */,
+				1176E13115BB6D910061A139 /* libpd-osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -243,6 +251,13 @@
 			fileType = archive.ar;
 			path = "libpd-ios.a";
 			remoteRef = 113A44C3138142ED004C88F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1176E13115BB6D910061A139 /* libpd-osx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libpd-osx.a";
+			remoteRef = 1176E13015BB6D910061A139 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
