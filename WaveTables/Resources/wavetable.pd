@@ -1,25 +1,5 @@
-#N canvas 604 147 442 216 10;
+#N canvas 604 147 436 280 10;
 #X obj 31 53 mtof;
-#N canvas 269 455 450 300 print-array 0;
-#X obj 62 126 t f f;
-#X msg 58 207 \$1 \$2;
-#X obj 58 185 pack f f;
-#X obj 58 78 for 0 8;
-#X floatatom 118 70 5 0 0 0 - - -;
-#X obj 97 46 r \$0-table-size;
-#X obj 90 162 tabread \$0-array;
-#X obj 49 239 print $-array;
-#X obj 58 11 r \$0-print-table;
-#X connect 0 0 2 0;
-#X connect 0 1 6 0;
-#X connect 1 0 7 0;
-#X connect 2 0 1 0;
-#X connect 3 0 0 0;
-#X connect 5 0 3 1;
-#X connect 5 0 4 0;
-#X connect 6 0 2 1;
-#X connect 8 0 3 0;
-#X restore 287 51 pd print-array;
 #X obj 31 82 tabosc4~ \$0-array;
 #N canvas 0 22 236 256 output~ 0;
 #X obj 35 171 dac~;
@@ -64,12 +44,13 @@
 #X connect 8 0 7 0;
 #X connect 9 0 7 0;
 #X connect 12 0 11 0;
-#X restore 313 87 pd init;
+#X restore 332 87 pd init;
 #X obj 31 22 r \$0-pitch;
 #X text 96 178 - reakinator@gmail.com;
-#X text 28 165 This patch if is apart of the libpd/pd-for-ios example
-WaveTables;
 #X obj 269 22 table \$0-array 259;
-#X connect 0 0 2 0;
-#X connect 2 0 3 0;
-#X connect 5 0 0 0;
+#X obj 270 53 util/print-array \$0;
+#X text 28 165 This patch is part of the libpd/pd-for-ios example WaveTables
+;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 4 0 0 0;

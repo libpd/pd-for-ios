@@ -1,0 +1,15 @@
+#N canvas 1475 169 308 351 10;
+#X obj 72 136 t f f;
+#X msg 68 217 \$1 \$2;
+#X obj 68 195 pack f f;
+#X obj 72 60 r \$1-print-table;
+#X obj 100 172 tabread \$1-array;
+#X obj 59 249 print array-contents;
+#X obj 72 88 for 0 256;
+#X connect 0 0 2 0;
+#X connect 0 1 4 0;
+#X connect 1 0 5 0;
+#X connect 2 0 1 0;
+#X connect 3 0 6 0;
+#X connect 4 0 2 1;
+#X connect 6 0 0 0;

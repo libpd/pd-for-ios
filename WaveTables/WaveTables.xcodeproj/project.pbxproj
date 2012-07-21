@@ -14,9 +14,9 @@
 		113A45D61381528E004C88F9 /* WaveTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 113A45D51381528E004C88F9 /* WaveTableView.m */; };
 		1152A3CD147E15C400DCD675 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1152A3CC147E15C400DCD675 /* RootViewController.m */; };
 		1152A3CF147E172400DCD675 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1152A3CE147E172400DCD675 /* AVFoundation.framework */; };
+		1176E15115BB71580061A139 /* util in Resources */ = {isa = PBXBuildFile; fileRef = 1176E15015BB71580061A139 /* util */; };
 		11C91B1F12C1AEE00022693B /* WaveTablesAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C91B1B12C1AEE00022693B /* WaveTablesAppDelegate.m */; };
 		11C91B2612C1AF010022693B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C91B2212C1AF010022693B /* main.m */; };
-		11C9C55B138936DC003FD21A /* for.pd in Resources */ = {isa = PBXBuildFile; fileRef = 11C9C55A138936DC003FD21A /* for.pd */; };
 		11D47E50138BE56500D2FEEE /* resynthesis.pd in Resources */ = {isa = PBXBuildFile; fileRef = 11D47E4F138BE56500D2FEEE /* resynthesis.pd */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -58,13 +58,13 @@
 		1152A3CB147E15C400DCD675 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Classes/RootViewController.h; sourceTree = SOURCE_ROOT; };
 		1152A3CC147E15C400DCD675 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Classes/RootViewController.m; sourceTree = SOURCE_ROOT; };
 		1152A3CE147E172400DCD675 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		1176E15015BB71580061A139 /* util */ = {isa = PBXFileReference; lastKnownFileType = folder; path = util; sourceTree = "<group>"; };
 		11C91B1A12C1AEE00022693B /* WaveTablesAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveTablesAppDelegate.h; sourceTree = "<group>"; };
 		11C91B1B12C1AEE00022693B /* WaveTablesAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveTablesAppDelegate.m; sourceTree = "<group>"; };
 		11C91B2212C1AF010022693B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		11C91B2312C1AF010022693B /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		11C91B2512C1AF010022693B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11C91B2C12C1AF9F0022693B /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
-		11C9C55A138936DC003FD21A /* for.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = for.pd; sourceTree = "<group>"; };
 		11D47E4F138BE56500D2FEEE /* resynthesis.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = resynthesis.pd; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* WaveTables.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaveTables.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,8 +150,8 @@
 		11C91B2412C1AF010022693B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1176E15015BB71580061A139 /* util */,
 				11D47E4F138BE56500D2FEEE /* resynthesis.pd */,
-				11C9C55A138936DC003FD21A /* for.pd */,
 				113A4575138149DB004C88F9 /* wavetable.pd */,
 				11C91B2512C1AF010022693B /* Info.plist */,
 			);
@@ -268,8 +268,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				113A4576138149DB004C88F9 /* wavetable.pd in Resources */,
-				11C9C55B138936DC003FD21A /* for.pd in Resources */,
 				11D47E50138BE56500D2FEEE /* resynthesis.pd in Resources */,
+				1176E15115BB71580061A139 /* util in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
