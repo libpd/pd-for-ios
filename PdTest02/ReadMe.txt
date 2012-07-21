@@ -1,6 +1,10 @@
 
 PdTest02 demonstrates the use of Libpd in a Universal iPad/iPhone app.
 
+*** Note: These docs are out of date, from an early version of libpd's obj-c layer.
+Please visit the following wiki for updated info:
+https://github.com/libpd/pd-for-ios/wiki/ios
+
 ------------------------------------------------------
 Version 1.0:
 
@@ -15,7 +19,7 @@ Note: PdTest02 loads LoopWithExtern.pd directly from the app bundle. The sample 
 must also be located in the app bundle. Be aware that on iOS the app bundle is read-only.
 
 The Libpd source and documentation is available at
-http://gitorious.org/Pdlib
+https://github.com/libpd/libpd
 
 The iOS sample project is currently set up to use the latest iOS SDK. 
 But this feature only works automatically with iOS SDK 4.2 and later. 

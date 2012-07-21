@@ -11,7 +11,7 @@ When a PdFile object is removed, the patch is automatically closed
 and pd frees the memory information for that patch.
 
 The Libpd source and documentation is available at
-http://gitorious.org/Pdlib
+https://github.com/libpd/libpd
 
 --------------- License ------------
 

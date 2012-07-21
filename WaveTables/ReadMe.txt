@@ -18,11 +18,17 @@ the graphical representatio on your iDevice.
 
 Hope this gives some people some good ideas for new and neat synthesizers!
 
+Note also that helper patches are in a subfolder, which helps you to keep
+your abstractions organized.  If you want to do this in your own projects,
+It is explained in further detail on the pd-for-ios wiki at:
+
+https://github.com/libpd/pd-for-ios/wiki/ios
+
 The Libpd source and documentation is available at
-http://gitorious.org/Pdlib
+https://github.com/libpd/libpd
 
 Documentation specific to the array api is at:
-https://gitorious.org/pdlib/pages/Libpd#7.+Accessing+arrays+in+Pd
+https://github.com/libpd/libpd/wiki/libpd
 
 TODO: multi-touch array editing
 

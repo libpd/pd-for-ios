@@ -2,7 +2,11 @@
 This is a simple sample Universal iPad/iPhone app using Libpd to load and run a PD patch file.
 
 The Libpd source and documentation is available at
-http://gitorious.org/Pdlib
+https://github.com/libpd/libpd
+
+*** Note: These docs are out of date, from an early version of libpd's obj-c layer.
+Please visit the following wiki for updated info:
+https://github.com/libpd/pd-for-ios/wiki/ios
 
 The iOS sample project is currently set up to use the latest iOS SDK. 
 But this feature only works automatically with iOS SDK 4.2 and later. 
