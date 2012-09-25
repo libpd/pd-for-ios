@@ -1,0 +1,427 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1106785812BF1F3E00EEF8B0 /* wavetabler.pd in Resources */ = {isa = PBXBuildFile; fileRef = 1106785712BF1F3E00EEF8B0 /* wavetabler.pd */; };
+		111ED9881481A48F00C2FA29 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111ED9871481A48F00C2FA29 /* AVFoundation.framework */; };
+		1138CFAA139C820D00E37D70 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1138CFA9139C820D00E37D70 /* QuartzCore.framework */; };
+		1178378B12C0EC5B00FC9681 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1178378912C0EC5B00FC9681 /* main.m */; };
+		117837CF12C0EE7F00FC9681 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 117837C612C0EE7F00FC9681 /* AppDelegate.m */; };
+		117837D012C0EE7F00FC9681 /* SlidePadBasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 117837C912C0EE7F00FC9681 /* SlidePadBasicViewController.m */; };
+		117837D112C0EE7F00FC9681 /* Fingerboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 117837CC12C0EE7F00FC9681 /* Fingerboard.m */; };
+		11A30EAF1611575A00786A6D /* libpd-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11A30EAA1611571B00786A6D /* libpd-ios.a */; };
+		11C91C2C12C203760022693B /* TouchDiamond.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C91C2B12C203760022693B /* TouchDiamond.m */; };
+		DC0C300E125D15FC008B6389 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0C300D125D15FC008B6389 /* Foundation.framework */; };
+		DC0C3012125D160B008B6389 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0C3011125D160B008B6389 /* UIKit.framework */; };
+		DC0C3016125D1614008B6389 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0C3015125D1614008B6389 /* CoreGraphics.framework */; };
+		DCCC7CDF125C3E0F002CF6AC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCC7CDE125C3E0F002CF6AC /* AudioToolbox.framework */; };
+		DCD724CF125D1A1E000A4BDE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCD724CE125D1A1E000A4BDE /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		11A30EA91611571B00786A6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0EE529681330D18D009D0B96 /* libpd.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = "libpd-ios";
+		};
+		11A30EAB1611571B00786A6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0EE529681330D18D009D0B96 /* libpd.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 119013AB1486450C00086F19;
+			remoteInfo = "libpd-osx";
+		};
+		11A30EAD1611575200786A6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0EE529681330D18D009D0B96 /* libpd.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = "libpd-ios";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0EE529681330D18D009D0B96 /* libpd.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libpd.xcodeproj; path = ../libpd/libpd.xcodeproj; sourceTree = "<group>"; };
+		1106785712BF1F3E00EEF8B0 /* wavetabler.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = wavetabler.pd; path = pd/wavetabler.pd; sourceTree = "<group>"; };
+		111ED9871481A48F00C2FA29 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		1138CF85139B78B500E37D70 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1138CFA9139C820D00E37D70 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		1178378812C0EC5B00FC9681 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Common.h; path = OtherSources/Common.h; sourceTree = "<group>"; };
+		1178378912C0EC5B00FC9681 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = OtherSources/main.m; sourceTree = "<group>"; };
+		1178378A12C0EC5B00FC9681 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = OtherSources/Prefix.pch; sourceTree = "<group>"; };
+		1178378E12C0ECB200FC9681 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
+		117837C512C0EE7F00FC9681 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		117837C612C0EE7F00FC9681 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		117837C812C0EE7F00FC9681 /* SlidePadBasicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlidePadBasicViewController.h; sourceTree = "<group>"; };
+		117837C912C0EE7F00FC9681 /* SlidePadBasicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlidePadBasicViewController.m; sourceTree = "<group>"; };
+		117837CB12C0EE7F00FC9681 /* Fingerboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Fingerboard.h; path = Views/Fingerboard.h; sourceTree = "<group>"; };
+		117837CC12C0EE7F00FC9681 /* Fingerboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Fingerboard.m; path = Views/Fingerboard.m; sourceTree = "<group>"; };
+		11C91C2A12C203760022693B /* TouchDiamond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchDiamond.h; path = Views/TouchDiamond.h; sourceTree = "<group>"; };
+		11C91C2B12C203760022693B /* TouchDiamond.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TouchDiamond.m; path = Views/TouchDiamond.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* SlidePadBasic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlidePadBasic.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC0C300D125D15FC008B6389 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DC0C3011125D160B008B6389 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		DC0C3015125D1614008B6389 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		DCCC7CDE125C3E0F002CF6AC /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
+		DCD724CE125D1A1E000A4BDE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11A30EAF1611575A00786A6D /* libpd-ios.a in Frameworks */,
+				111ED9881481A48F00C2FA29 /* AVFoundation.framework in Frameworks */,
+				1138CFAA139C820D00E37D70 /* QuartzCore.framework in Frameworks */,
+				DCCC7CDF125C3E0F002CF6AC /* AudioToolbox.framework in Frameworks */,
+				DC0C300E125D15FC008B6389 /* Foundation.framework in Frameworks */,
+				DC0C3012125D160B008B6389 /* UIKit.framework in Frameworks */,
+				DC0C3016125D1614008B6389 /* CoreGraphics.framework in Frameworks */,
+				DCD724CF125D1A1E000A4BDE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		117837C412C0EE7F00FC9681 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				117837C512C0EE7F00FC9681 /* AppDelegate.h */,
+				117837C612C0EE7F00FC9681 /* AppDelegate.m */,
+				117837C712C0EE7F00FC9681 /* Controllers */,
+				11DD271E1610028B0054B03D /* Fingerboard */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		117837C712C0EE7F00FC9681 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				117837C812C0EE7F00FC9681 /* SlidePadBasicViewController.h */,
+				117837C912C0EE7F00FC9681 /* SlidePadBasicViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		117EAAA312B7754400C00CFC /* pd files */ = {
+			isa = PBXGroup;
+			children = (
+				1106785712BF1F3E00EEF8B0 /* wavetabler.pd */,
+			);
+			name = "pd files";
+			sourceTree = "<group>";
+		};
+		11A30EA51611571B00786A6D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				11A30EAA1611571B00786A6D /* libpd-ios.a */,
+				11A30EAC1611571B00786A6D /* libpd-osx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		11DD271E1610028B0054B03D /* Fingerboard */ = {
+			isa = PBXGroup;
+			children = (
+				117837CB12C0EE7F00FC9681 /* Fingerboard.h */,
+				117837CC12C0EE7F00FC9681 /* Fingerboard.m */,
+				11C91C2A12C203760022693B /* TouchDiamond.h */,
+				11C91C2B12C203760022693B /* TouchDiamond.m */,
+			);
+			name = Fingerboard;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* SlidePadBasic.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				0EE529681330D18D009D0B96 /* libpd.xcodeproj */,
+				117837C412C0EE7F00FC9681 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				117EAAA312B7754400C00CFC /* pd files */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				1178378812C0EC5B00FC9681 /* Common.h */,
+				1178378912C0EC5B00FC9681 /* main.m */,
+				1178378A12C0EC5B00FC9681 /* Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1178378E12C0ECB200FC9681 /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				111ED9871481A48F00C2FA29 /* AVFoundation.framework */,
+				1138CFA9139C820D00E37D70 /* QuartzCore.framework */,
+				1138CF85139B78B500E37D70 /* SystemConfiguration.framework */,
+				DCCC7CDE125C3E0F002CF6AC /* AudioToolbox.framework */,
+				DC0C300D125D15FC008B6389 /* Foundation.framework */,
+				DC0C3011125D160B008B6389 /* UIKit.framework */,
+				DC0C3015125D1614008B6389 /* CoreGraphics.framework */,
+				DCD724CE125D1A1E000A4BDE /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* SlidePadBasic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "SlidePadBasic" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				11A30EAE1611575200786A6D /* PBXTargetDependency */,
+			);
+			name = SlidePadBasic;
+			productName = SlidePad01;
+			productReference = 1D6058910D05DD3D006BFB54 /* SlidePadBasic.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = Blarg;
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SlidePadBasic" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 11A30EA51611571B00786A6D /* Products */;
+					ProjectRef = 0EE529681330D18D009D0B96 /* libpd.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* SlidePadBasic */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		11A30EAA1611571B00786A6D /* libpd-ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libpd-ios.a";
+			remoteRef = 11A30EA91611571B00786A6D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		11A30EAC1611571B00786A6D /* libpd-osx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libpd-osx.a";
+			remoteRef = 11A30EAB1611571B00786A6D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1106785812BF1F3E00EEF8B0 /* wavetabler.pd in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1178378B12C0EC5B00FC9681 /* main.m in Sources */,
+				117837CF12C0EE7F00FC9681 /* AppDelegate.m in Sources */,
+				117837D012C0EE7F00FC9681 /* SlidePadBasicViewController.m in Sources */,
+				117837D112C0EE7F00FC9681 /* Fingerboard.m in Sources */,
+				11C91C2C12C203760022693B /* TouchDiamond.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		11A30EAE1611575200786A6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libpd-ios";
+			targetProxy = 11A30EAD1611575200786A6D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = OtherSources/Prefix.pch;
+				INFOPLIST_FILE = Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				OTHER_CFLAGS = (
+					"-DR_DEBUG",
+					"-DDEBUG",
+					"-DPD",
+					"-DUSA_API_DUMMY",
+					"-DHAVE_LIBDL",
+					"-DHAVE_UNISTD_H",
+				);
+				PRODUCT_NAME = SlidePadBasic;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = OtherSources/Prefix.pch;
+				INFOPLIST_FILE = Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				PRODUCT_NAME = SlidePadBasic;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = ../libpd/objc/;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-DPD",
+					"-DUSA_API_DUMMY",
+					"-DHAVE_LIBDL",
+					"-DHAVE_UNISTD_H",
+				);
+				PREBINDING = NO;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = ../libpd/objc/;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-DPD",
+					"-DUSA_API_DUMMY",
+					"-DHAVE_LIBDL",
+					"-DHAVE_UNISTD_H",
+				);
+				PREBINDING = NO;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "SlidePadBasic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SlidePadBasic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

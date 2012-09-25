@@ -1,0 +1,72 @@
+#N canvas 775 246 816 556 10;
+#X obj 57 398 dac~;
+#X obj 105 324 line~;
+#X obj 105 275 pack 0 40;
+#X obj 57 365 *~;
+#X obj 57 61 mtof;
+#X obj 243 223 loadbang;
+#X obj 58 96 pack f 30;
+#X obj 58 122 line~;
+#X obj 110 61 r synth-freq-ramptime;
+#X text 360 394 from ocarina.yaml \, frame 84 \, .28s;
+#X obj 58 25 r \$0-synth-freq;
+#X obj 105 248 r \$0-synth-mag;
+#X obj 58 176 tabosc4~ \$0-wavetable;
+#X obj 73 198 table \$0-wavetable 1027;
+#X obj 237 444 s \$0-wavetable;
+#X msg 228 307 cosinesum 1024 0 1 0.00504083 0.0565903 0.0108557 0.00585451
+0.0040287 0.00134951 0.00192504 0.00140905 \, normalize;
+#X text 429 491 For information on usage and redistribution \, and
+for a DISCLAIMER OF ALL WARRANTIES \, see the file \, "LICENSE.txt
+\, " in this distribution.;
+#X text 15 488 This pd patch was made for SlidePad \, an iOS app within
+the pd-for-ios collection \, powered by libpd.;
+#X text 15 519 https://github.com/libpd/pd-for-ios;
+#X msg 245 256 cosinesum 1024 0 0.7 0.3 0.5 \, normalize;
+#X text 200 173 TODO: this wavetable should be in a main patch;
+#N canvas 1359 811 450 300 test 0;
+#X floatatom 22 123 5 0 0 0 - - -;
+#X msg 336 30 \; pd dsp 1;
+#X msg 336 67 \; pd dsp 0;
+#X obj 22 34 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 22 11 loadbang;
+#X msg 22 91 40;
+#X msg 53 91 46;
+#X msg 229 94 75;
+#X floatatom 228 121 5 0 0 0 - - -;
+#X obj 228 149 s synth-freq-ramptime;
+#X obj 23 152 s \$0-synth-freq;
+#X floatatom 137 206 5 0 0 0 - - -;
+#X msg 129 92 0.9;
+#X obj 132 181 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 11000 0;
+#X obj 23 152 s \$0-synth-freq;
+#X obj 131 224 s \$0-synth-mag;
+#X connect 0 0 10 0;
+#X connect 3 0 5 0;
+#X connect 3 0 12 0;
+#X connect 4 0 3 0;
+#X connect 4 0 7 0;
+#X connect 5 0 0 0;
+#X connect 6 0 0 0;
+#X connect 7 0 8 0;
+#X connect 8 0 9 0;
+#X connect 12 0 13 0;
+#X connect 13 0 11 0;
+#X connect 13 0 15 0;
+#X restore 490 24 pd test;
+#X connect 1 0 3 1;
+#X connect 2 0 1 0;
+#X connect 3 0 0 0;
+#X connect 3 0 0 1;
+#X connect 4 0 6 0;
+#X connect 5 0 15 0;
+#X connect 6 0 7 0;
+#X connect 7 0 12 0;
+#X connect 8 0 6 1;
+#X connect 10 0 4 0;
+#X connect 11 0 2 0;
+#X connect 12 0 3 0;
+#X connect 15 0 14 0;
+#X connect 19 0 14 0;
