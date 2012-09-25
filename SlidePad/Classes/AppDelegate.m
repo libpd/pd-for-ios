@@ -43,7 +43,7 @@
     self.viewController = [[[SlidePadViewController alloc] init] autorelease];
     
 	self.audioController = [[[PdAudioController alloc] init] autorelease];
-	[self.audioController configureWithSampleRate:44100 numberInputChannels:0 numberOutputChannels:2];
+	[self.audioController configurePlaybackWithSampleRate:44100 numberChannels:2 inputEnabled:NO mixingEnabled:2];
 	[self.audioController print];
     
     [PdBase setDelegate:self]; // set AppDelegate as PdRecieverDelegate to recieve messages from Libpd
