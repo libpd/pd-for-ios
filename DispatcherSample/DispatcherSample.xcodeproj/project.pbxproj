@@ -30,6 +30,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		11A30E611611509500786A6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5811EFB71482EA65006867D5 /* libpd.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 119013AB1486450C00086F19;
+			remoteInfo = "libpd-osx";
+		};
 		5811EFBE1482EA65006867D5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5811EFB71482EA65006867D5 /* libpd.xcodeproj */;
@@ -113,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				5811EFBF1482EA65006867D5 /* libpd-ios.a */,
+				11A30E621611509500786A6D /* libpd-osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,8 +136,6 @@
 		58ABCE2F140ACCEE003C36F3 = {
 			isa = PBXGroup;
 			children = (
-				5811EFC51482EB33006867D5 /* AVFoundation.framework */,
-				5811EFC31482EB2F006867D5 /* AudioToolbox.framework */,
 				5811EFB71482EA65006867D5 /* libpd.xcodeproj */,
 				581A4B7314114A4E00C6AC68 /* patch */,
 				58ABCE44140ACCEE003C36F3 /* DispatcherSample */,
@@ -151,6 +157,8 @@
 		58ABCE3D140ACCEE003C36F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5811EFC51482EB33006867D5 /* AVFoundation.framework */,
+				5811EFC31482EB2F006867D5 /* AudioToolbox.framework */,
 				58ABCE3E140ACCEE003C36F3 /* UIKit.framework */,
 				58ABCE40140ACCEE003C36F3 /* Foundation.framework */,
 				58ABCE42140ACCEE003C36F3 /* CoreGraphics.framework */,
@@ -251,7 +259,7 @@
 		58ABCE31140ACCEE003C36F3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = 58ABCE34140ACCEE003C36F3 /* Build configuration list for PBXProject "DispatcherSample" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -278,6 +286,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		11A30E621611509500786A6D /* libpd-osx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libpd-osx.a";
+			remoteRef = 11A30E611611509500786A6D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		5811EFBF1482EA65006867D5 /* libpd-ios.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -410,6 +425,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;

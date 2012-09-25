@@ -38,6 +38,13 @@
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = libpd;
 		};
+		11A30E73161153F800786A6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E0EE92E12EC26C6004BA33D /* libpd.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 119013AB1486450C00086F19;
+			remoteInfo = "libpd-osx";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				0ED512FD132BB71700970D18 /* libpd-ios.a */,
+				11A30E74161153F800786A6D /* libpd-osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -184,7 +192,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "PolyPatch" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -217,6 +225,13 @@
 			fileType = archive.ar;
 			path = "libpd-ios.a";
 			remoteRef = 0ED512FC132BB71700970D18 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		11A30E74161153F800786A6D /* libpd-osx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libpd-osx.a";
+			remoteRef = 11A30E73161153F800786A6D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -272,6 +287,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PolyPatch_Prefix.pch;
+				GCC_THUMB_SUPPORT = NO;
 				HEADER_SEARCH_PATHS = ../libpd/objc;
 				INFOPLIST_FILE = "PolyPatch-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -293,6 +309,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PolyPatch_Prefix.pch;
+				GCC_THUMB_SUPPORT = NO;
 				HEADER_SEARCH_PATHS = ../libpd/objc;
 				INFOPLIST_FILE = "PolyPatch-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
