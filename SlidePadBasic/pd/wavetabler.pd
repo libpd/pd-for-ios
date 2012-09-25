@@ -8,7 +8,7 @@
 #X obj 58 96 pack f 30;
 #X obj 58 122 line~;
 #X obj 110 61 r synth-freq-ramptime;
-#X text 360 394 from ocarina.yaml \, frame 84 \, .28s;
+#X text 351 364 from ocarina.yaml \, frame 84 \, .28s;
 #X obj 58 176 tabosc4~ \$0-wavetable;
 #X obj 73 198 table \$0-wavetable 1027;
 #X obj 237 444 s \$0-wavetable;
@@ -60,7 +60,7 @@ the pd-for-ios collection \, powered by libpd.;
 #X connect 3 0 0 0;
 #X connect 3 0 0 1;
 #X connect 4 0 6 0;
-#X connect 5 0 13 0;
+#X connect 5 0 17 0;
 #X connect 6 0 7 0;
 #X connect 7 0 10 0;
 #X connect 8 0 6 1;
