@@ -99,9 +99,12 @@
 
     // rest of screen
     self.fingerboard.frame =  CGRectMake(spacer,
-                                         widgetHeight + spacer,
+                                         widgetHeight + spacer * 4.0,
                                          vw - spacer * 2.0,
-                                         vh - spacer * 2.0);
+                                         vh - widgetHeight - spacer * 5.0);
+
+	// load with DSP on:
+	[self playTogglePressed:self.playToggle];
 }
 
 
