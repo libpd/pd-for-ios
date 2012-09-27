@@ -170,8 +170,8 @@
 
 - (void)loadPatch {
 	self.patch = [PdFile openFileNamed:@"wavetabler.pd" path:[[NSBundle mainBundle] bundlePath]];
-	[PdBase sendFloat:50.0 toReceiver:@"synth-freq-ramptime"];
-	[PdBase sendFloat:0 toReceiver:@"synth-mag"];
+	[PdBase sendFloat:50.0 toReceiver:@"synth-freq-ramptime"]; // the amount of time to interpolate from one pitch value to another
+	[PdBase sendFloat:0 toReceiver:@"synth-mag"]; // initialize as no sound
 }
 
 - (void)formatLoadLabel {

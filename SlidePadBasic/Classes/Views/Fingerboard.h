@@ -21,15 +21,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class PolyPatchController;
-
 @interface Fingerboard : UIView
 
-@property (nonatomic, assign) float minPitch;
-@property (nonatomic, assign) float maxPitch;
-@property (nonatomic, assign) float numNotes;
-@property (nonatomic, assign) BOOL drawNoteLabels;
+@property (nonatomic, assign) float minPitch; // minimum frequency in well-tempered tuning
+@property (nonatomic, assign) float maxPitch; // maximum frequency in well-tempered tuning
+@property (nonatomic, assign) float numNotes; // number of notes is defaulted to maxPitch - minPitch, but it doesn't have to be
 
+@property (nonatomic, assign) BOOL drawNoteLabels; // the little midi numbers at the bottom
 @property (nonatomic, retain) UIColor *sharpNoteColor;
 @property (nonatomic, retain) UIColor *touchColor;
 

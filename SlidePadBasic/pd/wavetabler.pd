@@ -1,28 +1,24 @@
-#N canvas 529 158 816 556 10;
+#N canvas 529 158 675 490 10;
 #X obj 57 398 dac~;
 #X obj 105 324 line~;
 #X obj 105 275 pack 0 40;
 #X obj 57 365 *~;
-#X obj 57 61 mtof;
+#X obj 58 61 mtof;
 #X obj 243 223 loadbang;
 #X obj 58 96 pack f 30;
 #X obj 58 122 line~;
-#X obj 110 61 r synth-freq-ramptime;
-#X text 351 364 from ocarina.yaml \, frame 84 \, .28s;
+#X obj 109 61 r synth-freq-ramptime;
 #X obj 58 176 tabosc4~ \$0-wavetable;
 #X obj 73 198 table \$0-wavetable 1027;
-#X obj 237 444 s \$0-wavetable;
-#X msg 228 307 cosinesum 1024 0 1 0.00504083 0.0565903 0.0108557 0.00585451
-0.0040287 0.00134951 0.00192504 0.00140905 \, normalize;
-#X text 429 491 For information on usage and redistribution \, and
+#X obj 243 286 s \$0-wavetable;
+#X text 232 395 For information on usage and redistribution \, and
 for a DISCLAIMER OF ALL WARRANTIES \, see the file \, "LICENSE.txt
 \, " in this distribution.;
-#X text 15 488 This pd patch was made for SlidePad \, an iOS app within
+#X text 233 336 This pd patch was made for SlidePad \, an iOS app within
 the pd-for-ios collection \, powered by libpd.;
-#X text 15 519 https://github.com/libpd/pd-for-ios;
-#X msg 245 256 cosinesum 1024 0 0.7 0.3 0.5 \, normalize;
-#X text 200 173 TODO: this wavetable should be in a main patch;
-#N canvas 1359 811 450 300 test 0;
+#X text 233 367 https://github.com/libpd/pd-for-ios;
+#X msg 243 256 cosinesum 1024 0 0.7 0.3 0.5 \, normalize;
+#N canvas 1359 811 450 300 test 1;
 #X floatatom 22 123 5 0 0 0 - - -;
 #X msg 336 30 \; pd dsp 1;
 #X msg 336 67 \; pd dsp 0;
@@ -61,12 +57,11 @@ the pd-for-ios collection \, powered by libpd.;
 #X connect 3 0 0 0;
 #X connect 3 0 0 1;
 #X connect 4 0 6 0;
-#X connect 5 0 17 0;
+#X connect 5 0 15 0;
 #X connect 6 0 7 0;
-#X connect 7 0 10 0;
+#X connect 7 0 9 0;
 #X connect 8 0 6 1;
-#X connect 10 0 3 0;
-#X connect 13 0 12 0;
-#X connect 17 0 12 0;
-#X connect 20 0 4 0;
-#X connect 21 0 2 0;
+#X connect 9 0 3 0;
+#X connect 15 0 11 0;
+#X connect 17 0 4 0;
+#X connect 18 0 2 0;

@@ -139,7 +139,8 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
     
     int nm, ns;
     CGPoint notePoint = CGPointZero;
-     
+
+	// draw ever note rect with the layers we created
     for (int n = 0; n < nNotes; n++) {
         ns = n + self.minPitch;
         nm = ns % 12;
@@ -164,6 +165,7 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 
 #pragma mark - Touches
 
+// create a new TouchDiamond and update pd with params from this point
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	if (self.monoTouch) {
 		[self.monoTouch removeFromSuperview];
@@ -173,19 +175,25 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 	self.monoTouch.center = point;
 	[self addSubview:self.monoTouch];
 	[self.monoTouch displayAnimated];
+
 	[self sendParamsWithPoint:point];
 }
 
+// if the point is within this view's bounds, update it's position and pd
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 	CGPoint point = [[touches anyObject] locationInView:self];
 	if (![self pointIsWithinBounds:point]) {
-		// TODO: turn off voice and remove the diamond
+		// could remove the monoTouch here, but I chose not to,
+		// if it moves far enough out of the view the touchesCancelled
+		// will be called
 		return;
 	}
+
 	self.monoTouch.center = point;
 	[self sendParamsWithPoint:point];
 }
 
+// remove TouchDiamond and turn off the sound for this voice in pd
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	if (!self.monoTouch) {
 		return;
@@ -195,6 +203,7 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 	[self sendParamsOff];
 }
 
+// forward to touchesEnded
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     RLog(@"************ touches cancelled ***************");
 	[self touchesEnded:touches withEvent:event];
