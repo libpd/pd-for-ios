@@ -31,7 +31,6 @@
 
 @implementation PolyPatchController
 
-@synthesize numVoices = numVoices_;
 @synthesize patchName = patchName_;
 @synthesize patches = patches_;
 
@@ -40,7 +39,6 @@
 - (id)init {
 	self = [super init];
 	if (self) {
-		self.numVoices = 1;
 		self.patches = [NSMutableArray array];
 	}
 	return self;

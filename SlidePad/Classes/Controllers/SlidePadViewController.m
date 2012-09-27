@@ -92,7 +92,6 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
     [super loadView];
     
 	self.polyPatchController = [[[PolyPatchController alloc] init] autorelease];
-	self.polyPatchController.numVoices = kSynthNumVoices;
     
     // UI Setup:
     self.view.backgroundColor = [UIColor blackColor];

@@ -24,7 +24,6 @@
 //  - controls multiple instances of the same pd patch
 @interface PolyPatchController : NSObject
 
-@property (nonatomic, assign) NSUInteger numVoices;
 @property (nonatomic, copy, readonly) NSString *patchName;
 @property (nonatomic, retain, readonly) NSMutableArray *patches;
 
