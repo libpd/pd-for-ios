@@ -251,16 +251,9 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 	}
 }
 
+// forward to touchesEnded
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-	for (UITouch* touch in touches) {
-		TouchDiamond *diamond = [self.touches objectForKey:[NSValue valueWithPointer:touch]];
-		[diamond removeFromSuperview];
-		[self.touches removeObjectForKey:[NSValue valueWithPointer:touch]];
-	}
-
-	if (self.quantizePitch) {
-		[self highlightVoices];
-	}
+	[self touchesEnded:touches withEvent:event];
 }
 
 #pragma mark - Mapping functions
