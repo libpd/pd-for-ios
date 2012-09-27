@@ -63,8 +63,6 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.multipleTouchEnabled = YES;
-        
         self.minPitch = 36.0; 
         self.maxPitch = 60.0;
         self.numNotes = self.maxPitch - self.minPitch;
