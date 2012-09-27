@@ -28,8 +28,8 @@
 @property (nonatomic, copy, readonly) NSString *patchName;
 @property (nonatomic, retain, readonly) NSMutableArray *patches;
 
-- (void)closePatches;
-- (void)openPatchesNamed:(NSString *)name path:(NSString *)path instances:(int)numInstances;
-- (int)dollarZeroForInstance:(int)instance;
+- (void)closePatches; // close all patches, resets self.patches to an empty array
+- (void)openPatchesNamed:(NSString *)name path:(NSString *)path instances:(int)numInstances; // opens many instances of the same patch and holds them in self.patches
+- (int)dollarZeroForInstance:(int)instance; // returns the unique ID ('$0' in pd) for an instance of the patch
 
 @end
