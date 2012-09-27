@@ -260,15 +260,22 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 
 #pragma mark - Mapping functions
 
+
 - (void)sendParamsWithPoint:(CGPoint)point voice:(int)voice {
+
+	// pitch is related to the x location in view, scaled within min and max Pitch
     float pitch = self.minPitch + (self.maxPitch - self.minPitch) * point.x / CGRectGetWidth(self.frame);
 
 	if (self.quantizePitch) {
+		// round pitch down to the nears integral number, which corresponds to a note in the well-tempered tuning system
 		pitch = floorf(pitch);
 	}
 
+	// mag is related to the inverted y location in view, so loudest (1.0) is on top
     float mag = (CGRectGetHeight(self.frame) - point.y) / CGRectGetHeight(self.frame);
-	
+
+	// create the unique receiver name by prepending the patch's unique ID ('$0' in pd)
+	// for each voice.
 	int dzero = [self.polyPatchController dollarZeroForInstance:voice];
 	NSString *magReceiver = [NSString stringWithFormat:@"%d-%@", dzero, RECEIVER_MAG];
 	NSString *pitchReceiver = [NSString stringWithFormat:@"%d-%@", dzero, RECEIVER_FREQ];
@@ -304,6 +311,7 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 
 #pragma mark - Overridden Accessors
 
+// only create voiceHighlights if quantizePitch is set to YES
 - (void)setQuantizePitch:(BOOL)quantizePitch {
 	if (quantizePitch_ != quantizePitch) {
 		quantizePitch_  = quantizePitch;
