@@ -27,7 +27,7 @@
 }
 
 @property (nonatomic, retain) UIWindow *window;
-@property (nonatomic, getter=isPlaying) BOOL playing;
+@property (nonatomic, getter=isPlaying) BOOL playing; // a globally accesible flag to start or stop audio
 
 @end
 
