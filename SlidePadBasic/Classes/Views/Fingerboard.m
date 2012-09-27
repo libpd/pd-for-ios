@@ -56,7 +56,6 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 @synthesize drawNoteLabels = drawNoteLabels_;
 
 @synthesize sharpNoteColor = sharpNoteColor_;
-@synthesize touchColor = touchColor_;
 
 #pragma mark - Setup
 
@@ -71,7 +70,6 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 		self.clipsToBounds = YES;
         self.backgroundColor = DEFAULT_OTHER_NOTES_COLOR;
         self.sharpNoteColor = DEFAULT_SHARP_NOTES_COLOR;
-        self.touchColor = [UIColor redColor];
         
         self.layer.borderColor = self.sharpNoteColor.CGColor;
         self.layer.borderWidth = 2.0;
@@ -82,7 +80,6 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 - (void)dealloc {
     self.monoTouch = nil;
     self.sharpNoteColor = nil;
-    self.touchColor = nil;
     [super dealloc];
 }
 

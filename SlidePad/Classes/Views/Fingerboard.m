@@ -67,7 +67,6 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 @synthesize quantizePitch = quantizePitch_;
 
 @synthesize sharpNoteColor = sharpNoteColor_;
-@synthesize touchColor = touchColor_;
 
 @synthesize polyPatchController = polyPatchController_;
 
@@ -78,17 +77,16 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
     if (self) {
         self.multipleTouchEnabled = YES;
         
-        self.minPitch = 36.0; 
+        self.minPitch = 36.0;
         self.maxPitch = 60.0;
-        self.numVoices = 1; // FIXME: it is still multi pitched..
+        self.numVoices = 2;
         self.numNotes = self.maxPitch - self.minPitch;
         
         self.drawNoteLabels = YES;
 		self.clipsToBounds = YES;
         self.backgroundColor = DEFAULT_OTHER_NOTES_COLOR;
         self.sharpNoteColor = DEFAULT_SHARP_NOTES_COLOR;
-        self.touchColor = [UIColor redColor];
-        
+
         self.layer.borderColor = self.sharpNoteColor.CGColor;
         self.layer.borderWidth = 2.0;
 
@@ -101,7 +99,6 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
     self.touches = nil;
     self.monoTouch = nil;
     self.sharpNoteColor = nil;
-    self.touchColor = nil;
     [super dealloc];
 }
 
