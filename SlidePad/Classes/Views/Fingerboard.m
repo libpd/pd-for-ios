@@ -192,12 +192,12 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 
 #pragma mark - Touches
 
+// create a diamond for every touch down, fire off params for that voice
+// - store the touch ptr / TouchDiamond pair in an our dictionary so we can update it's position and parameters later on
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    CGPoint point;
-    TouchDiamond *diamond;
     for (UITouch* touch in touches) {
-        point = [touch locationInView:self];
-        diamond = [[[TouchDiamond alloc] initWithIndex:[self.touches count]] autorelease];
+        CGPoint point = [touch locationInView:self];
+        TouchDiamond *diamond = [[[TouchDiamond alloc] initWithIndex:[self.touches count]] autorelease];
         diamond.center = point;
         
         // only add touches up to numVoices amount
@@ -214,6 +214,8 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 	}
 }
 
+// locate which TouchDiamond needs updating with the touch's memory address as key
+// - send params based on new position
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     for (UITouch* touch in touches) {
         CGPoint point = [touch locationInView:self];
@@ -235,11 +237,11 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 	}
 }
 
+// locate the TouchDiamond as above, but this time, ramp it off and remove it from our dictionary
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	for (UITouch* touch in touches) {
 		TouchDiamond *diamond = [self.touches objectForKey:[NSValue valueWithPointer:touch]];
 
-		int dzero = [self.polyPatchController dollarZeroForInstance:diamond.touchIndex];
 		[self sendParamsOffForVoice:diamond.touchIndex];
 
 		[diamond removeFromSuperview];
@@ -318,6 +320,8 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 
 #pragma mark - Private
 
+// for every currently active voice, use one of our views in highlightsArray to display it's current pitch and magnitude
+// - size remains constaint, but origin and alpah change according to voice.center
 - (void)highlightVoices {
 	int i = 0;
 	float noteWidth = [self noteWidth];
