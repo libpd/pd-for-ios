@@ -3,7 +3,7 @@
     #import <Foundation/Foundation.h>
     #import <UIKit/UIKit.h>
 	#import <QuartzCore/QuartzCore.h>
+	#import "Common.h"
 #endif
 
-#import "Common.h"
 
