@@ -200,30 +200,13 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
         diamond = [[[TouchDiamond alloc] initWithIndex:[self.touches count]] autorelease];
         diamond.center = point;
         
-        // if mono, add all diamonds to the touches array, but only 1 will be displayed
-        // if poly, only add touches up to numVoices amount
-        if (self.numVoices == 1) {
-            [self.touches setObject:diamond forKey:[NSValue valueWithPointer:touch] ];
-        } else if ([self.touches count] < self.numVoices) {
+        // only add touches up to numVoices amount
+		if ([self.touches count] < self.numVoices) {
             [self.touches setObject:diamond forKey:[NSValue valueWithPointer:touch] ];
             [self addSubview:diamond];
             [diamond displayAnimated];
         }
 		[self sendParamsWithPoint:point voice:diamond.touchIndex];
-    }
-    
-    // if mono, use new touch as the position
-    if (self.numVoices == 1) {
-        // monoTouch is displayed, but update it's center and touchIndex to match the diamond
-        if (self.monoTouch) {
-            [self.monoTouch removeFromSuperview];
-            self.monoTouch = nil;
-        }
-        self.monoTouch = diamond;
-        [self addSubview:self.monoTouch];
-        [self.monoTouch displayAnimated];
-        
-        [self sendParamsWithPoint:point voice:0];
     }
 
 	if (self.quantizePitch) {
@@ -235,16 +218,14 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
     for (UITouch* touch in touches) {
         CGPoint point = [touch locationInView:self];
 		if (![self pointIsWithinBounds:point]) {
-            // TODO: turn off voice and remove the diamond
+			// do nothing, will be turned off in touchesCancelled
 			return;
 		}
         TouchDiamond *diamond = [self.touches objectForKey:[NSValue valueWithPointer:touch]];
         if (diamond) {
             diamond.center = point; // it won't always exist if we are in poly and the touch is being ignored
         }
-        if (self.numVoices == 1 && diamond == self.monoTouch) {
-            [self sendParamsWithPoint:point voice:0];
-        } else if ([self.touches count] <= self.numVoices) {
+        if ([self.touches count] <= self.numVoices) {
 			int dzero = [self.polyPatchController dollarZeroForInstance:diamond.touchIndex];
 			[self sendParamsWithPoint:point voice:diamond.touchIndex];
 		}
@@ -255,48 +236,15 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    if (self.numVoices == 1) {
-        for (UITouch* touch in touches) {
-            TouchDiamond *diamond = [self.touches objectForKey:[NSValue valueWithPointer:touch]];
-            [self.touches removeObjectForKey:[NSValue valueWithPointer:touch]];
-            if (diamond == self.monoTouch) {
-                if ([self.touches count] == 0) {
-                    [diamond removeFromSuperview];
-                    [self sendParamsOff];
-                }
-                else {
-                    // assign monoTouch to diamond with greatest index
-                    NSInteger ii = 0;
-                    int touchIndex;
-                    TouchDiamond *newestTouch;
-                    for (UITouch *t in self.touches) {
-                        TouchDiamond *d = [self.touches objectForKey:t];
-                        if (d.touchIndex > ii) {
-                            ii = d.touchIndex;
-                            newestTouch = d;
-                        }
-                    }
-                    [self.monoTouch removeFromSuperview];
-                    self.monoTouch = newestTouch;
-                    [self addSubview:self.monoTouch];
-                    [self sendParamsWithPoint:self.monoTouch.center voice:0];
-                }
-            } else {
-			}
+	for (UITouch* touch in touches) {
+		TouchDiamond *diamond = [self.touches objectForKey:[NSValue valueWithPointer:touch]];
 
-        }
-    }
-    else {
-        for (UITouch* touch in touches) {
-            TouchDiamond *diamond = [self.touches objectForKey:[NSValue valueWithPointer:touch]];
+		int dzero = [self.polyPatchController dollarZeroForInstance:diamond.touchIndex];
+		[self sendParamsOffForVoice:diamond.touchIndex];
 
-			int dzero = [self.polyPatchController dollarZeroForInstance:diamond.touchIndex];
-			[self sendParamsOffForVoice:diamond.touchIndex];
-			
-            [diamond removeFromSuperview];
-            [self.touches removeObjectForKey:[NSValue valueWithPointer:touch]];
-        }
-    }
+		[diamond removeFromSuperview];
+		[self.touches removeObjectForKey:[NSValue valueWithPointer:touch]];
+	}
 
 	if (self.quantizePitch) {
 		[self highlightVoices];
@@ -304,21 +252,11 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    RLog(@"************ touches cancelled ***************");
-    if (self.numVoices == 1) {
-        if (self.monoTouch) {
-            [self.monoTouch removeFromSuperview];
-            self.monoTouch = nil;
-        }
-        [self sendParamsOff];
-    }
-    else {
-        for (UITouch* touch in touches) {
-            TouchDiamond *diamond = [self.touches objectForKey:[NSValue valueWithPointer:touch]];
-            [diamond removeFromSuperview];
-            [self.touches removeObjectForKey:[NSValue valueWithPointer:touch]];
-        }
-    }
+	for (UITouch* touch in touches) {
+		TouchDiamond *diamond = [self.touches objectForKey:[NSValue valueWithPointer:touch]];
+		[diamond removeFromSuperview];
+		[self.touches removeObjectForKey:[NSValue valueWithPointer:touch]];
+	}
 
 	if (self.quantizePitch) {
 		[self highlightVoices];
