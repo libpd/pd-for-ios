@@ -21,9 +21,10 @@
 
 #import <UIKit/UIKit.h>
 
+// simple view that draws a diamond to display the current touch.
 @interface TouchDiamond : UIView
 
-@property (nonatomic, assign) NSInteger touchIndex; // identifier for this touch
+@property (nonatomic, assign) NSInteger touchIndex; // identifier for this touch, which allows us to tie it to a voice in the synthesizer
 
 - (id)initWithIndex:(NSInteger)touchIndex;
 - (void)displayAnimated; // diamond grows to full size
