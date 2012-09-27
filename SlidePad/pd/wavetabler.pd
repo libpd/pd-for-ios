@@ -40,7 +40,7 @@ the pd-for-ios collection \, powered by libpd.;
 #X floatatom 137 206 5 0 0 0 - - -;
 #X msg 129 92 0.9;
 #X obj 132 181 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 11000 0;
+-1 -1 11430 0;
 #X obj 23 152 s \$0-synth-freq;
 #X obj 131 224 s \$0-synth-mag;
 #X connect 0 0 10 0;
@@ -56,6 +56,7 @@ the pd-for-ios collection \, powered by libpd.;
 #X connect 13 0 11 0;
 #X connect 13 0 15 0;
 #X restore 490 24 pd test;
+#X obj 489 52 load-meter;
 #X connect 1 0 3 1;
 #X connect 2 0 1 0;
 #X connect 3 0 0 0;

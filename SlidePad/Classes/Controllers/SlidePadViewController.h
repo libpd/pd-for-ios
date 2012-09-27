@@ -23,5 +23,7 @@
 
 @interface SlidePadViewController : UIViewController
 
+@property (nonatomic, assign) int loadPercentage;
+
 @end
 

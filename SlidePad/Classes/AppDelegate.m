@@ -28,6 +28,8 @@
 @property (nonatomic, retain) SlidePadViewController *viewController;
 @property (nonatomic, retain) PdAudioController *audioController;
 
+- (void)setupPd;
+
 @end
 
 @implementation AppDelegate
@@ -42,11 +44,7 @@
     self.window = [[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
     self.viewController = [[[SlidePadViewController alloc] init] autorelease];
     
-	self.audioController = [[[PdAudioController alloc] init] autorelease];
-	[self.audioController configurePlaybackWithSampleRate:44100 numberChannels:2 inputEnabled:NO mixingEnabled:2];
-	[self.audioController print];
-    
-    [PdBase setDelegate:self]; // set AppDelegate as PdRecieverDelegate to recieve messages from Libpd
+	[self setupPd];
 	
     [self.window addSubview:self.viewController.view];
     [self.window makeKeyAndVisible];
@@ -54,12 +52,43 @@
 	return YES;
 }
 
+- (void)setupPd {
+	// Configure a typical audio session with 2 output channels
+	self.audioController = [[[PdAudioController alloc] init] autorelease];
+	PdAudioStatus status = [self.audioController configurePlaybackWithSampleRate:44100
+																  numberChannels:2
+																	inputEnabled:NO
+																   mixingEnabled:NO];
+	if (status == PdAudioError) {
+		RLog(@"Error! Could not configure PdAudioController");
+	} else if (status == PdAudioPropertyChanged) {
+		RLog(@"Warning: some of the audio parameters were not accceptable.");
+	} else {
+		RLog(@"Audio Configuration successful.");
+	}
+
+	// log actually settings
+	[self.audioController print];
+
+	// set AppDelegate as PdRecieverDelegate to recieve messages from pd
+    [PdBase setDelegate:self];
+
+	// recieve all [send load-meter] messages from pd
+	[PdBase subscribe:@"load-meter"];
+}
 
 #pragma mark - PdRecieverDelegate
 
 // uncomment this to get print statements from pd
 - (void)receivePrint:(NSString *)message {
     NSLog(@"Pd Console: %@", message);
+}
+
+// handle subscribed float messages from pd
+- (void)receiveFloat:(float)received fromSource:(NSString *)source {
+	if ([source isEqualToString:@"load-meter"]) {
+		self.viewController.loadPercentage = (int)received;
+	}
 }
 
 #pragma mark - Accessors

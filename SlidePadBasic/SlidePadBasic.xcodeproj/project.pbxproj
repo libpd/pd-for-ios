@@ -14,6 +14,7 @@
 		117837CF12C0EE7F00FC9681 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 117837C612C0EE7F00FC9681 /* AppDelegate.m */; };
 		117837D012C0EE7F00FC9681 /* SlidePadBasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 117837C912C0EE7F00FC9681 /* SlidePadBasicViewController.m */; };
 		117837D112C0EE7F00FC9681 /* Fingerboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 117837CC12C0EE7F00FC9681 /* Fingerboard.m */; };
+		11820F3816126D9000ACDC3E /* load-meter.pd in Resources */ = {isa = PBXBuildFile; fileRef = 11820F3716126D9000ACDC3E /* load-meter.pd */; };
 		11A30EAF1611575A00786A6D /* libpd-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11A30EAA1611571B00786A6D /* libpd-ios.a */; };
 		11C91C2C12C203760022693B /* TouchDiamond.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C91C2B12C203760022693B /* TouchDiamond.m */; };
 		DC0C300E125D15FC008B6389 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0C300D125D15FC008B6389 /* Foundation.framework */; };
@@ -63,6 +64,7 @@
 		117837C912C0EE7F00FC9681 /* SlidePadBasicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlidePadBasicViewController.m; sourceTree = "<group>"; };
 		117837CB12C0EE7F00FC9681 /* Fingerboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Fingerboard.h; path = Views/Fingerboard.h; sourceTree = "<group>"; };
 		117837CC12C0EE7F00FC9681 /* Fingerboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Fingerboard.m; path = Views/Fingerboard.m; sourceTree = "<group>"; };
+		11820F3716126D9000ACDC3E /* load-meter.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "load-meter.pd"; path = "pd/load-meter.pd"; sourceTree = "<group>"; };
 		11C91C2A12C203760022693B /* TouchDiamond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchDiamond.h; path = Views/TouchDiamond.h; sourceTree = "<group>"; };
 		11C91C2B12C203760022693B /* TouchDiamond.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TouchDiamond.m; path = Views/TouchDiamond.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* SlidePadBasic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlidePadBasic.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +117,7 @@
 		117EAAA312B7754400C00CFC /* pd files */ = {
 			isa = PBXGroup;
 			children = (
+				11820F3716126D9000ACDC3E /* load-meter.pd */,
 				1106785712BF1F3E00EEF8B0 /* wavetabler.pd */,
 			);
 			name = "pd files";
@@ -272,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1106785812BF1F3E00EEF8B0 /* wavetabler.pd in Resources */,
+				11820F3816126D9000ACDC3E /* load-meter.pd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,4 +1,4 @@
-#N canvas 775 246 816 556 10;
+#N canvas 529 158 816 556 10;
 #X obj 57 398 dac~;
 #X obj 105 324 line~;
 #X obj 105 275 pack 0 40;
@@ -55,6 +55,7 @@ the pd-for-ios collection \, powered by libpd.;
 #X restore 490 24 pd test;
 #X obj 58 25 r synth-freq;
 #X obj 105 248 r synth-mag;
+#X obj 490 51 load-meter;
 #X connect 1 0 3 1;
 #X connect 2 0 1 0;
 #X connect 3 0 0 0;

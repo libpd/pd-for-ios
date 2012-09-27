@@ -42,6 +42,7 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 @property (nonatomic, retain) UIButton *quantizeToggle;
 @property (nonatomic, retain) UISegmentedControl *patchSelector;
 @property (nonatomic, retain) QSlider *freqSlider;
+@property (nonatomic, retain) UILabel *loadLabel;
 @property (nonatomic, retain) QRadioDial *transposeDial;
 @property (nonatomic, retain) Fingerboard *fingerboard;
 @property (nonatomic, retain) NSArray *patches; // all the base names of patches
@@ -52,6 +53,8 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 - (void)patchSelectorChanged:(UISegmentedControl *)sender;
 
 - (UIButton *)newButton;
+- (UILabel *)newLabel;
+- (void)formatLoadLabel;
 
 @end
 
@@ -62,6 +65,8 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 @synthesize quantizeToggle = quantizeToggle_;
 @synthesize patchSelector = patchSelector_;
 @synthesize freqSlider = freqSlider_;
+@synthesize loadLabel = loadLabel_;
+@synthesize loadPercentage = loadPercentage_;
 @synthesize transposeDial = transposeDial_;
 @synthesize fingerboard = fingerboard_;
 @synthesize patches = patches_;
@@ -77,7 +82,7 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 	self.transposeDial = nil;
 	self.fingerboard = nil;
     self.patches = nil;
-
+	self.loadLabel = nil;
     [super dealloc];
 }
 
@@ -121,6 +126,11 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
     self.freqSlider.maximumValue = 100.0;
     [self.freqSlider setValue:50.0];
     [self.freqSlider addValueTarget:self action:@selector(sliderChanged:)];
+
+	// add a label to display cpu load
+	self.loadLabel = [self newLabel];
+	self.loadLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+	[self formatLoadLabel];
     
 	self.transposeDial = [[[QRadioDial alloc] init] autorelease];
 	self.transposeDial.minimumValue = -3.0;
@@ -136,6 +146,7 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 
     [self.view addSubview:self.patchSelector];
     [self.view addSubview:self.freqSlider];
+	[self.view addSubview:self.loadLabel];
     [self.view addSubview:self.playToggle];
     [self.view addSubview:self.quantizeToggle];
 	[self.view addSubview:self.transposeDial];
@@ -147,49 +158,57 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 
 	[self.playToggle sizeToFit];
 	[self.quantizeToggle sizeToFit];
+
     
     float vh = CGRectGetHeight(self.view.bounds);
     float vw = CGRectGetWidth(self.view.bounds);
     
-    float spacer = 10.0;
-    float widgetHeight = vh * 0.05;
+    float kSpacer = 10.0;
+    float kWidgetHeight = vh * 0.05;
 
     // top 5% of the view, to the left
-    self.playToggle.frame = CGRectMake(spacer,
-                                       spacer, 
+    self.playToggle.frame = CGRectMake(kSpacer,
+                                       kSpacer, 
                                        self.playToggle.frame.size.width,
-                                       widgetHeight);
+                                       kWidgetHeight);
 
-	float quantizeToggleOffset = self.playToggle.frame.origin.x + self.playToggle.frame.size.width + spacer;
+	float quantizeToggleOffset = self.playToggle.frame.origin.x + self.playToggle.frame.size.width + kSpacer;
 	self.quantizeToggle.frame = CGRectMake(quantizeToggleOffset,
-										   spacer,
+										   kSpacer,
 										   self.quantizeToggle.frame.size.width,
-										   widgetHeight);
+										   kWidgetHeight);
 
     // Patch Selector: top 5% of view, right 1/3
     self.patchSelector.frame = CGRectMake(vw * 0.666,
-                                          spacer,
-                                          vw * 0.333 - spacer,
-                                          widgetHeight);
+                                          kSpacer,
+                                          vw * 0.333 - kSpacer,
+                                          kWidgetHeight);
     
     // Frequency Slider: next 5%, left half of screen
-    self.freqSlider.frame = CGRectMake(spacer, 
-                                       widgetHeight + spacer * 2.0,
-                                       vw * 0.5 - spacer,
-                                       widgetHeight);
+    self.freqSlider.frame = CGRectMake(kSpacer, 
+                                       kWidgetHeight + kSpacer * 2.0,
+                                       vw * 0.5 - kSpacer,
+                                       kWidgetHeight);
+
+	// Load Label: below Patch Selector (right side)
+    self.loadLabel.frame = CGRectMake(self.patchSelector.frame.origin.x,
+									  self.freqSlider.frame.origin.y,
+									  self.patchSelector.frame.size.width,
+									  kWidgetHeight);
+
 
 	// Transpose Dial: next 5% - the edge of the the top half, perfect circle
-	CGFloat transposeDialHeight = vw * 0.5 - spacer * 5 - widgetHeight * 2;
-	self.transposeDial.frame = CGRectMake(spacer,
-										  (widgetHeight + spacer) * 2 + spacer,
+	CGFloat transposeDialHeight = vw * 0.5 - kSpacer * 5 - kWidgetHeight * 2;
+	self.transposeDial.frame = CGRectMake(kSpacer,
+										  (kWidgetHeight + kSpacer) * 2 + kSpacer,
 										  transposeDialHeight,
 										  transposeDialHeight);
 
     // bottom half of screen
-    self.fingerboard.frame =  CGRectMake(spacer,
+    self.fingerboard.frame =  CGRectMake(kSpacer,
                                          vh * 0.5,
-                                         vw - spacer * 2, 
-                                         vh * 0.5 - spacer);
+                                         vw - kSpacer * 2, 
+                                         vh * 0.5 - kSpacer);
 
 	// fire initial state after views are loaded and laid out
 	[self patchSelectorChanged:self.patchSelector];
@@ -198,6 +217,12 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 	[self transposeChanged:self.transposeDial];
 }
 
+- (void)viewDidUnload {
+	[super viewDidUnload];
+
+	// the patch is loaded along with the view, so make sure to cleanup if the view is unloaded.
+	self.patches = nil;
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
@@ -257,7 +282,7 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
         return;
     }
 
-	[self.fingerboard sendParamsOff];
+	[self.fingerboard mute]; // make sure all voices are silent before switching
 
 	// TODO: delay this
     if (self.polyPatchController.patchName) {
@@ -267,8 +292,8 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 	[self.polyPatchController openPatchesNamed:patchName path:bundlePath instances:kSynthNumVoices];
 
     [PdBase sendFloat:kSynthFreqRamptime toReceiver:kSynthFreqRamptimeReceiver];
-    
-    [self.fingerboard sendParamsOff]; // FIXME: don't know why this needs to be called here to shut the synth up when it starts
+
+    [self.fingerboard mute]; // make sure all voices start with 0 mag
 
     // turn on / off gui elements for given patches
     if (sender.selectedSegmentIndex == 1) {
@@ -279,6 +304,15 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
     }
 }
 
+#pragma mark - Custom Accessors
+
+// whenever loadPercentage is set, update the label
+- (void)setLoadPercentage:(int)loadPercentage {
+	if (loadPercentage_ != loadPercentage) {
+		loadPercentage_ = loadPercentage;
+		[self formatLoadLabel];
+	}
+}
 #pragma mark - Private Helpers
 
 - (UIButton *)newButton {
@@ -290,6 +324,18 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
     button.showsTouchWhenHighlighted = YES;
 	button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 6.0, 0.0, 6.0);
 	return button;
+}
+
+- (UILabel *)newLabel {
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+	label.backgroundColor = [UIColor clearColor];
+	label.textColor = QCONTROL_DEFAULT_FRAME_COLOR;
+	label.textAlignment = UITextAlignmentRight;
+	return label;
+}
+
+- (void)formatLoadLabel {
+	self.loadLabel.text = [NSString stringWithFormat:@"cpu load: %d%%", self.loadPercentage];
 }
 
 @end
