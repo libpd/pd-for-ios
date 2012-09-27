@@ -137,15 +137,16 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
     int nm, ns;
     CGPoint notePoint = CGPointZero;
 
-	// draw ever note rect with the layers we created
     for (int n = 0; n < nNotes; n++) {
         ns = n + self.minPitch;
         nm = ns % 12;
         if (nm == 1 || nm == 3 || nm == 6 || nm == 8 || nm == 10) {
+			// draw the sharp notes
             notePoint.x = n * noteWidth;
             CGContextDrawLayerAtPoint (context, notePoint, noteLayer);
         }            
         else if (nm == 0 || nm == 5) {
+			// draw the lines in between consecutive 'white' keys
             notePoint.x = n * noteWidth;
             CGContextDrawLayerAtPoint (context, notePoint, lineLayer);
         }
