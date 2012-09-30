@@ -1,5 +1,5 @@
-#N canvas 1476 761 667 494 10;
-#X obj 476 71 table wavetable 1027;
+#N canvas 1476 761 408 358 10;
+#X obj 239 66 table wavetable 1027;
 #N canvas 0 22 450 300 load-wavetable 0;
 #X obj 53 23 loadbang;
 #X text 168 160 from ocarina.yaml \, frame 84 \, .28s;
@@ -10,8 +10,42 @@
 #X connect 0 0 2 0;
 #X connect 2 0 4 0;
 #X connect 3 0 4 0;
-#X restore 474 36 pd load-wavetable;
-#X obj 120 272 catch~ slidepad-audio;
-#X obj 120 312 dac~;
-#X connect 2 0 3 0;
-#X connect 2 0 3 1;
+#X restore 240 39 pd load-wavetable;
+#X obj 32 36 catch~ slidepad-audio;
+#X obj 32 95 dac~;
+#N canvas 1260 256 281 347 filter 0;
+#X obj 67 12 inlet~;
+#X obj 108 229 line~;
+#X obj 126 119 t b f;
+#X obj 128 11 r vcf-cutoff;
+#X obj 69 303 outlet~;
+#X obj 69 267 vcf~ 3;
+#X obj 109 151 * 50;
+#X obj 153 63 loadbang;
+#X obj 163 89 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 82 41 env~;
+#X obj 83 68 * 0.5;
+#X obj 109 205 pack f 50;
+#X connect 0 0 5 0;
+#X connect 0 0 9 0;
+#X connect 1 0 5 1;
+#X connect 2 0 6 0;
+#X connect 2 1 6 1;
+#X connect 3 0 2 0;
+#X connect 5 0 4 0;
+#X connect 6 0 11 0;
+#X connect 7 0 2 0;
+#X connect 8 0 2 0;
+#X connect 9 0 10 0;
+#X connect 10 0 6 0;
+#X connect 11 0 1 0;
+#X restore 32 66 pd filter;
+#X text 12 281 For information on usage and redistribution \, and for
+a DISCLAIMER OF ALL WARRANTIES \, see the file \, "LICENSE.txt \, "
+in this distribution.;
+#X text 15 208 This pd patch was made for SlidePad \, an iOS app within
+the pd-for-ios collection \, powered by libpd.;
+#X text 15 239 https://github.com/libpd/pd-for-ios;
+#X connect 2 0 4 0;
+#X connect 4 0 3 0;
