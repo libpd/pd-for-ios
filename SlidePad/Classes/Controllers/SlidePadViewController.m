@@ -300,14 +300,6 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
     [PdBase sendFloat:kSynthFreqRamptime toReceiver:kSynthFreqRamptimeReceiver];
 
     [self.fingerboard mute]; // make sure all voices start with 0 mag
-
-    // turn on / off gui elements for given patches
-    if (sender.selectedSegmentIndex == 1) {
-        self.freqSlider.hidden = YES;
-    }
-    else {
-        self.freqSlider.hidden = NO;
-    }
 }
 
 #pragma mark - Custom Accessors
