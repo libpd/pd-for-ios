@@ -155,7 +155,6 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
     CGAffineTransform textFlip = CGAffineTransformMake(1.0,0.0, 0.0, -1.0, 0.0, 0.0);
     CGContextSetTextMatrix(context, textFlip);
     
-    
     int nm, ns;
     CGPoint notePoint = CGPointZero;
      
