@@ -1,24 +1,24 @@
-#N canvas 529 158 675 490 10;
+#N canvas 414 226 652 503 10;
 #X obj 57 398 dac~;
 #X obj 105 324 line~;
 #X obj 105 275 pack 0 40;
 #X obj 57 365 *~;
 #X obj 58 61 mtof;
-#X obj 243 223 loadbang;
+#X obj 303 180 loadbang;
 #X obj 58 96 pack f 30;
 #X obj 58 122 line~;
 #X obj 109 61 r synth-freq-ramptime;
 #X obj 58 176 tabosc4~ \$0-wavetable;
 #X obj 73 198 table \$0-wavetable 1027;
-#X obj 243 286 s \$0-wavetable;
+#X obj 303 267 s \$0-wavetable;
 #X text 232 395 For information on usage and redistribution \, and
 for a DISCLAIMER OF ALL WARRANTIES \, see the file \, "LICENSE.txt
 \, " in this distribution.;
 #X text 233 336 This pd patch was made for SlidePad \, an iOS app within
 the pd-for-ios collection \, powered by libpd.;
 #X text 233 367 https://github.com/libpd/pd-for-ios;
-#X msg 243 256 cosinesum 1024 0 0.7 0.3 0.5 \, normalize;
-#N canvas 1359 811 450 300 test 1;
+#X msg 303 207 cosinesum 1024 0 0.7 0.3 0.5 \, normalize;
+#N canvas 747 506 450 300 test 0;
 #X floatatom 22 123 5 0 0 0 - - -;
 #X msg 336 30 \; pd dsp 1;
 #X msg 336 67 \; pd dsp 0;
@@ -51,7 +51,7 @@ the pd-for-ios collection \, powered by libpd.;
 #X restore 490 24 pd test;
 #X obj 58 25 r synth-freq;
 #X obj 105 248 r synth-mag;
-#X obj 490 51 load-meter;
+#X msg 331 239 sinesum 1024 1;
 #X connect 1 0 3 1;
 #X connect 2 0 1 0;
 #X connect 3 0 0 0;
@@ -65,3 +65,4 @@ the pd-for-ios collection \, powered by libpd.;
 #X connect 15 0 11 0;
 #X connect 17 0 4 0;
 #X connect 18 0 2 0;
+#X connect 19 0 11 0;

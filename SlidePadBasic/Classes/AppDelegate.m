@@ -74,6 +74,9 @@
 
 	// recieve all [send load-meter] messages from pd
 	[PdBase subscribe:@"load-meter"];
+
+	// open one instance of the load-meter patch and forget about it
+	[PdBase openFile:@"load-meter.pd" path:[[NSBundle mainBundle] bundlePath]];
 }
 
 #pragma mark - PdRecieverDelegate

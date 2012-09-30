@@ -129,7 +129,6 @@ license included with Pure Data.;
 #X text 19 527 This pd patch has been adapted from pd's own help file
 'J08.classicsynth.pd' for use with SlidePad \, an iOS app within the
 pd-for-ios collection \, powered by libpd.;
-#X obj 338 53 load-meter;
 #X connect 0 0 1 0;
 #X connect 1 0 6 0;
 #X connect 2 0 1 1;
