@@ -110,15 +110,15 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 
 	self.quantizeToggle = [self newButton];
     [self.quantizeToggle addTarget:self action:@selector(quantizeTogglePressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.quantizeToggle setTitle:@"Quantize On" forState:UIControlStateNormal];
-    [self.quantizeToggle setTitle:@"Quantize Off" forState:UIControlStateSelected];
+    [self.quantizeToggle setTitle:@"Quantize Off" forState:UIControlStateNormal];
+    [self.quantizeToggle setTitle:@"Quantize On" forState:UIControlStateSelected];
 
     self.patches = [NSArray arrayWithObjects:@"classicsub-voice.pd", @"wavetabler-voice.pd", nil];
 
     self.patchSelector = [[[UISegmentedControl alloc] initWithItems:
                                           [NSArray arrayWithObjects:@"Classic Sub", @"Wavetabler", nil]]
                                           autorelease];
-    
+
     self.patchSelector.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
     self.patchSelector.segmentedControlStyle = UISegmentedControlStyleBar;
     self.patchSelector.tintColor = [UIColor darkGrayColor];
