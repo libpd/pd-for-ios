@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0EDD8C21130014F900D99E63 /* PolyPatchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EDD8C20130014F900D99E63 /* PolyPatchController.m */; };
-		1106785812BF1F3E00EEF8B0 /* wavetabler.pd in Resources */ = {isa = PBXBuildFile; fileRef = 1106785712BF1F3E00EEF8B0 /* wavetabler.pd */; };
+		1106785812BF1F3E00EEF8B0 /* wavetabler-voice.pd in Resources */ = {isa = PBXBuildFile; fileRef = 1106785712BF1F3E00EEF8B0 /* wavetabler-voice.pd */; };
 		111ED9881481A48F00C2FA29 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111ED9871481A48F00C2FA29 /* AVFoundation.framework */; };
 		1138CF99139B7A0F00E37D70 /* QControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1138CF96139B7A0F00E37D70 /* QControl.m */; };
 		1138CF9A139B7A0F00E37D70 /* QRadioDial.m in Sources */ = {isa = PBXBuildFile; fileRef = 1138CF98139B7A0F00E37D70 /* QRadioDial.m */; };
@@ -20,8 +20,9 @@
 		117837D212C0EE7F00FC9681 /* QSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 117837CE12C0EE7F00FC9681 /* QSlider.m */; };
 		11820F6D1613F80000ACDC3E /* load-meter.pd in Resources */ = {isa = PBXBuildFile; fileRef = 11820F6C1613F80000ACDC3E /* load-meter.pd */; };
 		11A30EAF1611575A00786A6D /* libpd-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11A30EAA1611571B00786A6D /* libpd-ios.a */; };
-		11A44FE112BC9079000B4443 /* classicsub.pd in Resources */ = {isa = PBXBuildFile; fileRef = 11A44FE012BC9079000B4443 /* classicsub.pd */; };
+		11A44FE112BC9079000B4443 /* classicsub-voice.pd in Resources */ = {isa = PBXBuildFile; fileRef = 11A44FE012BC9079000B4443 /* classicsub-voice.pd */; };
 		11C91C2C12C203760022693B /* TouchDiamond.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C91C2B12C203760022693B /* TouchDiamond.m */; };
+		11FD016F1617D9E000D54A9C /* main.pd in Resources */ = {isa = PBXBuildFile; fileRef = 11FD016E1617D9E000D54A9C /* main.pd */; };
 		DC0C300E125D15FC008B6389 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0C300D125D15FC008B6389 /* Foundation.framework */; };
 		DC0C3012125D160B008B6389 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0C3011125D160B008B6389 /* UIKit.framework */; };
 		DC0C3016125D1614008B6389 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0C3015125D1614008B6389 /* CoreGraphics.framework */; };
@@ -57,7 +58,7 @@
 		0EDD8C1F130014F900D99E63 /* PolyPatchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolyPatchController.h; sourceTree = "<group>"; };
 		0EDD8C20130014F900D99E63 /* PolyPatchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolyPatchController.m; sourceTree = "<group>"; };
 		0EE529681330D18D009D0B96 /* libpd.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libpd.xcodeproj; path = ../libpd/libpd.xcodeproj; sourceTree = "<group>"; };
-		1106785712BF1F3E00EEF8B0 /* wavetabler.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = wavetabler.pd; path = pd/wavetabler.pd; sourceTree = "<group>"; };
+		1106785712BF1F3E00EEF8B0 /* wavetabler-voice.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "wavetabler-voice.pd"; path = "pd/wavetabler-voice.pd"; sourceTree = "<group>"; };
 		111ED9871481A48F00C2FA29 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1138CF85139B78B500E37D70 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1138CF95139B7A0F00E37D70 /* QControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QControl.h; sourceTree = "<group>"; };
@@ -78,9 +79,10 @@
 		117837CD12C0EE7F00FC9681 /* QSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSlider.h; sourceTree = "<group>"; };
 		117837CE12C0EE7F00FC9681 /* QSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSlider.m; sourceTree = "<group>"; };
 		11820F6C1613F80000ACDC3E /* load-meter.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "load-meter.pd"; path = "pd/load-meter.pd"; sourceTree = "<group>"; };
-		11A44FE012BC9079000B4443 /* classicsub.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = classicsub.pd; path = pd/classicsub.pd; sourceTree = "<group>"; };
+		11A44FE012BC9079000B4443 /* classicsub-voice.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "classicsub-voice.pd"; path = "pd/classicsub-voice.pd"; sourceTree = "<group>"; };
 		11C91C2A12C203760022693B /* TouchDiamond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchDiamond.h; path = Views/TouchDiamond.h; sourceTree = "<group>"; };
 		11C91C2B12C203760022693B /* TouchDiamond.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TouchDiamond.m; path = Views/TouchDiamond.m; sourceTree = "<group>"; };
+		11FD016E1617D9E000D54A9C /* main.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.pd; path = pd/main.pd; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* SlidePad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlidePad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC0C300D125D15FC008B6389 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DC0C3011125D160B008B6389 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -148,8 +150,9 @@
 		117EAAA312B7754400C00CFC /* pd files */ = {
 			isa = PBXGroup;
 			children = (
-				1106785712BF1F3E00EEF8B0 /* wavetabler.pd */,
-				11A44FE012BC9079000B4443 /* classicsub.pd */,
+				11FD016E1617D9E000D54A9C /* main.pd */,
+				1106785712BF1F3E00EEF8B0 /* wavetabler-voice.pd */,
+				11A44FE012BC9079000B4443 /* classicsub-voice.pd */,
 				11820F6C1613F80000ACDC3E /* load-meter.pd */,
 			);
 			name = "pd files";
@@ -307,9 +310,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11A44FE112BC9079000B4443 /* classicsub.pd in Resources */,
-				1106785812BF1F3E00EEF8B0 /* wavetabler.pd in Resources */,
+				11A44FE112BC9079000B4443 /* classicsub-voice.pd in Resources */,
+				1106785812BF1F3E00EEF8B0 /* wavetabler-voice.pd in Resources */,
 				11820F6D1613F80000ACDC3E /* load-meter.pd in Resources */,
+				11FD016F1617D9E000D54A9C /* main.pd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

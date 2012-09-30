@@ -19,14 +19,16 @@
  POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "PdBase.h"
-#import <QuartzCore/QuartzCore.h>
 #import "SlidePadViewController.h"
 #import "AppDelegate.h"
-#import "QSlider.h"
-#import "Fingerboard.h"
+
 #import "PolyPatchController.h"
+#import "Fingerboard.h"
+#import "QSlider.h"
 #import "QRadioDial.h"
+
+#import "PdBase.h"
+#import "PdFile.h"
 
 static const int kSynthNumVoices = 5;
 static const float kSynthFreqRamptime = 50.0;
@@ -45,7 +47,8 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 @property (nonatomic, retain) UILabel *loadLabel;
 @property (nonatomic, retain) QRadioDial *transposeDial;
 @property (nonatomic, retain) Fingerboard *fingerboard;
-@property (nonatomic, retain) NSArray *patches; // all the base names of patches
+@property (nonatomic, retain) NSArray *patches; // all the base names of synth patches (all contain [throw~])
+@property (nonatomic, retain) PdFile *mainPatch;
 
 - (void)playTogglePressed:(UIButton *)sender;
 - (void)quantizeTogglePressed:(UIButton *)sender;
@@ -90,9 +93,13 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 
 - (void) loadView {
     [super loadView];
-    
+
+	// open the main patch, which contains a [catch~] and other post-effects
+	self.mainPatch = [PdFile openFileNamed:@"main.pd" path:[[NSBundle mainBundle] bundlePath]];
+
+	// this guy will hold the voice patches
 	self.polyPatchController = [[[PolyPatchController alloc] init] autorelease];
-    
+
     // UI Setup:
     self.view.backgroundColor = [UIColor blackColor];
     
@@ -106,7 +113,7 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
     [self.quantizeToggle setTitle:@"Quantize On" forState:UIControlStateNormal];
     [self.quantizeToggle setTitle:@"Quantize Off" forState:UIControlStateSelected];
 
-    self.patches = [NSArray arrayWithObjects:@"classicsub.pd", @"wavetabler.pd", nil];
+    self.patches = [NSArray arrayWithObjects:@"classicsub-voice.pd", @"wavetabler-voice.pd", nil];
 
     self.patchSelector = [[[UISegmentedControl alloc] initWithItems:
                                           [NSArray arrayWithObjects:@"Classic Sub", @"Wavetabler", nil]]
@@ -126,7 +133,6 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
     [self.freqSlider setValue:50.0];
     [self.freqSlider addValueTarget:self action:@selector(sliderChanged:)];
 
-	// add a label to display cpu load
 	self.loadLabel = [self newLabel];
 	self.loadLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
 	[self formatLoadLabel];
@@ -220,10 +226,12 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 	[super viewDidUnload];
 
 	// the patch is loaded along with the view, so make sure to cleanup if the view is unloaded.
+	self.mainPatch = nil;
 	self.patches = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	RLog(@"bang");
     return YES;
 }
 

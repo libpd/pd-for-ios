@@ -1,0 +1,17 @@
+#N canvas 1476 761 667 494 10;
+#X obj 476 71 table wavetable 1027;
+#N canvas 0 22 450 300 load-wavetable 0;
+#X obj 53 23 loadbang;
+#X text 168 160 from ocarina.yaml \, frame 84 \, .28s;
+#X msg 38 107 cosinesum 1024 0 1 0.00504083 0.0565903 0.0108557 0.00585451
+0.0040287 0.00134951 0.00192504 0.00140905 \, normalize;
+#X msg 55 56 cosinesum 1024 0 0.7 0.3 0.5 \, normalize;
+#X obj 47 244 s wavetable;
+#X connect 0 0 2 0;
+#X connect 2 0 4 0;
+#X connect 3 0 4 0;
+#X restore 474 36 pd load-wavetable;
+#X obj 120 272 catch~ slidepad-audio;
+#X obj 120 312 dac~;
+#X connect 2 0 3 0;
+#X connect 2 0 3 1;
