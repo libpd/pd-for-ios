@@ -36,8 +36,6 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 @interface Fingerboard ()
 
 @property (nonatomic, retain) NSMutableDictionary *touches;
-@property (nonatomic, retain) TouchDiamond *monoTouch;
-
 @property (nonatomic, retain) NSArray *voiceHighlights; // when quantizePitch == YES, this contains UIView's for highlighting the current touches
 
 - (CGFloat)mapXToPitch:(CGFloat)x; // minPitch mapped to x = 0, maxPitch to x = self.frame.size.width
@@ -57,7 +55,6 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 @implementation Fingerboard
 
 @synthesize touches = touches_;
-@synthesize monoTouch = monoTouch_;
 
 @synthesize minPitch = minPitch_;
 @synthesize maxPitch = maxPitch_;
@@ -97,7 +94,6 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 
 - (void)dealloc {
     self.touches = nil;
-    self.monoTouch = nil;
     self.sharpNoteColor = nil;
     [super dealloc];
 }
@@ -115,13 +111,8 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 }
 
 - (void)reset {
-    if (self.monoTouch) {
-        [self.monoTouch removeFromSuperview];
-        self.monoTouch = nil;
-    } else {
-		for (TouchDiamond *diamond in self.touches) {
-			[diamond removeFromSuperview];
-		}
+	for (TouchDiamond *diamond in [self.touches allValues]) {
+		[diamond removeFromSuperview];
 	}
 
     [self.touches removeAllObjects];
