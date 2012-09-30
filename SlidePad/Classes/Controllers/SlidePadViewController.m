@@ -231,8 +231,7 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	RLog(@"bang");
-    return YES;
+	return YES;
 }
 
 #pragma mark - Control Events

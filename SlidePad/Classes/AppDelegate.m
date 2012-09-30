@@ -43,6 +43,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     self.window = [[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
     self.viewController = [[[SlidePadViewController alloc] init] autorelease];
+	self.window.rootViewController = self.viewController;
     
 	[self setupPd];
 	
