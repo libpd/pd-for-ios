@@ -48,13 +48,14 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 @property (nonatomic, retain) QRadioDial *transposeDial;
 @property (nonatomic, retain) Fingerboard *fingerboard;
 @property (nonatomic, retain) NSArray *patches; // all the base names of synth patches (all contain [throw~])
-@property (nonatomic, retain) PdFile *mainPatch;
+@property (nonatomic, retain) PdFile *mainPatch; // contains the [catch~] and post effects, global tables
 
 - (void)playTogglePressed:(UIButton *)sender;
 - (void)quantizeTogglePressed:(UIButton *)sender;
 - (void)sliderChanged:(QSlider *)sender;
 - (void)patchSelectorChanged:(UISegmentedControl *)sender;
 
+- (void)openPatchVoicesWithPatchNamed:(NSString *)patchName;
 - (UIButton *)newButton;
 - (UILabel *)newLabel;
 - (void)formatLoadLabel;
@@ -274,7 +275,6 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 }
 
 - (void)patchSelectorChanged:(UISegmentedControl *)sender {
-    RLog(@"segment selected: %d", sender.selectedSegmentIndex);
     if (sender.selectedSegmentIndex > [self.patches count]) {
         RLog(@"Error: patch selector is too large");
         return;
@@ -282,24 +282,15 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
     NSString *patchName = [self.patches objectAtIndex:sender.selectedSegmentIndex];
     RLog(@"patch selected: %@", patchName); 
 
-	NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
-    
     if ([patchName isEqualToString:self.polyPatchController.patchName]) {
         return;
     }
 
-	[self.fingerboard mute]; // make sure all voices are silent before switching
+	// make sure all voices are silent before switching
+	[self.fingerboard mute];
 
-	// TODO: delay this
-    if (self.polyPatchController.patchName) {
-		[self.polyPatchController closePatches];
-    }
-
-	[self.polyPatchController openPatchesNamed:patchName path:bundlePath instances:kSynthNumVoices];
-
-    [PdBase sendFloat:kSynthFreqRamptime toReceiver:kSynthFreqRamptimeReceiver];
-
-    [self.fingerboard mute]; // make sure all voices start with 0 mag
+	// begin opening patches only after the current patches have finished being muted
+	[self performSelector:@selector(openPatchVoicesWithPatchNamed:) withObject:patchName afterDelay:kSynthFreqRamptime / 1000.0];
 }
 
 #pragma mark - Custom Accessors
@@ -312,6 +303,15 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 	}
 }
 #pragma mark - Private Helpers
+
+- (void)openPatchVoicesWithPatchNamed:(NSString *)patchName {
+    if (self.polyPatchController.patchName) {
+		[self.polyPatchController closePatches];
+    }
+
+	[self.polyPatchController openPatchesNamed:patchName path:[[NSBundle mainBundle] bundlePath] instances:kSynthNumVoices];
+    [PdBase sendFloat:kSynthFreqRamptime toReceiver:kSynthFreqRamptimeReceiver];
+}
 
 - (UIButton *)newButton {
 	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
