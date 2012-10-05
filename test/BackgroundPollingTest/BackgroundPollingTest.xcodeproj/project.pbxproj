@@ -61,7 +61,6 @@
 		11A8BDC31425EC200006B996 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		11A8BDC81425EC200006B996 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		11A8BDC91425EC200006B996 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		11A8BDDC1425ED810006B996 /* RDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDebug.h; sourceTree = "<group>"; };
 		11A8BDDD1425F4920006B996 /* libpd.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libpd.xcodeproj; path = ../../libpd/libpd.xcodeproj; sourceTree = "<group>"; };
 		11A8BDE91425F4C10006B996 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -119,7 +118,6 @@
 		11A8BDB91425EC200006B996 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				11A8BDDC1425ED810006B996 /* RDebug.h */,
 				11A8BDC21425EC200006B996 /* AppDelegate.h */,
 				11A8BDC31425EC200006B996 /* AppDelegate.m */,
 				11A8BDC81425EC200006B996 /* RootViewController.h */,
