@@ -1,0 +1,61 @@
+#N canvas 100 23 416 755 10;
+#X msg 313 514 tempo \$1;
+#X msg 102 515 resolution \$1;
+#X msg 205 535 reset \$1 \$2;
+#X obj 205 514 pack f f;
+#X floatatom 212 633 5 0 0 1 beat_time - -, f 5;
+#X floatatom 175 651 5 0 0 1 phase - -, f 5;
+#X msg 34 624 \; pd dsp 1;
+#X floatatom 138 673 5 0 0 1 step - -, f 5;
+#X floatatom 249 612 5 0 0 1 tempo - -, f 5;
+#X obj 25 495 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 138 587 abl_link~ 1 0 4 134;
+#X floatatom 313 495 5 0 0 2 tempo - -, f 5;
+#X floatatom 250 495 5 0 0 2 quantum - -, f 5;
+#X floatatom 205 495 5 0 0 2 beat - -, f 5;
+#X floatatom 102 495 5 0 0 2 resolution - -, f 5;
+#X text 25 52 abl_link~ is a Pd external that integrates Ableton Link
+into Pd. It has four outlets \, which emit the index of the current
+step (at the beginning of each step) \, the current phase and beat
+time on each DSP tick \, as well as the tempo on tempo changes. Phase
+and beat time are Link concepts. The purpose of the step feature is
+to generate events in Pd at a given rate (measured in steps per beat).
+;
+#X text 25 331 Link's beat time can sometimes go backwards. When this
+happens \, the step outlet will fall silent until the beat time moves
+forward again. The phase and beat outlets will output raw values from
+Link so that patches can implement their own handling of time going
+backwards.;
+#X text 25 238 The creation arguments \, all optional \, specify the
+resolution (default 1) and the initial beat time (default 0) \, as
+well as the quantum (default 4) and tempo (default 120) \, which will
+be replaced by the session tempo if the Link instance is already connected.
+The Link external will perform a quantized launch on creation.;
+#X msg 25 515 connect \$1;
+#X text 25 158 abl_link~ responds to four methods \, for connecting
+with other Link instances \, for setting the resolution of the step
+outlet (in steps per beat) \, the tempo (in beats per minute) \, and
+for resetting the beat time and quantum by having Link perform a quantized
+launch.;
+#X text 25 411 The Link external emits events as soon as DSP is enabled
+in Pd. It will only connect with other Link instances \, however \,
+if you send it the message [connect 1(.;
+#X floatatom 220 708 5 0 0 0 - - -, f 5;
+#X obj 220 686 r #abl_link_num_peers;
+#X text 25 24 abl_link~: Ableton Link external;
+#X connect 0 0 10 0;
+#X connect 1 0 10 0;
+#X connect 2 0 10 0;
+#X connect 3 0 2 0;
+#X connect 9 0 18 0;
+#X connect 10 0 7 0;
+#X connect 10 1 5 0;
+#X connect 10 2 4 0;
+#X connect 10 3 8 0;
+#X connect 11 0 0 0;
+#X connect 12 0 3 1;
+#X connect 13 0 3 0;
+#X connect 14 0 1 0;
+#X connect 18 0 10 0;
+#X connect 22 0 21 0;
