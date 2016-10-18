@@ -13,3 +13,7 @@ xcuserdata
 # osx noise
 .DS_Store
 profile
+
+*.o
+*.pd_darwin
+*.dylib

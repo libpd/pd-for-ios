@@ -1,6 +1,11 @@
 # abl_link~
 Ableton Link integration for Pd.
 
+## Desktop version
+
+* Build the external by saying `make` in `abl_link/external` and install it like any other external.
+* Check out the help patch `abl_link~-help.pd` and metronome patch `metronome.pd`, also in `abl_link/external.`
+
 ## iOS version
 
 **This version uses Ableton LinkKit 2.0.0.**
@@ -22,6 +27,6 @@ PdLinkAudioUnit pdAudioUnit = [[PdLinkAudioUnit alloc] initWithLinkRef:linkRef];
 PdAudioContoller pd = [[PdAudioController alloc] initWithAudioUnit:pdAudioUnit];
 ```
 
-* Make sure to check out the help patch of `abl_link~`.
-* Create a Pd patch using the Link external, `abl_link~`.
+* Create a Pd patch using the desktop version of the Link external, `abl_link~`.
+* Add the patch to your Xcode project.
 

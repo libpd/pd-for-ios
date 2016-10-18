@@ -1,3 +1,9 @@
 [submodule "libpd"]
 	path = libpd
 	url = git://github.com/libpd/libpd.git
+[submodule "abl_link/external/link"]
+	path = abl_link/external/link
+	url = https://github.com/Ableton/link.git
+[submodule "abl_link/external/pd-lib-builder"]
+	path = abl_link/external/pd-lib-builder
+	url = https://github.com/pure-data/pd-lib-builder.git
