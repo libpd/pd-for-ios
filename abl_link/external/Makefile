@@ -10,7 +10,7 @@
 #
 # make install pdincludepath=../pure-data/src/ objectsdir=./build
 
-lib.name = abl_link
+lib.name = abl_link~
 
 class.sources = abl_link~.cpp
 
