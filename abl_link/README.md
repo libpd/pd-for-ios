@@ -3,8 +3,14 @@ Ableton Link integration for Pd.
 
 ## Desktop version
 
+Users:
+
+* Simply install `abl_link~` from deken and check out the help patch.
+
+Developers:
+
 * Build the external by saying `make` in `abl_link/external` and install it like any other external.
-* Check out the help patch `abl_link~-help.pd` and metronome patch `metronome.pd`, also in `abl_link/external.`
+* Run the metronome patch in `abl_link/external` to check the timing of the external against the LinkHut sample app.
 
 ## iOS version
 
