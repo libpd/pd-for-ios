@@ -12,6 +12,10 @@ Developers:
 * Build the external by saying `make` in `abl_link/external` and install it like any other external.
 * Run the metronome patch in `abl_link/external` to check the timing of the external against the LinkHut sample app.
 
+## Android version
+
+The desktop version works on Android, with minor adjustments. See the `abl_link/android` directory for details.
+
 ## iOS version
 
 **This version uses Ableton LinkKit 2.0.0.**
