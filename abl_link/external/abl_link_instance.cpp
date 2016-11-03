@@ -14,7 +14,11 @@ namespace abl_link {
 // the duration of one Pd buffer (1.4ms at 44.1kHz), rounded up to the next
 // integer.
 // TODO: Come up with a more scientific way of estimating the offset.
-static constexpr auto kLatencyOffset = std::chrono::milliseconds(7);
+#ifndef ABL_LINK_OFFSET_MS
+#define ABL_LINK_OFFSET_MS 7
+#endif
+static constexpr auto kLatencyOffset =
+    std::chrono::milliseconds(ABL_LINK_OFFSET_MS);
 
 std::weak_ptr<AblLinkWrapper> AblLinkWrapper::shared_instance;
 
