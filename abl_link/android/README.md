@@ -18,7 +18,7 @@ Note: While this solution is about using the abl_link~ external with Pd for Andr
 
 ## What's going on here?
 
-* The main challenges was to find an Android toolchain that works with Link. I tried many combinations, but the only one that worked for me was GNU 4.9 with the gnustl_static library. `Application.mk` includes the necessary settings. 
+* The main challenge was to find an Android toolchain that works with Link. I tried many combinations, but the only one that worked for me was GNU 4.9 with the gnustl_static library. `Application.mk` includes the necessary settings. 
 * So far, I've only been able to make this work with android-21 (Android 5.0 Lollipop) or later.
 * Link uses ifaddrs, which is not part of the stable Android APIs. So, I looked around and decided to borrow the implementation of ifaddrs that comes with the Android version of Chromium, which is BSD-licensed and IPv6 aware. It's included here, in `external/android-ifaddrs`.
 * Other than that, I just took a few straightforward compiler flags to make this work. They're in `Android.mk`.
