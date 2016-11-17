@@ -87,6 +87,8 @@ static OSStatus AudioRenderCallback(void *inRefCon,
         AudioUnitRender([pdAudioUnit audioUnit], ioActionFlags, inTimeStamp, kInputElement, inNumberFrames, ioData);
     }
     
+    ABLLinkTimelineRef timeline = ABLLinkCaptureAudioTimeline(pdAudioUnit->linkRef_);
+    abl_link_set_timeline(timeline);
     int ticks = inNumberFrames / kPdBlockSize;
     UInt64 hostTimeAfterTick = inTimeStamp->mHostTime + pdAudioUnit->outputLatency_;
     int bufSizePerTick = kPdBlockSize * pdAudioUnit->numChannels_;
@@ -96,6 +98,7 @@ static OSStatus AudioRenderCallback(void *inRefCon,
         [PdBase processFloatWithInputBuffer:auBuffer outputBuffer:auBuffer ticks:1];
         auBuffer += bufSizePerTick;
     }
+    ABLLinkCommitAudioTimeline(pdAudioUnit->linkRef_, timeline);
 
     return noErr;
 }
