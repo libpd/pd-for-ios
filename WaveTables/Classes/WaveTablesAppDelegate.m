@@ -65,7 +65,7 @@
 	[self.audioController setActive:YES];
 	[self.audioController print];
 	
-    [self.window addSubview:self.viewController.view];
+    [self.window setRootViewController:self.viewController];
     [self.window makeKeyAndVisible];
 	
 	return YES;
