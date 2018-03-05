@@ -15,6 +15,7 @@
 
 @interface ViewController ()
 - (void)updateTempo:(int)tempo;
+- (void)updatePlayState:(bool)is_playing;
 @end
 
 @implementation ViewController {
@@ -28,6 +29,11 @@ void sessionTempoCallback(double tempo, void *context) {
     [vc updateTempo:tempo];
 }
 
+void playStateCallback(bool is_playing, void *context) {
+    ViewController *vc = (__bridge ViewController*) context;
+    [vc updatePlayState:is_playing];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -38,8 +44,10 @@ void sessionTempoCallback(double tempo, void *context) {
     ABLLinkRef linkRef = [appDelegate getLinkRef];
     linkSettings_ = [ABLLinkSettingsViewController instance:linkRef];
     ABLLinkSetSessionTempoCallback(linkRef, sessionTempoCallback, (__bridge void *)(self));
+    ABLLinkSetStartStopCallback(linkRef, playStateCallback, (__bridge void *)(self));
     ABLLinkSessionStateRef session_state = ABLLinkCaptureAppSessionState(linkRef);
     [self updateTempo:ABLLinkGetTempo(session_state)];
+    [self updatePlayState:ABLLinkIsPlaying(session_state)];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -106,6 +114,10 @@ void sessionTempoCallback(double tempo, void *context) {
 
 - (void)updateTempo:(int)tempo {
     self.tempoLabel.text = [NSString stringWithFormat:@"Tempo: %d", tempo];
+}
+
+- (void)updatePlayState:(bool)is_playing {
+    [self.playState setOn:is_playing];
 }
 
 @end
