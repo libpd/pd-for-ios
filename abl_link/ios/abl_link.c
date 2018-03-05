@@ -12,15 +12,15 @@
 #include <string.h>
 
 static ABLLinkRef libpdLinkRef = NULL;
-static ABLLinkTimelineRef libpd_timeline;
+static ABLLinkSessionStateRef libpd_session_state;
 static uint64_t libpd_curr_time;
 
 void abl_link_set_link_ref(ABLLinkRef ref) {
     libpdLinkRef = ref;
 }
 
-void abl_link_set_timeline(ABLLinkTimelineRef timeline) {
-    libpd_timeline = timeline;
+void abl_link_set_session_state(ABLLinkSessionStateRef session_state) {
+    libpd_session_state = session_state;
 }
 
 void abl_link_set_time(uint64_t curr_time) {
@@ -55,21 +55,21 @@ static void abl_link_tilde_dsp(t_abl_link_tilde *x, t_signal **sp) {
 
 static void abl_link_tilde_tick(t_abl_link_tilde *x) {
     if (x->tempo < 0) {
-        ABLLinkSetTempo(libpd_timeline, -x->tempo, libpd_curr_time);
+        ABLLinkSetTempo(libpd_session_state, -x->tempo, libpd_curr_time);
     }
     double prev_tempo = x->tempo;
-    x->tempo = ABLLinkGetTempo(libpd_timeline);
+    x->tempo = ABLLinkGetTempo(libpd_session_state);
     if (prev_tempo != x->tempo) {
         outlet_float(x->tempo_out, x->tempo);
     }
     double curr_beat_time;
     if (x->reset_flag) {
-        ABLLinkRequestBeatAtTime(libpd_timeline, x->prev_beat_time, libpd_curr_time, x->quantum);
-        curr_beat_time = ABLLinkBeatAtTime(libpd_timeline, libpd_curr_time, x->quantum);
+        ABLLinkRequestBeatAtTime(libpd_session_state, x->prev_beat_time, libpd_curr_time, x->quantum);
+        curr_beat_time = ABLLinkBeatAtTime(libpd_session_state, libpd_curr_time, x->quantum);
         x->prev_beat_time = curr_beat_time - 1e-6;
         x->reset_flag = 0;
     } else {
-        curr_beat_time = ABLLinkBeatAtTime(libpd_timeline, libpd_curr_time, x->quantum);
+        curr_beat_time = ABLLinkBeatAtTime(libpd_session_state, libpd_curr_time, x->quantum);
     }
     outlet_float(x->beat_out, curr_beat_time);
     double curr_phase = fmod(curr_beat_time, x->quantum);
