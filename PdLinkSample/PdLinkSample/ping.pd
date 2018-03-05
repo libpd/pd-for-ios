@@ -11,7 +11,7 @@
 #X obj 250 219 print beat;
 #X msg 56 64 tempo \$1;
 #X msg 119 64 resolution \$1;
-#X msg 216 64 reset 0 \$1;
+#X msg 216 65 reset 0 \$1;
 #X floatatom 56 45 5 0 0 2 tempo tempo -, f 5;
 #X floatatom 119 46 5 0 0 2 resolution resolution -, f 5;
 #X floatatom 216 46 5 0 0 2 quantum quantum -, f 5;
@@ -25,7 +25,11 @@
 #X obj 148 233 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X obj 112 258 print downbeat;
-#X obj 234 134 print tempo;
+#X obj 248 156 print tempo;
+#X obj 251 134 print play;
+#X obj 290 45 tgl 15 0 empty play play 17 7 0 10 -262144 -1 -1 0 1
+;
+#X msg 290 65 play \$1;
 #X connect 0 0 1 1;
 #X connect 1 0 8 0;
 #X connect 3 0 1 0;
@@ -46,6 +50,7 @@
 #X connect 17 1 6 1;
 #X connect 17 2 5 1;
 #X connect 17 3 24 0;
+#X connect 17 4 25 0;
 #X connect 18 0 0 0;
 #X connect 19 0 4 0;
 #X connect 19 1 20 0;
@@ -56,3 +61,5 @@
 #X connect 21 0 18 0;
 #X connect 21 0 23 0;
 #X connect 22 0 16 0;
+#X connect 26 0 27 0;
+#X connect 27 0 17 0;
