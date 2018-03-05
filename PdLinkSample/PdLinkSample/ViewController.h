@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *tempoSlider;
 @property (weak, nonatomic) IBOutlet UISlider *resolutionSlider;
 @property (weak, nonatomic) IBOutlet UISlider *quantumSlider;
+@property (weak, nonatomic) IBOutlet UISwitch *playState;
 
 @end
 

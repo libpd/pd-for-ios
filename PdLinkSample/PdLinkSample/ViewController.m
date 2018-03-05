@@ -68,6 +68,12 @@ void sessionTempoCallback(double tempo, void *context) {
     [PdBase sendFloat:quantum toReceiver:@"quantum"];
 }
 
+- (IBAction)playStateChanged:(id)sender {
+    UISwitch *sw = (UISwitch*) sender;
+    bool is_playing = sw.isOn;
+    [PdBase sendFloat:is_playing toReceiver:@"play"];
+}
+
 -(IBAction)showLinkSettings:(id)sender
 {
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:linkSettings_];
