@@ -12,4 +12,3 @@ setup, say
 	git submodule update --recursive
 
 whenever you want to sync with the GitHub repositories.
-

@@ -50,10 +50,10 @@ static const CGFloat kTwoPi = 6.283185307179586;
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-		self.valueLabel = [[[UILabel alloc] init] autorelease];
+		self.valueLabel = [[UILabel alloc] init];
 		self.valueLabel.backgroundColor = [UIColor clearColor];
 		self.valueLabel.textColor = self.frameColor;
-        self.valueLabel.textAlignment = UITextAlignmentCenter;
+        self.valueLabel.textAlignment = NSTextAlignmentCenter;
         self.valueLabel.text = [NSString stringWithFormat:@"0"]; // this is what self.value starts at
 		[self addSubview:self.valueLabel];
         
@@ -61,11 +61,6 @@ static const CGFloat kTwoPi = 6.283185307179586;
         self.value = NSIntegerMin; // if value == 0 is initially passed in, we still want it to be considered, so set value_ to something else
 	}
     return self;
-}
-
-- (void) dealloc {
-	self.valueLabel = nil;
-	[super dealloc];
 }
 
 #pragma mark - View Methods
@@ -164,8 +159,8 @@ static const CGFloat kTwoPi = 6.283185307179586;
         [self.valueLabel setNeedsDisplay];
         [self setNeedsDisplay];
         
-        if (self.valueTarget && self.valueAction) {
-            [self.valueTarget performSelector:self.valueAction withObject:self];
+        if (self.valueTarget && self.valueAction && [self.valueTarget respondsToSelector:self.valueAction]) {
+        	[self.valueTarget performSelectorOnMainThread:self.valueAction withObject:self waitUntilDone:YES];
         }
     }
 }

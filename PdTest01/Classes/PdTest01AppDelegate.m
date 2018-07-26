@@ -52,14 +52,14 @@
 @synthesize audioController = audioController_;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-	self.audioController = [[[PdAudioController alloc] init] autorelease];
+	self.audioController = [[PdAudioController alloc] init];
 	[self.audioController configurePlaybackWithSampleRate:44100 numberChannels:2 inputEnabled:YES mixingEnabled:NO];
 	[PdBase openFile:@"test.pd" path:[[NSBundle mainBundle] resourcePath]];
 	[self.audioController setActive:YES];
 	[self.audioController print];
 	
-	self.window = [[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
-	self.window.rootViewController = [[[PdTest01ViewController alloc] init] autorelease];
+	self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	self.window.rootViewController = [[PdTest01ViewController alloc] init];
     [self.window makeKeyAndVisible];
 	return YES;
 }
@@ -67,7 +67,6 @@
 - (void)dealloc {
 	self.audioController = nil;
 	self.window = nil;
-    [super dealloc];
 }
 
 @end

@@ -1,5 +1,6 @@
 /*
  Copyright (c) 2012, Richard Eakin
+ Updated by Dan Wilcox 2018
 
  Redistribution and use in source and binary forms, with or without modification, are permitted provided that
  the following conditions are met:
@@ -75,21 +76,6 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 @synthesize fingerboard = fingerboard_;
 @synthesize patches = patches_;
 
-#pragma mark - Dealloc
-
-- (void)dealloc {
-	self.polyPatchController = nil;
-    self.playToggle = nil;
-	self.quantizeToggle = nil;
-	self.patchSelector = nil;
-    self.freqSlider = nil;
-	self.transposeDial = nil;
-	self.fingerboard = nil;
-    self.patches = nil;
-	self.loadLabel = nil;
-    [super dealloc];
-}
-
 #pragma mark - View management
 
 - (void) loadView {
@@ -99,7 +85,7 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 	self.mainPatch = [PdFile openFileNamed:@"main.pd" path:[[NSBundle mainBundle] bundlePath]];
 
 	// this guy will hold the voice patches
-	self.polyPatchController = [[[PolyPatchController alloc] init] autorelease];
+	self.polyPatchController = [[PolyPatchController alloc] init];
 
     // UI Setup:
     self.view.backgroundColor = [UIColor blackColor];
@@ -116,17 +102,15 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 
     self.patches = [NSArray arrayWithObjects:@"classicsub-voice.pd", @"wavetabler-voice.pd", nil];
 
-    self.patchSelector = [[[UISegmentedControl alloc] initWithItems:
-                                          [NSArray arrayWithObjects:@"Classic Sub", @"Wavetabler", nil]]
-                                          autorelease];
+    self.patchSelector = [[UISegmentedControl alloc] initWithItems:
+                                          [NSArray arrayWithObjects:@"Classic Sub", @"Wavetabler", nil]];
 
     self.patchSelector.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
-    self.patchSelector.segmentedControlStyle = UISegmentedControlStyleBar;
     self.patchSelector.tintColor = [UIColor darkGrayColor];
     self.patchSelector.selectedSegmentIndex = 0;
     [self.patchSelector addTarget:self action:@selector(patchSelectorChanged:) forControlEvents:UIControlEventValueChanged];
     
-    self.freqSlider = [[[QSlider alloc] init] autorelease];
+    self.freqSlider = [[QSlider alloc] init];
     self.freqSlider.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
 
     self.freqSlider.minimumValue = 0.0;
@@ -138,14 +122,14 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 	self.loadLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
 	[self formatLoadLabel];
     
-	self.transposeDial = [[[QRadioDial alloc] init] autorelease];
+	self.transposeDial = [[QRadioDial alloc] init];
 	self.transposeDial.minimumValue = -3.0;
 	self.transposeDial.maximumValue = 3.0;
     self.transposeDial.numSections = 7;
     self.transposeDial.value = 0;
 	[self.transposeDial addValueTarget:self action:@selector(transposeChanged:)];
 
-    self.fingerboard = [[[Fingerboard alloc] init] autorelease];
+    self.fingerboard = [[Fingerboard alloc] init];
     self.fingerboard.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
 	self.fingerboard.numVoices = kSynthNumVoices;
 	self.fingerboard.polyPatchController = self.polyPatchController; // currently need a reference to this to send messages
@@ -222,19 +206,6 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 	[self sliderChanged:self.freqSlider];
 	[self transposeChanged:self.transposeDial];
 }
-
-- (void)viewDidUnload {
-	[super viewDidUnload];
-
-	// the patch is loaded along with the view, so make sure to cleanup if the view is unloaded.
-	self.mainPatch = nil;
-	self.patches = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return YES;
-}
-
 #pragma mark - Control Events
 
 - (void)sliderChanged:(QSlider *)sender {
@@ -328,7 +299,7 @@ static NSString *const kSynthFreqRamptimeReceiver = @"synth-freq-ramptime";
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
 	label.backgroundColor = [UIColor clearColor];
 	label.textColor = QCONTROL_DEFAULT_FRAME_COLOR;
-	label.textAlignment = UITextAlignmentRight;
+	label.textAlignment = NSTextAlignmentRight;
 	return label;
 }
 

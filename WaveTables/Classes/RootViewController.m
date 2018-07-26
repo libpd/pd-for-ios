@@ -72,17 +72,9 @@ static NSString *const kPdArrayName = @"%d-array"; // decimal parameter is the $
 @synthesize toolBar = toolBar_;
 
 #pragma mark -
-#pragma mark Init / Dealloc
+#pragma mark Init
 
-- (void)dealloc {
-    self.patch = nil;
-    self.waveTableView = nil;
-	self.toolBar = nil;
-    [super dealloc];
-}
-
-
-- (void) loadView {
+- (void)loadView {
     [super loadView];
     self.view.backgroundColor = [UIColor whiteColor];
 
@@ -97,11 +89,7 @@ static NSString *const kPdArrayName = @"%d-array"; // decimal parameter is the $
 #pragma mark -
 #pragma mark Rotation
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
+- (void)viewDidLayoutSubviews {
     [self layoutWavetable];
 }
 
@@ -130,45 +118,40 @@ static NSString *const kPdArrayName = @"%d-array"; // decimal parameter is the $
         [self.waveTableView removeFromSuperview];
     }
     
-    self.waveTableView = [[[WaveTableView alloc] initWithWavetable:wavetable] autorelease];
+    self.waveTableView = [[WaveTableView alloc] initWithWavetable:wavetable];
     self.waveTableView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
 	
 	[self.view addSubview:self.waveTableView];
 }
 
 - (void)setupToolbar {
-	self.toolBar = [[[UIToolbar alloc] init] autorelease];
+	self.toolBar = [[UIToolbar alloc] init];
 	self.toolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	self.toolBar.barStyle = UIBarStyleBlack;
 	
-	UIBarButtonItem *printButton = [[[UIBarButtonItem alloc] initWithTitle:@"Print"
-																	 style:UIBarButtonItemStyleBordered
+	UIBarButtonItem *printButton = [[UIBarButtonItem alloc] initWithTitle:@"Print"
+																	 style:UIBarButtonItemStylePlain
 																	target:self
-																	action:@selector(printButtonTapped:)]
-                                    autorelease];
+																	action:@selector(printButtonTapped:)];
 
-    UIBarButtonItem *resetButton = [[[UIBarButtonItem alloc] initWithTitle:@"Reset"
-																	 style:UIBarButtonItemStyleBordered
-																	target:self
-																	action:@selector(resetButtonTapped:)]
-                                    autorelease];
+    UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset"
+																	style:UIBarButtonItemStylePlain
+																   target:self
+																   action:@selector(resetButtonTapped:)];
     
-    UIBarButtonItem *spaceButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+    UIBarButtonItem *spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                                   target:nil
-                                                                                  action:nil]
-                                    autorelease];
+                                                                                  action:nil];
 
-    UISegmentedControl *patchControl = [[[UISegmentedControl alloc] initWithItems:
-                                          [NSArray arrayWithObjects:@"Wavetable", @"Resynthesis", nil]]
-                                         autorelease];
-    
-    patchControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    UISegmentedControl *patchControl = [[UISegmentedControl alloc] initWithItems:
+                                          [NSArray arrayWithObjects:@"Wavetable", @"Resynthesis", nil]];
+
     patchControl.tintColor = [UIColor darkGrayColor];
 	patchControl.selectedSegmentIndex = 0;
     [patchControl addTarget:self action:@selector(patchSelectorChanged:) forControlEvents:UIControlEventValueChanged];
 	[self patchSelectorChanged:patchControl];
 	
-    UIBarButtonItem *patchControlButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:patchControl] autorelease];
+    UIBarButtonItem *patchControlButtonItem = [[UIBarButtonItem alloc] initWithCustomView:patchControl];
     
 	[self.toolBar setItems:[NSArray arrayWithObjects:printButton,
                             resetButton,
@@ -273,7 +256,7 @@ static NSString *const kPdArrayName = @"%d-array"; // decimal parameter is the $
         DLog(@"%@ already open, returning.", patchName);
         return;
     }
-	DLog(@"minY = %2.1f, maxY = %2.1f", patchName, minY, maxY);
+	DLog(@"minY = %2.1f, maxY = %2.1f", minY, maxY);
     [self openPatch:patchName];
     self.waveTableView.minY = minY;
     self.waveTableView.maxY = maxY;

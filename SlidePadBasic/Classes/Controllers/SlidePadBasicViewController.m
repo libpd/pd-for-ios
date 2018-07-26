@@ -1,5 +1,6 @@
 /*
  Copyright (c) 2012, Richard Eakin
+ Updated by Dan Wilcox 2018
 
  Redistribution and use in source and binary forms, with or without modification, are permitted provided that
  the following conditions are met:
@@ -53,16 +54,6 @@
 @synthesize loadPercentage = loadPercentage_;
 @synthesize loadLabel = loadLabel_;
 
-#pragma mark - Dealloc
-
-- (void)dealloc {
-    self.playToggle = nil;
-	self.fingerboard = nil;
-	self.patch = nil;
-	self.loadLabel = nil;
-    [super dealloc];
-}
-
 #pragma mark - View management
 
 - (void)loadView {
@@ -85,7 +76,7 @@
 	[self formatLoadLabel];
 
 	// add The Fingerboard - the guy who triggers sound
-    self.fingerboard = [[[Fingerboard alloc] init] autorelease];
+    self.fingerboard = [[Fingerboard alloc] init];
     self.fingerboard.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
 
     [self.view addSubview:self.playToggle];
@@ -129,20 +120,9 @@
 	[self playTogglePressed:self.playToggle];
 }
 
-- (void)viewDidUnload {
-	[super viewDidUnload];
-
-	// the patch is loaded along with the view, so make sure to cleanup if the view is unloaded.
-	self.patch = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return YES;
-}
-
 #pragma mark - Control Events
 
--(void)playTogglePressed:(UIButton *)sender {
+- (void)playTogglePressed:(UIButton *)sender {
 	AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
 
     if([sender isSelected]){
@@ -193,7 +173,7 @@
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
 	label.backgroundColor = [UIColor clearColor];
 	label.textColor = [UIColor colorWithRed:0.0 green:0.7 blue:0.3 alpha:1.0];
-	label.textAlignment = UITextAlignmentRight;
+	label.textAlignment = NSTextAlignmentRight;
 	return label;
 }
 

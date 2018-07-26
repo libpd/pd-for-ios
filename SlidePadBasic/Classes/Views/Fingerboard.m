@@ -1,5 +1,6 @@
 /*
  Copyright (c) 2012, Richard Eakin
+ Updated by Dan Wilcox 2018
 
  Redistribution and use in source and binary forms, with or without modification, are permitted provided that
  the following conditions are met:
@@ -77,12 +78,6 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
     return self;
 }
 
-- (void)dealloc {
-    self.monoTouch = nil;
-    self.sharpNoteColor = nil;
-    [super dealloc];
-}
-
 #pragma mark - Public
 
 - (void)mute {
@@ -127,11 +122,12 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
     // ***** set up text for midi number *****
 
 	const float kTextColorGrayLevel = 0.75;
-    CGContextSelectFont (context, "Helvetica", 12, kCGEncodingMacRoman);
-    CGContextSetRGBFillColor(context, kTextColorGrayLevel, kTextColorGrayLevel, kTextColorGrayLevel, 1.0);
-    CGContextSetTextDrawingMode (context, kCGTextFill); 
-    CGAffineTransform textFlip = CGAffineTransformMake(1.0,0.0, 0.0, -1.0, 0.0, 0.0);
-    CGContextSetTextMatrix(context, textFlip);
+	UIColor *gray = [UIColor colorWithWhite:kTextColorGrayLevel alpha:1.0];
+	UIFont *font;
+	if (self.drawNoteLabels) {
+		font = [UIFont fontWithName:@"Helvetica" size:12];
+	}
+    CGContextSetStrokeColorWithColor(context, gray.CGColor);
     
     
     int nm, ns;
@@ -152,11 +148,8 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
         }
         if (self.drawNoteLabels) {
             NSString *noteLabel = [NSString stringWithFormat:@"%d", ns];
-            CGContextShowTextAtPoint (context, 
-                                      n * noteWidth + 3.0, 
-                                      self.bounds.size.height - 4.0,
-                                      [noteLabel UTF8String], 
-                                      [noteLabel length]); 
+            [noteLabel drawAtPoint:CGPointMake(n * noteWidth + 3.0, self.bounds.size.height - 16.0)
+					withAttributes:@{NSFontAttributeName:font, NSForegroundColorAttributeName:gray}];
         }
     }
 }
@@ -169,7 +162,7 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 		[self.monoTouch removeFromSuperview];
 	}
 	CGPoint point = [[touches anyObject] locationInView:self];
-	self.monoTouch = [[[TouchDiamond alloc] init] autorelease];
+	self.monoTouch = [[TouchDiamond alloc] init];
 	self.monoTouch.center = point;
 	[self addSubview:self.monoTouch];
 	[self.monoTouch displayAnimated];

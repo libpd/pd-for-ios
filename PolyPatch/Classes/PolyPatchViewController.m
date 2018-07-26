@@ -66,16 +66,6 @@ NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
 @synthesize patches = patches_;
 
 #pragma mark -
-#pragma mark Init / Dealloc
-
-- (void)dealloc {
-	self.openButton = nil;
-	self.tableView = nil;
-	self.patches = nil;
-    [super dealloc];
-}
-
-#pragma mark -
 #pragma mark View Life Cycle
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
@@ -96,7 +86,7 @@ NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
 	[self.view addSubview:openButton];
 	self.openButton = openButton;
 	
-	self.tableView = [[[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped] autorelease];
+	self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
 	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	self.tableView.editing = YES;
 	self.tableView.dataSource = self;
@@ -113,10 +103,6 @@ NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
 
 	self.tableView.backgroundColor = [UIColor colorWithRed:0.2 green:0.7 blue:0.3 alpha:1.0];
 	self.tableView.frame = CGRectMake(0.0, 55.0, self.view.bounds.size.width, self.view.bounds.size.height - 60.0);
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
 }
 
 #pragma mark -
@@ -140,7 +126,7 @@ NSString *const kTestPatchName = @"test2.pd"; // audio blurbs with pitch control
 
 	PatchTableViewCell *cell = (PatchTableViewCell *)[tableView dequeueReusableCellWithIdentifier:kCellID];
 	if (!cell) {
-		cell = [[[PatchTableViewCell alloc] initWithDollarZeroArg:[patch dollarZero] reuseIdentifier:kCellID] autorelease];
+		cell = [[PatchTableViewCell alloc] initWithDollarZeroArg:[patch dollarZero] reuseIdentifier:kCellID];
 	}
 	cell.textLabel.text = [NSString stringWithFormat:@"%@ - %d", kTestPatchName, cell.dollarZero];
 	return cell;

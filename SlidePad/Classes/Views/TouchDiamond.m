@@ -29,8 +29,10 @@
 @synthesize touchIndex = touchIndex_;
 
 - (id)initWithIndex:(NSInteger)touchIndex {
-    [self init];
-    self.touchIndex = touchIndex;
+    self = [super init];
+    if(self) {
+    	self.touchIndex = touchIndex;
+    }
     return self;
 }
 

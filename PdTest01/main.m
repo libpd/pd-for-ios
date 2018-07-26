@@ -41,8 +41,7 @@
 #import "PdTest01AppDelegate.h"
 
 int main(int argc, char *argv[]) {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, NSStringFromClass([PdTest01AppDelegate class]));
-    [pool release];
-    return retVal;
+    @autoreleasepool {
+    	return UIApplicationMain(argc, argv, nil, NSStringFromClass([PdTest01AppDelegate class]));
+    }
 }

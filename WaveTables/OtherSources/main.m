@@ -6,13 +6,11 @@
 //  Copyright 2011 Richard T. Eakin. All rights reserved.
 //
 
-
 #import <UIKit/UIKit.h>
+#import "WaveTablesAppDelegate.h"
 
 int main(int argc, char *argv[]) {
-    
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, @"WaveTablesAppDelegate");
-    [pool release];
-    return retVal;
+    @autoreleasepool {
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass(WaveTablesAppDelegate.class));
+    }
 }

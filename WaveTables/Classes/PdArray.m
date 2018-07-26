@@ -61,7 +61,7 @@
 #pragma mark - Init / Dealloc
 
 + (id)arrayNamed:(NSString *)arrayName {
-  PdArray *pdArray = [[[self alloc] init] autorelease];
+  PdArray *pdArray = [[self alloc] init];
   if (pdArray) {
     pdArray.size = [PdBase arraySizeForArrayNamed:arrayName];
     if (pdArray.size <= 0) {
@@ -76,9 +76,6 @@
 
 - (void)dealloc {
   free(self.array);
-  self.array = nil;
-  self.name = nil;
-  [super dealloc];
 }
 
 #pragma mark -

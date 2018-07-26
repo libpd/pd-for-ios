@@ -3,6 +3,7 @@
 //  PdTest02
 //
 //  Created by Richard Lawler on 11/22/10.
+//  Updated by Dan Wilcox 2018.
 /**
  * This software is copyrighted by Richard Lawler. 
  * The following terms (the "Standard Improved BSD License") apply to 
@@ -38,10 +39,10 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "PdTestAppDelegate.h"
 
 int main(int argc, char *argv[]) {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, nil);
-    [pool release];
-    return retVal;
+    @autoreleasepool {
+    	return UIApplicationMain(argc, argv, nil, NSStringFromClass(PdTestAppDelegate.class));
+    }
 }

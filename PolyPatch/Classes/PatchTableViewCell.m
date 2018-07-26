@@ -58,7 +58,7 @@
 		self.dollarZero = dollarZero;
 		self.backgroundColor = [UIColor brownColor];
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
-		self.pitchSlider = [[[UISlider alloc] init] autorelease];
+		self.pitchSlider = [[UISlider alloc] init];
 		self.pitchSlider.minimumValue = 0;
 		self.pitchSlider.maximumValue = 30;
 		self.pitchSlider.continuous = YES;
@@ -76,11 +76,6 @@
 										self.bounds.size.height * 0.3,
 										self.bounds.size.width  * 0.3,
 										self.bounds.size.height * 0.5);
-}
-
-- (void)dealloc {
-	self.pitchSlider = nil;
-    [super dealloc];
 }
 
 // Here we send the pitch value to only the patch specified by the $0 arg associated with this table cell

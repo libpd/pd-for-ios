@@ -86,13 +86,6 @@
     return self;
 }
 
-- (void)dealloc {
-    self.wavetable = nil;
-    self.borderColor = nil;
-    self.arrayColor = nil;
-    [super dealloc];
-}
-
 #pragma mark -
 #pragma mark Inline Conversion functions
 

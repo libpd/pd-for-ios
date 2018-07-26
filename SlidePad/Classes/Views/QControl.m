@@ -49,12 +49,6 @@
     return self;
 }
 
-- (void)dealloc {
-    self.fillColor = nil;
-    self.frameColor = nil;
-	[super dealloc];
-}
-
 #pragma mark - Public 
 
 - (void) addValueTarget:(id)target action:(SEL)action {
@@ -67,8 +61,8 @@
 
 - (void)setValue:(float)f {
     value_ = f;
-    if (self.valueTarget) {
-        [self.valueTarget performSelector:self.valueAction withObject:self];
+    if (self.valueTarget && [self.valueTarget respondsToSelector:self.valueAction]) {
+    	[self.valueTarget performSelectorOnMainThread:self.valueAction withObject:self waitUntilDone:YES];
     }
     [self setNeedsDisplay];
 }

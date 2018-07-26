@@ -4,6 +4,7 @@
 //
 //  Created by Richard Eakin on 18/09/11.
 //  Copyright 2011 Blarg. All rights reserved.
+//  Updated by Dan Wilcox 2018.
 //
 
 #import "PdSettingsViewController.h"
@@ -76,7 +77,7 @@ allowMixingButton = allowMixingButton_;
 	if (self) {
 		[PdBase setDelegate:self];
 		[PdBase subscribe:@"test-value"];
-		self.audioController = [[[PdAudioController alloc] init] autorelease];
+		self.audioController = [[PdAudioController alloc] init];
 		[self.audioController configurePlaybackWithSampleRate:44100 numberChannels:2 inputEnabled:YES mixingEnabled:NO]; // well known settings
 		[self fillSettingsArray];
 	}
@@ -92,7 +93,6 @@ allowMixingButton = allowMixingButton_;
     self.allowMixingButton = nil;
 	self.patchSelector = nil;
 	self.settingsArray = nil;
-	[super dealloc];
 }
 
 #pragma mark - View lifecycle
@@ -110,13 +110,12 @@ allowMixingButton = allowMixingButton_;
 	self.ambientAudioButton = [self addButtonWithText:@"Ambient Audio" selector:@selector(ambientButtonWasTapped:)];
 	self.allowMixingButton = [self addButtonWithText:@"Allow Mixing" selector:@selector(allowMixingButtonWasTapped:)];
 	
-	self.settingsPicker = [[[UIPickerView alloc] init] autorelease];
+	self.settingsPicker = [[UIPickerView alloc] init];
 	self.settingsPicker.delegate = self;
 	self.settingsPicker.dataSource = self;
 	self.settingsPicker.showsSelectionIndicator = YES;
 	
-	self.patchSelector = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"testoutput.pd", @"testinput.pd", nil]] autorelease];
-    self.patchSelector.segmentedControlStyle = UISegmentedControlStyleBezeled;
+	self.patchSelector = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"testoutput.pd", @"testinput.pd", nil]];
     self.patchSelector.tintColor = [UIColor colorWithRed:54.0/255.0 green:56.0/255.0 blue:96.0/255.0 alpha:1.0];
     self.patchSelector.selectedSegmentIndex = 0;
     [self.patchSelector addTarget:self action:@selector(patchSelectorChanged:) forControlEvents:UIControlEventValueChanged];
@@ -124,13 +123,10 @@ allowMixingButton = allowMixingButton_;
     
 	[self.view addSubview:self.settingsPicker];
 	[self.view addSubview:self.patchSelector];
-    
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-	[self layoutInterface];
-	[self layoutLabels];
+-(BOOL)prefersStatusBarHidden{
+    return YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -139,24 +135,18 @@ allowMixingButton = allowMixingButton_;
 	[self.audioController print];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return YES;
+- (void)viewDidLayoutSubviews {
+	[self layoutInterface];
+	[self layoutLabels];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+- (void)viewWillTransitionToSize:(CGSize)size
+	   withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
 	for (UIView *view in self.view.subviews) {
 		if ([view isKindOfClass:[UILabel class]]) {
 			[view removeFromSuperview];
 		}
 	}
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	[self layoutInterface];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[self layoutLabels];
 }
 
 #pragma mark - PdReceiverDelegate
@@ -221,31 +211,34 @@ allowMixingButton = allowMixingButton_;
 	const CGFloat kPickerHeight = 162.0;
 	CGSize viewSize = self.view.bounds.size;
     
-	self.settingsPicker.frame =  CGRectMake(0.0, viewSize.height - kPickerHeight, viewSize.width, kPickerHeight);
+	self.settingsPicker.frame = CGRectMake(0.0, viewSize.height - kPickerHeight, viewSize.width, kPickerHeight);
 	
 	CGFloat psXOffset = (viewSize.width - kPSWidth) * 0.5;
 	CGFloat psYOffset = self.settingsPicker.frame.origin.y - kButtonHeight - 26.0;
 	self.patchSelector.frame = CGRectIntegral(CGRectMake(psXOffset, psYOffset, kPSWidth, kButtonHeight));
-	
+
+	CGFloat bYOffset = 0.0;
 	self.activeButton.frame = CGRectMake(kFramePadding, kFramePadding, kActiveButtonWidth, kButtonHeight);
 	CGFloat rButtonXOffset = viewSize.width - kFramePadding - kReloadButtonWidth;
 	self.reloadButton.frame = CGRectMake(rButtonXOffset, kFramePadding, kReloadButtonWidth, kButtonHeight);
-	if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+	int currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+	if (UIInterfaceOrientationIsPortrait(currentOrientation)) {
 		self.ambientAudioButton.frame = CGRectMake(self.reloadButton.frame.origin.x,
-                                                   self.reloadButton.frame.origin.y + kButtonHeight + kButtonSpacer,
+                                                   self.reloadButton.frame.origin.y + kButtonHeight + kButtonSpacer + bYOffset,
                                                    kReloadButtonWidth,
                                                    kButtonHeight);
 		self.allowMixingButton.frame = CGRectMake(self.reloadButton.frame.origin.x,
-                                                  self.reloadButton.frame.origin.y + 2 * (kButtonHeight + kButtonSpacer),
+                                                  self.reloadButton.frame.origin.y + 2 * (kButtonHeight + kButtonSpacer + bYOffset),
                                                   kReloadButtonWidth,
                                                   kButtonHeight);
 	} else {
-		self.ambientAudioButton.frame = CGRectMake(self.reloadButton.frame.origin.x - self.reloadButton.frame.size.width - kButtonSpacer,
-                                                   self.reloadButton.frame.origin.y,
+		self.ambientAudioButton.frame = CGRectMake(self.reloadButton.frame.origin.x -
+		                                           self.reloadButton.frame.size.width - kButtonSpacer,
+                                                   self.reloadButton.frame.origin.y + bYOffset,
                                                    kReloadButtonWidth,
                                                    kButtonHeight);
 		self.allowMixingButton.frame = CGRectMake(self.reloadButton.frame.origin.x - 2 * (self.reloadButton.frame.size.width + kButtonSpacer),
-                                                  self.reloadButton.frame.origin.y,
+                                                  self.reloadButton.frame.origin.y + bYOffset,
                                                   kReloadButtonWidth,
                                                   kButtonHeight);
 	}
@@ -286,7 +279,7 @@ allowMixingButton = allowMixingButton_;
 												 kLabelHeight));
     
 	UILabel *psLabel = [self addLabelWithText:@"patch selector"];
-	psLabel.textAlignment = UITextAlignmentCenter;
+	psLabel.textAlignment = NSTextAlignmentCenter;
 	CGFloat psLabelYOffset = self.patchSelector.frame.origin.y - kLabelHeight - 2;
 	psLabel.frame = CGRectIntegral(CGRectMake((viewSize.width - kPSLabelWidth) * 0.5,
 											  psLabelYOffset,
@@ -295,7 +288,7 @@ allowMixingButton = allowMixingButton_;
 }
 
 - (UILabel *)addLabelWithText:(NSString *)text {
-	UILabel *label = [[[UILabel alloc] init] autorelease];
+	UILabel *label = [[UILabel alloc] init];
 	[self.view addSubview:label];
 	label.text = text;
 	label.textColor = [UIColor lightGrayColor];
@@ -427,7 +420,7 @@ allowMixingButton = allowMixingButton_;
 }
 
 - (int)pickerValueForComponent:(SettingsPickerComponent)component {
-	int row = [self.settingsPicker selectedRowInComponent:component];
+	int row = (int)[self.settingsPicker selectedRowInComponent:component];
 	NSString *value = [[self.settingsArray objectAtIndex:component] objectAtIndex:row];
 	return [value intValue];
 }

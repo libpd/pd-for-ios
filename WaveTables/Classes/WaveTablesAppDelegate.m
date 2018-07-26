@@ -57,10 +57,10 @@
 @synthesize audioController = audioController_;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    self.window = [[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
-    self.viewController = [[[RootViewController alloc] init] autorelease];
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.viewController = [[RootViewController alloc] init];
 
-	self.audioController = [[[PdAudioController alloc] init] autorelease];
+	self.audioController = [[PdAudioController alloc] init];
 	[self.audioController configureAmbientWithSampleRate:44100 numberChannels:2 mixingEnabled:YES];
 	[self.audioController setActive:YES];
 	[self.audioController print];
@@ -70,13 +70,5 @@
 	
 	return YES;
 }
-
-- (void)dealloc {
-    self.viewController = nil;
-    self.window = nil;
-    self.audioController = nil;
-    [super dealloc];
-}
-
 
 @end

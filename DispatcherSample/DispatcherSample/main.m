@@ -3,15 +3,14 @@
 //  DispatcherSample
 //
 //  Created by Peter Brinkmann on 8/28/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Updated by Dan Wilcox 2018.
 //
 
 #import <UIKit/UIKit.h>
+#import "DispatcherSampleAppDelegate.h"
 
-int main(int argc, char *argv[])
-{
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, nil);
-    [pool release];
-    return retVal;
+int main(int argc, char *argv[]) {
+    @autoreleasepool {
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass(DispatcherSampleAppDelegate.class));
+    }
 }

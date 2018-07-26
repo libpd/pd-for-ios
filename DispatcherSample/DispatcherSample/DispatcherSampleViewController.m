@@ -23,21 +23,12 @@
     PdDispatcher *dispatcher = (PdDispatcher *)[PdBase delegate];
     SampleListener *listener = [[SampleListener alloc] initWithLabel:fooLabel];
     [dispatcher addListener:listener forSource:@"foo"];
-    [listener release];
     listener = [[SampleListener alloc] initWithLabel:barLabel];
     [dispatcher addListener:listener forSource:@"bar"];
-    [listener release];
     listener = [[SampleListener alloc] initWithLabel:nil];
     [dispatcher addListener:listener forSource:@"baz"];
-    [listener release];
     
 	[PdBase openFile:@"sample.pd" path:[[NSBundle mainBundle] resourcePath]];
-}
-
-- (void)dealloc {
-    [fooLabel release];
-    [barLabel release];
-    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning {

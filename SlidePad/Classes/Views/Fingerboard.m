@@ -1,5 +1,6 @@
 /*
  Copyright (c) 2012, Richard Eakin
+ Updated by Dan Wilcox 2018
 
  Redistribution and use in source and binary forms, with or without modification, are permitted provided that
  the following conditions are met:
@@ -92,17 +93,11 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
     return self;
 }
 
-- (void)dealloc {
-    self.touches = nil;
-    self.sharpNoteColor = nil;
-    [super dealloc];
-}
-
 #pragma mark - Public
 
 - (void)updateAllVoices {
     for (TouchDiamond *diamond in [self.touches allValues]) {
-        [self sendParamsWithPoint:diamond.center voice:diamond.touchIndex];
+        [self sendParamsWithPoint:diamond.center voice:(int)diamond.touchIndex];
     }
 }
 
@@ -130,14 +125,14 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
     
     // ***** create a layer for sharp notes *****
     CGRect noteRect = CGRectMake(0.0, 0.0, noteWidth, CGRectGetHeight(self.bounds));
-    CGLayerRef noteLayer = CGLayerCreateWithContext (context, noteRect.size, NULL);
-    CGContextRef noteContext = CGLayerGetContext (noteLayer);
+    CGLayerRef noteLayer = CGLayerCreateWithContext(context, noteRect.size, NULL);
+    CGContextRef noteContext = CGLayerGetContext(noteLayer);
     CGContextSetFillColorWithColor(noteContext, self.sharpNoteColor.CGColor);
     CGContextFillRect(noteContext, noteRect);
     
     // ***** create a layer for line notes (C's and F's).  *****
-    CGLayerRef lineLayer = CGLayerCreateWithContext (context, noteRect.size, NULL);
-    CGContextRef lineContext = CGLayerGetContext (lineLayer);
+    CGLayerRef lineLayer = CGLayerCreateWithContext(context, noteRect.size, NULL);
+    CGContextRef lineContext = CGLayerGetContext(lineLayer);
     CGContextSetStrokeColorWithColor(lineContext, self.sharpNoteColor.CGColor);
     CGContextBeginPath(lineContext);
     CGContextMoveToPoint(lineContext, 0.0, 0.0);
@@ -149,12 +144,13 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
     // ***** set up text for midi number *****
 
 	const float kTextColorGrayLevel = 0.75;
-    CGContextSelectFont (context, "Helvetica", 12, kCGEncodingMacRoman);
-    CGContextSetRGBFillColor(context, kTextColorGrayLevel, kTextColorGrayLevel, kTextColorGrayLevel, 1.0);
-    CGContextSetTextDrawingMode (context, kCGTextFill); 
-    CGAffineTransform textFlip = CGAffineTransformMake(1.0,0.0, 0.0, -1.0, 0.0, 0.0);
-    CGContextSetTextMatrix(context, textFlip);
-    
+	UIColor *gray = [UIColor colorWithWhite:kTextColorGrayLevel alpha:1.0];
+	UIFont *font;
+	if (self.drawNoteLabels) {
+		font = [UIFont fontWithName:@"Helvetica" size:12];
+	}
+    CGContextSetStrokeColorWithColor(context, gray.CGColor);
+
     int nm, ns;
     CGPoint notePoint = CGPointZero;
      
@@ -163,19 +159,16 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
         nm = ns % 12;
         if (nm == 1 || nm == 3 || nm == 6 || nm == 8 || nm == 10) {
             notePoint.x = n * noteWidth;
-            CGContextDrawLayerAtPoint (context, notePoint, noteLayer);
+            CGContextDrawLayerAtPoint(context, notePoint, noteLayer);
         }            
         else if (nm == 0 || nm == 5) {
             notePoint.x = n * noteWidth;
-            CGContextDrawLayerAtPoint (context, notePoint, lineLayer);
+            CGContextDrawLayerAtPoint(context, notePoint, lineLayer);
         }
         if (self.drawNoteLabels) {
             NSString *noteLabel = [NSString stringWithFormat:@"%d", ns];
-            CGContextShowTextAtPoint (context, 
-                                      n * noteWidth + 3.0, 
-                                      self.bounds.size.height - 4.0,
-                                      [noteLabel UTF8String], 
-                                      [noteLabel length]); 
+            [noteLabel drawAtPoint:CGPointMake(n * noteWidth + 3.0, self.bounds.size.height - 16.0)
+                    withAttributes:@{NSFontAttributeName:font, NSForegroundColorAttributeName:gray}];
         }
     }
 }
@@ -187,16 +180,16 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     for (UITouch* touch in touches) {
         CGPoint point = [touch locationInView:self];
-        TouchDiamond *diamond = [[[TouchDiamond alloc] initWithIndex:[self.touches count]] autorelease];
+        TouchDiamond *diamond = [[TouchDiamond alloc] initWithIndex:[self.touches count]];
         diamond.center = point;
         
         // only add touches up to numVoices amount
 		if ([self.touches count] < self.numVoices) {
-            [self.touches setObject:diamond forKey:[NSValue valueWithPointer:touch] ];
+			[self.touches setObject:diamond forKey:[NSValue valueWithPointer:(__bridge const void * _Nullable)(touch)]];
             [self addSubview:diamond];
             [diamond displayAnimated];
         }
-		[self sendParamsWithPoint:point voice:diamond.touchIndex];
+		[self sendParamsWithPoint:point voice:(int)diamond.touchIndex];
     }
 
 	if (self.quantizePitch) {
@@ -213,13 +206,13 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 			// do nothing, will be turned off in touchesCancelled
 			return;
 		}
-        TouchDiamond *diamond = [self.touches objectForKey:[NSValue valueWithPointer:touch]];
+		TouchDiamond *diamond = [self.touches objectForKey:[NSValue valueWithPointer:(__bridge const void * _Nullable)(touch)]];
         if (diamond) {
             diamond.center = point; // it won't always exist if we are in poly and the touch is being ignored
         }
         if ([self.touches count] <= self.numVoices) {
-			int dzero = [self.polyPatchController dollarZeroForInstance:diamond.touchIndex];
-			[self sendParamsWithPoint:point voice:diamond.touchIndex];
+			int dzero = [self.polyPatchController dollarZeroForInstance:(int)diamond.touchIndex];
+			[self sendParamsWithPoint:point voice:(int)diamond.touchIndex];
 		}
     }
 	if (self.quantizePitch) {
@@ -230,12 +223,12 @@ static const CGFloat kThresholdForTouchRelease = 0.0;
 // locate the TouchDiamond as above, but this time, ramp it off and remove it from our dictionary
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	for (UITouch* touch in touches) {
-		TouchDiamond *diamond = [self.touches objectForKey:[NSValue valueWithPointer:touch]];
+		TouchDiamond *diamond = [self.touches objectForKey:[NSValue valueWithPointer:(__bridge const void * _Nullable)(touch)]];
 
-		[self sendParamsOffForVoice:diamond.touchIndex];
+		[self sendParamsOffForVoice:(int)diamond.touchIndex];
 
 		[diamond removeFromSuperview];
-		[self.touches removeObjectForKey:[NSValue valueWithPointer:touch]];
+		[self.touches removeObjectForKey:[NSValue valueWithPointer:(__bridge const void * _Nullable)(touch)]];
 	}
 
 	if (self.quantizePitch) {

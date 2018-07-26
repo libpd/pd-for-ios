@@ -1,5 +1,6 @@
 /*
  Copyright (c) 2012, Richard Eakin
+ Updated by Dan Wilcox 2018
 
  Redistribution and use in source and binary forms, with or without modification, are permitted provided that
  the following conditions are met:
@@ -41,8 +42,8 @@
 #pragma mark - Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    self.window = [[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
-    self.viewController = [[[SlidePadBasicViewController alloc] init] autorelease];
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.viewController = [[SlidePadBasicViewController alloc] init];
 	self.window.rootViewController = self.viewController;
     
 	[self setupPd];
@@ -54,7 +55,7 @@
 
 - (void)setupPd {
 	// Configure a typical audio session with 2 output channels
-	self.audioController = [[[PdAudioController alloc] init] autorelease];
+	self.audioController = [[PdAudioController alloc] init];
 	PdAudioStatus status = [self.audioController configurePlaybackWithSampleRate:44100
 																  numberChannels:2
 																	inputEnabled:NO
@@ -122,13 +123,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
 	self.playing = NO;
-}
-
-- (void)dealloc {
-    self.viewController = nil;
-	self.audioController = nil;
-    self.window = nil;
-    [super dealloc];
 }
 
 @end

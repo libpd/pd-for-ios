@@ -26,7 +26,7 @@
     [PdBase setDelegate:dispatcher];
     
 	audioController = [[PdAudioController alloc] init];
-    [audioController configureAmbientWithSampleRate:44100 numberChannels:2 mixingEnabled:YES];
+    [audioController configureAmbientWithSampleRate:48000 numberChannels:2 mixingEnabled:YES];
     [audioController print];
     
     [viewController pdSetup];
@@ -36,12 +36,7 @@
 }
 
 - (void)dealloc {
-    [audioController release];
     [PdBase setDelegate:nil];
-    [dispatcher release];
-    [window release];
-    [viewController release];
-    [super dealloc];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

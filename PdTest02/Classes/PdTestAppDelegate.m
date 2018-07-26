@@ -3,6 +3,7 @@
 //  PdTest02
 //
 //  Created by Richard Lawler on 11/22/10.
+//  Updated by Dan Wilcox 2018.
 /**
  * This software is copyrighted by Richard Lawler. 
  * The following terms (the "Standard Improved BSD License") apply to 
@@ -43,16 +44,13 @@
 
 @interface PdTestAppDelegate()
 
-@property (nonatomic, retain) PdAudioController *audioController;
+@property (nonatomic, strong) PdAudioController *audioController;
+
 - (void) openAndRunTestPatch;
 
 @end
 
 @implementation PdTestAppDelegate
-
-@synthesize window;
-@synthesize viewController;
-@synthesize audioController;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -60,9 +58,9 @@
 extern void lrshift_tilde_setup(void);
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-
+	
 	// load our audio controller
-	self.audioController = [[[PdAudioController alloc] init] autorelease];
+	self.audioController = [[PdAudioController alloc] init];
 	[self.audioController configureAmbientWithSampleRate:44100 numberChannels:2 mixingEnabled:YES];
 	
 	// set AppDelegate as PdRecieverDelegate to recieve messages from Libpd
@@ -74,9 +72,7 @@ extern void lrshift_tilde_setup(void);
 	
 	[self openAndRunTestPatch]; 
 	[self.audioController print];
-	
-	[self.window setRootViewController:viewController];
-    [self.window makeKeyAndVisible];
+
 	return YES;
 }
 
@@ -94,13 +90,6 @@ extern void lrshift_tilde_setup(void);
 
 - (void)setAudioActive:(BOOL)active {
 	[self.audioController setActive:active];
-}
-
-- (void)dealloc {
-    [viewController release];
-    self.window = nil;
-	self.audioController = nil;
-    [super dealloc];
 }
 
 @end

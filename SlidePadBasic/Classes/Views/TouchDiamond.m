@@ -1,5 +1,6 @@
 /*
  Copyright (c) 2012, Richard Eakin
+ Updated by Dan Wilcox 2018
 
  Redistribution and use in source and binary forms, with or without modification, are permitted provided that
  the following conditions are met:
@@ -29,8 +30,10 @@
 @synthesize touchIndex = touchIndex_;
 
 - (id)initWithIndex:(NSInteger)touchIndex {
-    [self init];
-    self.touchIndex = touchIndex;
+    self = [super init];
+    if(self) {
+    	self.touchIndex = touchIndex;
+	}
     return self;
 }
 

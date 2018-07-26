@@ -48,10 +48,6 @@ static const CGFloat kThresholdForTouchRelease = 50.0;
     return self;
 }
 
-- (void)dealloc {
-    [super dealloc];
-}
-
 - (void)drawRect:(CGRect)rect {
 
     CGContextRef context = UIGraphicsGetCurrentContext();

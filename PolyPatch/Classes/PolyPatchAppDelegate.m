@@ -58,8 +58,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 	[PdBase setDelegate:self];
 
-	self.window = [[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
-	self.window.rootViewController = [[[PolyPatchViewController alloc] init] autorelease];
+	self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	self.window.rootViewController = [[PolyPatchViewController alloc] init];
     [self.window makeKeyAndVisible];
 	
 	[self initAudio];
@@ -70,19 +70,10 @@
 	NSLog(@"%s %@", __PRETTY_FUNCTION__, message);
 }
 
-#pragma mark -
-#pragma mark Memory management
-
-- (void)dealloc {
-	self.audioController = nil;
-	self.window = nil;
-    [super dealloc];
-}
-
 #pragma mark - Private
 
 - (void)initAudio {
-	self.audioController = [[[PdAudioController alloc] init] autorelease];
+	self.audioController = [[PdAudioController alloc] init];
 	PdAudioStatus status = [self.audioController configurePlaybackWithSampleRate:44100 numberChannels:2 inputEnabled:YES mixingEnabled:NO];
 	if (status == PdAudioError) {
 		NSLog(@"Error in PdAudioController!");

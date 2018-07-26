@@ -45,8 +45,4 @@
 	self.view.backgroundColor = [UIColor blueColor];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
-}
-
 @end

@@ -17,14 +17,8 @@
     self = [super init];
     if (self) {
         label = s;
-        [label retain];
     }
     return self;
-}
-
-- (void)dealloc {
-    [label release];
-    [super dealloc];
 }
 
 - (void)receiveBangFromSource:(NSString *)source {
