@@ -15,6 +15,7 @@
 
 @interface ViewController ()
 - (void)updateTempo:(int)tempo;
+- (void)updatePlayState:(bool)is_playing;
 @end
 
 @implementation ViewController {
@@ -28,6 +29,11 @@ void sessionTempoCallback(double tempo, void *context) {
     [vc updateTempo:tempo];
 }
 
+void playStateCallback(bool is_playing, void *context) {
+    ViewController *vc = (__bridge ViewController*) context;
+    [vc updatePlayState:is_playing];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -38,8 +44,10 @@ void sessionTempoCallback(double tempo, void *context) {
     ABLLinkRef linkRef = [appDelegate getLinkRef];
     linkSettings_ = [ABLLinkSettingsViewController instance:linkRef];
     ABLLinkSetSessionTempoCallback(linkRef, sessionTempoCallback, (__bridge void *)(self));
-    ABLLinkTimelineRef timeline = ABLLinkCaptureAppTimeline(linkRef);
-    [self updateTempo:ABLLinkGetTempo(timeline)];
+    ABLLinkSetStartStopCallback(linkRef, playStateCallback, (__bridge void *)(self));
+    ABLLinkSessionStateRef session_state = ABLLinkCaptureAppSessionState(linkRef);
+    [self updateTempo:ABLLinkGetTempo(session_state)];
+    [self updatePlayState:ABLLinkIsPlaying(session_state)];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -66,6 +74,12 @@ void sessionTempoCallback(double tempo, void *context) {
     int quantum = slider.value;
     self.quantumLabel.text = [NSString stringWithFormat:@"Quantum: %d", quantum];
     [PdBase sendFloat:quantum toReceiver:@"quantum"];
+}
+
+- (IBAction)playStateChanged:(id)sender {
+    UISwitch *sw = (UISwitch*) sender;
+    bool is_playing = sw.isOn;
+    [PdBase sendFloat:is_playing toReceiver:@"play"];
 }
 
 -(IBAction)showLinkSettings:(id)sender
@@ -100,6 +114,10 @@ void sessionTempoCallback(double tempo, void *context) {
 
 - (void)updateTempo:(int)tempo {
     self.tempoLabel.text = [NSString stringWithFormat:@"Tempo: %d", tempo];
+}
+
+- (void)updatePlayState:(bool)is_playing {
+    [self.playState setOn:is_playing];
 }
 
 @end

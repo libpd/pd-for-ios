@@ -7,7 +7,7 @@ The version of abl_link~ for desktop and Android has moved to https://github.com
 
 ## iOS version
 
-**This version uses Ableton LinkKit 2.0.0.**
+**This version uses Ableton LinkKit 3.0.**
 
 To see the iOS version of abl_link~ in action, try PdLinkSample in this repository.
 

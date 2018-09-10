@@ -12,15 +12,15 @@
 #include <string.h>
 
 static ABLLinkRef libpdLinkRef = NULL;
-static ABLLinkTimelineRef libpd_timeline;
+static ABLLinkSessionStateRef libpd_session_state;
 static uint64_t libpd_curr_time;
 
 void abl_link_set_link_ref(ABLLinkRef ref) {
     libpdLinkRef = ref;
 }
 
-void abl_link_set_timeline(ABLLinkTimelineRef timeline) {
-    libpd_timeline = timeline;
+void abl_link_set_session_state(ABLLinkSessionStateRef session_state) {
+    libpd_session_state = session_state;
 }
 
 void abl_link_set_time(uint64_t curr_time) {
@@ -36,10 +36,12 @@ typedef struct _abl_link_tilde {
     t_outlet *phase_out;
     t_outlet *beat_out;
     t_outlet *tempo_out;
+    t_outlet *is_playing_out;
     double steps_per_beat;
     double prev_beat_time;
     double quantum;
     double tempo;
+    int is_playing;
     int reset_flag;
 } t_abl_link_tilde;
 
@@ -54,22 +56,30 @@ static void abl_link_tilde_dsp(t_abl_link_tilde *x, t_signal **sp) {
 }
 
 static void abl_link_tilde_tick(t_abl_link_tilde *x) {
+    if (x->is_playing < 0) {
+      ABLLinkSetIsPlaying(libpd_session_state, x->is_playing + 2, libpd_curr_time);
+    }
+    const int prev_play = x->is_playing;
+    x->is_playing = ABLLinkIsPlaying(libpd_session_state);
+    if (prev_play != x->is_playing) {
+      outlet_float(x->is_playing_out, x->is_playing);
+    }
     if (x->tempo < 0) {
-        ABLLinkSetTempo(libpd_timeline, -x->tempo, libpd_curr_time);
+        ABLLinkSetTempo(libpd_session_state, -x->tempo, libpd_curr_time);
     }
     double prev_tempo = x->tempo;
-    x->tempo = ABLLinkGetTempo(libpd_timeline);
+    x->tempo = ABLLinkGetTempo(libpd_session_state);
     if (prev_tempo != x->tempo) {
         outlet_float(x->tempo_out, x->tempo);
     }
     double curr_beat_time;
     if (x->reset_flag) {
-        ABLLinkRequestBeatAtTime(libpd_timeline, x->prev_beat_time, libpd_curr_time, x->quantum);
-        curr_beat_time = ABLLinkBeatAtTime(libpd_timeline, libpd_curr_time, x->quantum);
+        ABLLinkRequestBeatAtTime(libpd_session_state, x->prev_beat_time, libpd_curr_time, x->quantum);
+        curr_beat_time = ABLLinkBeatAtTime(libpd_session_state, libpd_curr_time, x->quantum);
         x->prev_beat_time = curr_beat_time - 1e-6;
         x->reset_flag = 0;
     } else {
-        curr_beat_time = ABLLinkBeatAtTime(libpd_timeline, libpd_curr_time, x->quantum);
+        curr_beat_time = ABLLinkBeatAtTime(libpd_session_state, libpd_curr_time, x->quantum);
     }
     outlet_float(x->beat_out, curr_beat_time);
     double curr_phase = fmod(curr_beat_time, x->quantum);
@@ -92,6 +102,10 @@ static void abl_link_tilde_enable(t_abl_link_tilde *x, t_floatarg enabled) {
 
 static void abl_link_tilde_set_tempo(t_abl_link_tilde *x, t_floatarg bpm) {
     x->tempo = -bpm;  // Negative values signal tempo changes.
+}
+
+static void abl_link_tilde_play(t_abl_link_tilde *x, t_floatarg is_playing) {
+  x->is_playing = (is_playing != 0) - 2;
 }
 
 static void abl_link_tilde_set_resolution(t_abl_link_tilde *x, t_floatarg steps_per_beat) {
@@ -120,10 +134,12 @@ static void *abl_link_tilde_new(t_symbol *s, int argc, t_atom *argv) {
     x->phase_out = outlet_new(&x->obj, &s_float);
     x->beat_out = outlet_new(&x->obj, &s_float);
     x->tempo_out = outlet_new(&x->obj, &s_float);
+    x->is_playing_out = outlet_new(&x->obj, &s_float);
     x->steps_per_beat = 1;
     x->prev_beat_time = 0;
     x->quantum = 4;
     x->tempo = 0;
+    x->is_playing = 2;
     x->reset_flag = 1;
     switch (argc) {
         default:
@@ -159,6 +175,8 @@ void abl_link_tilde_setup(void) {
                     gensym("dsp"), 0);
     class_addmethod(abl_link_tilde_class, (t_method)abl_link_tilde_enable,
                     gensym("connect"), A_DEFFLOAT, 0);
+    class_addmethod(abl_link_tilde_class, (t_method)abl_link_tilde_play,
+                    gensym("play"), A_DEFFLOAT, 0);
     class_addmethod(abl_link_tilde_class, (t_method)abl_link_tilde_set_tempo,
                     gensym("tempo"), A_DEFFLOAT, 0);
     class_addmethod(abl_link_tilde_class, (t_method)abl_link_tilde_set_resolution,
